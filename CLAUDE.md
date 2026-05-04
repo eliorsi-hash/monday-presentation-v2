@@ -9,11 +9,12 @@ Use the skill: `/monday-presentation-v2`
 ## Architecture
 
 - **SKILL.md** — The skill definition (invoked via `/monday-presentation-v2`). Contains the phased workflow, inlined brand SVG, and navigation JS.
-- **design-system.css** — CSS tokens (colors, typography, spacing). Inlined verbatim into every generated HTML.
+- **design-system.css** — CSS tokens (colors, typography, spacing). Inlined verbatim into every generated HTML. Supports dark (default) and light themes via `data-theme` attribute on `<html>`.
 - **Selected/** — 67 proven HTML slide templates (`Deck_Dark_Page_*.html`). Used as source patterns.
 - **Icons/** — 267 monday.com SVG icons. Read and inlined into generated HTML for portability.
 - **RECIPES.md** — 5 presentation recipes (Product Launch, Team Review, Proposal, Training, Quick Update).
 - **SLIDE_INVENTORY.md** — Metadata catalog for every template (structure, capacity, editable elements).
+- **VISUAL_PATTERNS.md** — CSS/HTML recipes for visual effects: display typography, data viz charts, image placeholders, card panels, animations.
 - **ICON_MATCHING.md** — Semantic icon selection guide by content type.
 
 ## Key Rules

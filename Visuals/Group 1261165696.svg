@@ -1,0 +1,13 @@
+<svg width="625" height="795" viewBox="0 0 625 795" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="176" y="188" width="252" height="253" stroke="white" stroke-width="2"/>
+<mask id="mask0_189_253" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="177" y="0" width="448" height="440">
+<rect x="177" width="448" height="440" fill="black"/>
+</mask>
+<g mask="url(#mask0_189_253)">
+<path d="M520.725 99.6583L176.999 441.987" stroke="white" stroke-width="29"/>
+<path d="M389 89L530 89L530 230" stroke="white" stroke-width="29"/>
+</g>
+<circle cx="92.7142" cy="92.7142" r="92.7142" transform="matrix(1 0 0 -1 209 627.428)" fill="#FFCC00"/>
+<rect x="98" y="627" width="408" height="161" rx="80.5" fill="#00CA72"/>
+<path d="M1.44337 744C0.55021 742.453 0.55021 740.547 1.44337 739L25.3066 697.668C26.1998 696.121 27.8504 695.168 29.6367 695.168L77.3633 695.168C79.1496 695.168 80.8002 696.121 81.6934 697.668L105.557 739C106.45 740.547 106.45 742.453 105.557 744L81.6934 785.332C80.8002 786.879 79.1496 787.832 77.3633 787.832L29.6368 787.832C27.8504 787.832 26.1998 786.879 25.3066 785.332L1.44337 744Z" fill="#FB275D"/>
+</svg>
