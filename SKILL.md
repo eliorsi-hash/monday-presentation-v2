@@ -9,7 +9,7 @@ Generate professional, single-file monday.com branded HTML presentations with ze
 
 ## Core Principles
 
-1. **Design-System First** — All output uses official monday.com design tokens (dark bg, Poppins, purple #6164ff)
+1. **Design-System First** — All output uses official monday.com design tokens (Poppins, purple #6164ff). Supports dark (default) and light themes via `data-theme` on `<html>`.
 2. **Existing + Generated** — Reuse proven Deck_Dark_Page templates; generate novel slide types from design system
 3. **Zero Dependencies** — Single, self-contained HTML file with inline CSS/JS. No external scripts.
 4. **Responsive 16:9** — Every slide fits exactly within viewport (no scrolling, ever)
@@ -27,21 +27,34 @@ Generate professional, single-file monday.com branded HTML presentations with ze
 
 ```
 AskUserQuestion({
-  questions: [{
-    question: "What type of presentation are you creating?",
-    header: "Recipe",
-    multiSelect: false,
-    options: [
-      { label: "Quick Update", description: "Brief status update or announcement (5-8 slides)" },
-      { label: "Product Launch", description: "Introduce a new product or major feature (10-15 slides)" },
-      { label: "Team Review", description: "Update team on progress and plans (8-12 slides)" },
-      { label: "Training", description: "Teach a topic or skill (15-20 slides)" }
-    ]
-  }]
+  questions: [
+    {
+      question: "What type of presentation are you creating?",
+      header: "Recipe",
+      multiSelect: false,
+      options: [
+        { label: "Quick Update", description: "Brief status update or announcement (5-8 slides)" },
+        { label: "Product Launch", description: "Introduce a new product or major feature (10-15 slides)" },
+        { label: "Team Review", description: "Update team on progress and plans (8-12 slides)" },
+        { label: "Training", description: "Teach a topic or skill (15-20 slides)" }
+      ]
+    },
+    {
+      question: "Which color theme?",
+      header: "Theme",
+      multiSelect: false,
+      options: [
+        { label: "Dark", description: "Black background, white text — monday.com signature style" },
+        { label: "Light", description: "White background, dark text — clean, print-friendly" }
+      ]
+    }
+  ]
 })
 ```
 
-> The user can also select "Other" to type a custom presentation type (e.g. Business Proposal).
+**Store the theme choice** — carry it through all phases. It controls `data-theme` in Phase 3 and the light mode safety rules in Strategy A.
+
+> The user can also select "Other" for recipe to type a custom presentation type (e.g. Business Proposal).
 
 Once chosen, explain the recipe structure:
 
@@ -91,6 +104,14 @@ If user has content, ask them to paste or upload it.
 - Layout specifications (grid cols, flex direction, gaps, sizing)
 - Design variables used
 - Quick-reference matching table by purpose
+
+**Read [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md)** for visual design recipes. SLIDE_INVENTORY tells you WHAT to build (structure, content slots). VISUAL_PATTERNS tells you HOW to make it look polished (CSS techniques, weight-mixing, animations). Use VISUAL_PATTERNS when:
+- Creating opening/closing slides that need display typography or orbital graphics
+- Deciding whether to add image placeholders to text-heavy slides
+- Reproducing specific visual effects (timelines, concentric rings, radial diagrams)
+- Referencing animation stagger patterns for complex entrance sequences
+
+> **Note:** Bar charts, pie/donut charts, stat blocks, numbered step cards, and tables are now **reusable CSS classes in design-system.css** — use those directly instead of hand-rolling CSS from VISUAL_PATTERNS. VISUAL_PATTERNS remains the reference for timeline, orbital, and decorative patterns not yet in the component library.
 
 **CRITICAL RULE:** Use ONLY templates listed in SLIDE_INVENTORY.md. Never mix elements from different slides. Never create new layouts—work only with existing templates.
 
@@ -158,7 +179,8 @@ Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
 
 When generating, **read these files:**
 1. [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) — Confirm exact template structure
-2. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, layouts)
+2. [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) — CSS recipes for visual polish, data viz, image placeholders
+3. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, layouts)
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
@@ -178,6 +200,14 @@ This is the safest approach but becomes impractical for large decks (20+ slides)
 - You'd need to read 8-10 template files individually
 - CSS class names collide across templates (both use `.main-title`, `.bullet-list`, etc.)
 - Each template has its own `<style>` block that must be merged and de-duplicated
+
+**Light Mode Safety (when theme = "light"):** Templates in `Selected/` are dark-mode source files. When extracting CSS from them for a light mode deck:
+- ✅ `var(--color-*)` references — safe, adapt automatically via CSS cascade
+- ✅ `.ds-icon-white` class — safe, design-system.css flips it to dark in light theme automatically
+- ❌ Hardcoded hex colors (`#232427`, `#000`, `#1f1f1f`, `#333`, etc.) — **do not copy**; replace with the nearest CSS var (`var(--color-surface)`, `var(--color-bg)`, etc.)
+- ❌ `rgba(255,255,255,...)` for overlays, grid lines, or borders — replace with `var(--color-border)` or `var(--color-border-strong)`
+
+**When in doubt for light mode, prefer Strategy B** — its centralized template classes are entirely var-based and convert seamlessly.
 
 #### Strategy B: Template Class Architecture (for large decks, 15+ slides) — RECOMMENDED
 
@@ -275,7 +305,9 @@ Slide 7 (Track 1 - Training):
 **HTML Structure:**
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+<!-- ↑ Set data-theme="dark" or data-theme="light" based on Step 0.1 theme choice.
+     The [data-theme="light"] block in design-system.css handles all color cascading automatically. -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -312,10 +344,24 @@ Slide 7 (Track 1 - Training):
 2. Color accents: use CSS vars like `var(--color-purple)`, `var(--color-yellow)`, etc.
 3. Spacing: `var(--space-4)` through `var(--space-10)` only
 4. If using icons: **read the SVG file** from `Icons/Property 1=Name.svg` and **embed inline** — never use `<img src=...>` for icons. Inline SVGs can be recolored with `style="fill: var(--color-xxx)"`
-5. **Monday logo on title + closing slides**: Use the inline SVG from the "Inlined Asset" section above — NEVER use external image files
+5. **Monday logo on title + closing slides**: Read the appropriate file and inline its SVG — dark theme → `Logos/monday_White.svg`, light theme → `Logos/monday_Black.svg`. Add `class="monday-logo"` to the `<svg>` element. NEVER use `<img src>` for the logo.
 6. **Part labels** (optional): Add `<span class="part-label">PART N — SECTION NAME</span>` for training/workshop decks where the speaker needs section tracking.
 
 **Available Components (from [design-system.css](design-system.css)):**
+
+*Data visualization — Charts:*
+- `.chart-container` — surface card that wraps a bar chart. Internal structure: `.chart-body` → `.y-axis` (labels) + `.chart-plot` (`.grid-lines` + `.bars-row` → `.bar-group` → `.bar-group-bars` → `.bar-wrap` → `.bar-top-label` + `.bar`). Bar fill colors: `.bar-purple`, `.bar-green`, `.bar-yellow`, `.bar-red`, `.bar-purple-light`. Legend: `.chart-legend` → `.legend-item` → `.legend-dot` + text. Stagger animation built in for up to 8 bar groups.
+- `.pie-chart` / `.donut-chart` — conic-gradient circle/donut. Set `background: conic-gradient(var(--color-purple) 0deg Ndeg, ...)` inline. Formula: `percent × 3.6 = degrees`. Donut wraps in `.donut-wrap`; center label uses `.donut-center` + `.donut-center-value` + `.donut-center-label`. Side legend: `.pie-wrap` → `.pie-legend` → `.pie-legend-item` (`.pie-legend-dot` + `.pie-legend-label` + `.pie-legend-value`).
+
+*Data visualization — Stats:*
+- `.stat-block` + `.stat-value` + `.stat-label` — metric tile. `stat-value` = h1-size semibold number. Place 3–4 in a grid for a metrics slide.
+- `.stat-value-hero` — 15vmin single dominant number for hero metric slides. Pair with `.stat-label` for the descriptor.
+
+*Content patterns:*
+- `.step-card` + `.step-number` + `.step-text` + `.dot-[color]` — numbered step cards (Deck_043 pattern). Number is h1-size semibold; colored accent span wraps the period. Colors: `.dot-purple`, `.dot-yellow`, `.dot-green`, `.dot-red`. Arrange 3–5 cards in `grid-template-columns: repeat(N, 1fr)`.
+- `.table-container` → `.table-row.header-row` + `.data-rows-wrapper` → `.table-row.data-row` → `.cell` — zebra-stripe table (Deck_089 pattern). **Always set `grid-template-columns` inline** per table (e.g. `2.5fr repeat(5, 1.2fr)` — wide label column + equal data columns). Odd data rows receive surface background automatically. `chartFadeUp` entrance stagger built in for up to 8 rows.
+
+*Text & layout:*
 - `.code-block` — Styled monospace code/prompt display (use for technical slides, file previews, prompt examples)
 - `.quote-text` — Large centered italic quote with `.em` spans for highlighted words
 - `.part-label` — Section tracker in top-left corner
@@ -330,7 +376,16 @@ Slide 7 (Track 1 - Training):
 
 ### Inlined Asset: monday.com Logo SVG
 
-Use this inline SVG on title and closing slides. CSS class: `.monday-logo { height: 4vmin; width: auto; max-width: 15vmin; }` Place inside `<div class="logo-container">` with `position: absolute; bottom: var(--space-8); display: flex; justify-content: center; width: 100%;`.
+**Read and inline the logo file** matching the chosen theme. CSS class: `.monday-logo { height: 4vmin; width: auto; max-width: 15vmin; }` Place inside `<div class="logo-container">` with `position: absolute; bottom: var(--space-8); display: flex; justify-content: center; width: 100%;`.
+
+| Theme | File to read | Why |
+|-------|-------------|-----|
+| Dark  | `Logos/monday_White.svg` | White wordmark on dark background |
+| Light | `Logos/monday_Black.svg` | Dark wordmark on light background |
+
+Read the appropriate file and paste its SVG content inline — add `class="monday-logo"` to the `<svg>` element.
+
+**Legacy reference SVG (dark/white variant — only if file read fails):**
 
 ```html
 <svg class="monday-logo" width="282" height="50" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -515,8 +570,9 @@ See [SLIDE_TEMPLATES.md](SLIDE_TEMPLATES.md) for full documentation:
 |------|---------|
 | [RECIPES.md](RECIPES.md) | **Phase 0** — 5 pre-designed presentation recipes with slide sequences and best practices |
 | [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) | **Phase 1** — MANDATORY metadata of every Deck_Dark_Page_*.html template with exact structure and content limits |
+| [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) | **Phase 1 + Phase 3** — Visual CSS recipes: title typography, data viz construction, image placeholder decisions, card hierarchy, animations |
 | [ICON_MATCHING.md](ICON_MATCHING.md) | **Phase 3.1** — Semantic icon recommendations by slide purpose and content type |
-| [design-system.css](design-system.css) | CSS tokens, typography, spacing — inline directly into generated HTML |
+| [design-system.css](design-system.css) | CSS tokens, typography, spacing, and **all reusable components** (bar charts, pie/donut charts, stat blocks, numbered steps, tables, image placeholders, animations). Supports dark (default) and light theme via `data-theme` on `<html>`. Inline entire file into generated HTML. |
 | [ICON_GUIDE.md](ICON_GUIDE.md) | 267 icon names and categories |
 
 > **Note:** Brand SVG logo and navigation JS are inlined directly in this SKILL.md — no need to read BRAND_ASSETS.md or NAVIGATION.md separately.
@@ -597,4 +653,10 @@ Before delivery, ensure:
 - [ ] **Slides use absolute centering (`position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)`) for proper viewport fit**
 - [ ] Icons render with correct colors (test on all slides)
 - [ ] `.slide-container:not(.slide-active) { display: none !important }` rule is present
+- [ ] **Theme**: `<html data-theme="dark|light">` set per user's choice from Step 0.1
+- [ ] **Light mode**: no hardcoded hex colors (`#000`, `#232427`, `#1f1f1f`) or `rgba(255,255,255,...)` in generated CSS — all replaced with `var(--color-*)` vars
+- [ ] **Logo**: correct variant inlined — `monday_White.svg` for dark, `monday_Black.svg` for light
+- [ ] **Bar charts**: `grid-template-columns` set on `.table-row`; bars use `.bar-[color]` classes not inline background
+- [ ] **Tables**: `grid-template-columns` set inline on every `.table-row`; `.data-rows-wrapper` wraps all data rows (not `.table-container`)
+- [ ] **Pie/donut**: `conic-gradient` stops sum to 360deg; donut uses CSS `mask` not a white center circle overlay
 
