@@ -7,6 +7,17 @@ description: Creates branded monday.com HTML presentations using a design-system
 
 Generate professional, single-file monday.com branded HTML presentations with zero dependencies.
 
+## Platform Compatibility
+
+| Feature | Claude Code (CLI/Desktop) | claude.ai Projects | Claude API |
+|---------|--------------------------|-------------------|------------|
+| Interactive recipe picker (`AskUserQuestion`) | ✅ Full UI | ⚠️ Falls back to text questions | ⚠️ Falls back to text questions |
+| Read template/icon files from disk | ✅ Automatic | ✅ Via Project Knowledge | ⚠️ Must provide content inline |
+| Write output file to disk | ✅ Automatic | ⚠️ User saves code block | ⚠️ User saves code block |
+| Open file in browser | ✅ `open` command | ❌ Manual | ❌ Manual |
+
+**Fallback behavior** — When `AskUserQuestion` is unavailable, ask the same questions as plain text. When `Read` is unavailable (no local file access), rely on Project Knowledge files uploaded by the user. The generated HTML is always correct regardless of platform.
+
 ## Core Principles
 
 1. **Design-System First** — All output uses official monday.com design tokens (Poppins, purple #6164ff). Supports dark (default) and light themes via `data-theme` on `<html>`.
@@ -495,29 +506,32 @@ If user has a .pptx file:
 
 ## Phase 5: Delivery
 
-**Open the file:**
+**Name the file** — derive a short kebab-case filename from the presentation topic (e.g. `monday-ai-features.html`, `q3-roadmap.html`, `team-kickoff.html`). Never use `presentation.html`.
+
+**Save to the current working directory** (not the skill directory).
+
+**Open the file** (Claude Code only):
 ```
-open presentation.html
+open <filename>.html
 ```
 
 **Summarize for the user:**
 
 > **Your deck is ready!**
 >
-> **File:** `presentation.html` (self-contained, no external dependencies)
+> **File:** `<filename>.html` — self-contained, no external dependencies
 >
 > **Navigation:**
 > - Arrow keys or Space to advance
 > - Click slide counter to jump to a specific slide
-> - Bottom-right: current slide / total slides
 >
 > **Customization:**
-> Want to tweak colors, text, or layout? Edit the HTML file directly:
-> - Colors: Find `:root { --color-purple: ...}` to change brand color
-> - Text: Edit content inside `<h1>`, `<h2>`, `<p>` tags
-> - Layout: Modify grid or flex properties in `<style>` block
->
-> To regenerate: Create a `content.md` file and run the skill again with `update`.
+> Edit the HTML file directly:
+> - Colors: `:root { --color-purple: ... }` to change brand color
+> - Text: Content inside `<h1>`, `<h2>`, `<p>` tags
+> - Layout: Grid/flex properties in the `<style>` block
+
+**Note for non-Claude Code environments** — If writing to disk isn't possible, output the complete HTML as a code block and ask the user to save it as `<filename>.html`.
 
 **Optional:** Offer to create a `content.md` template for future updates.
 
