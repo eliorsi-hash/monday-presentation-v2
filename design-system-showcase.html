@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>monday.com Design System Showcase</title>
+  <link rel="stylesheet" href="design-system.css">
+  <style>
+    /* ============================================================
+       SHOWCASE PAGE LAYOUT
+       Not a 16:9 slide — this is a scrollable reference page.
+       All colors use CSS vars so the dark/light toggle works.
+       ============================================================ */
+
+    body {
+      overflow: auto;
+      display: block;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      padding: 0;
+      margin: 0;
+    }
+
+    .showcase {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    /* ---- Sticky header ---- */
+    .showcase-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      margin-bottom: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .showcase-header .monday-logo {
+      height: 28px;
+      width: auto;
+    }
+
+    /* Logo variant switching — no JS needed */
+    .logo-for-light { display: none; }
+    [data-theme="light"] .logo-for-dark  { display: none; }
+    [data-theme="light"] .logo-for-light { display: block; }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--color-surface);
+      border: none;
+      border-radius: 999px;
+      color: var(--color-text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .theme-toggle:hover { background: var(--color-surface-alt); }
+
+    .theme-toggle .icon-sun, .theme-toggle .icon-moon { font-size: 15px; }
+
+    /* ---- Section chrome ---- */
+    .ds-section {
+      margin-top: 60px;
+    }
+
+    .ds-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+    }
+
+    /* ---- Color swatches ---- */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch-group-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin: 24px 0 10px;
+      grid-column: 1 / -1;
+    }
+
+    .swatch {
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--color-surface);
+    }
+
+    .swatch-color {
+      height: 56px;
+      width: 100%;
+    }
+
+    .swatch-info {
+      padding: 8px 10px;
+    }
+
+    .swatch-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text);
+      font-family: 'Courier New', monospace;
+    }
+
+    .swatch-value {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      font-family: 'Courier New', monospace;
+      margin-top: 2px;
+    }
+
+    /* ---- Typography ---- */
+    .type-table { width: 100%; border-collapse: collapse; }
+    .type-row { border-bottom: 1px solid var(--color-border); }
+    .type-row td { padding: 16px 0; vertical-align: middle; }
+    .type-row td:first-child {
+      width: 160px;
+      font-size: 11px;
+      font-family: 'Courier New', monospace;
+      color: var(--color-text-muted);
+    }
+    .type-row td:last-child {
+      width: 100px;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      text-align: right;
+    }
+
+    /* ---- Spacing scale ---- */
+    .spacing-grid { display: flex; flex-direction: column; gap: 10px; }
+    .spacing-row { display: flex; align-items: center; gap: 16px; }
+    .spacing-bar-wrap { flex: 1; }
+    .spacing-bar {
+      background: var(--color-purple);
+      height: 8px;
+      border-radius: 4px;
+      opacity: 0.7;
+    }
+    .spacing-label {
+      width: 80px;
+      font-size: 11px;
+      font-family: 'Courier New', monospace;
+      color: var(--color-text-muted);
+    }
+    .spacing-value {
+      width: 60px;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      text-align: right;
+    }
+
+    /* ---- Radius scale ---- */
+    .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+    .radius-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .radius-box {
+      width: 60px;
+      height: 60px;
+      background: var(--color-purple);
+      opacity: 0.8;
+    }
+    .radius-label {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--color-text-muted);
+    }
+
+    /* ---- Icon sizes ---- */
+    .icon-size-row { display: flex; gap: 32px; align-items: flex-end; }
+    .icon-size-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .icon-size-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); }
+
+    /* ---- Icon library grid ---- */
+    .icon-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .icon-filter-btn {
+      padding: 6px 14px;
+      background: var(--color-surface);
+      border: none;
+      border-radius: 999px;
+      color: var(--color-text-secondary);
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .icon-filter-btn.active {
+      background: var(--color-purple);
+      color: #fff;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 8px;
+    }
+
+    .icon-cell {
+      background: var(--color-surface);
+      border-radius: 8px;
+      padding: 12px 8px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: default;
+      transition: background 0.15s;
+    }
+
+    .icon-cell:hover { background: var(--color-surface-alt); }
+
+    .icon-cell img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      /* Natural purple — no filter. On dark, purple is visible. On light, purple on white also passes. */
+    }
+
+    .icon-cell .icon-name {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      text-align: center;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    /* ---- Card & surface demos ---- */
+    .surface-demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .surface-demo {
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .surface-bg { background: var(--color-bg); border: 1px solid var(--color-border); }
+    .surface-card { background: var(--color-surface); }
+    .surface-card-alt { background: var(--color-surface-alt); }
+
+    .surface-demo-label {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--color-text-muted);
+      margin-bottom: 8px;
+    }
+
+    /* ---- Image placeholder demo ---- */
+    .placeholder-demos { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+    .placeholder-demo-item { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .placeholder-demo-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); }
+
+    .placeholder-box {
+      border-radius: 8px;
+    }
+
+    /* ---- Visuals assets ---- */
+    .visuals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .visual-cell {
+      background: var(--color-surface);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .visual-cell img { width: 100%; height: 100px; object-fit: contain; }
+    .visual-cell .visual-name { font-size: 9px; color: var(--color-text-muted); font-family: 'Courier New', monospace; }
+
+    /* ---- Icon with filter demo ---- */
+    .filter-demos { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+    .filter-demo-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .filter-demo-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .filter-demo-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); text-align: center; }
+
+    /* ---- Brand color pills ---- */
+    .brand-colors { display: flex; gap: 12px; flex-wrap: wrap; }
+    .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+    }
+    .brand-pill-dot { width: 14px; height: 14px; border-radius: 50%; }
+    .brand-pill-text { font-size: 12px; font-family: 'Courier New', monospace; font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="showcase">
+
+  <!-- ============================================================ HEADER -->
+  <header class="showcase-header">
+    <div class="header-left">
+      <img class="monday-logo logo-for-dark"  src="Logos/monday_White.svg" alt="monday.com">
+      <img class="monday-logo logo-for-light" src="Logos/monday_Black.svg" alt="monday.com">
+      <span class="header-title">Design System</span>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+      <span class="icon-sun">☀</span> Switch to Light
+    </button>
+  </header>
+
+  <!-- ============================================================ COLORS -->
+  <section class="ds-section" id="colors">
+    <div class="ds-section-title">Colors</div>
+
+    <div class="swatch-grid">
+      <div class="swatch-group-title">Backgrounds (theme-adaptive)</div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-bg);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-bg</div>
+          <div class="swatch-value" id="val-bg"></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-surface);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-surface</div>
+          <div class="swatch-value" id="val-surface"></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-surface-alt);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-surface-alt</div>
+          <div class="swatch-value" id="val-surface-alt"></div>
+        </div>
+      </div>
+
+      <div class="swatch-group-title">Text (theme-adaptive)</div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-text);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-text</div>
+          <div class="swatch-value" id="val-text"></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-text-secondary);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-text-secondary</div>
+          <div class="swatch-value" id="val-text-secondary"></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-text-muted);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-text-muted</div>
+          <div class="swatch-value" id="val-text-muted"></div>
+        </div>
+      </div>
+
+      <div class="swatch-group-title">Brand Accents (always fixed)</div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-purple);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-purple</div>
+          <div class="swatch-value">#6164ff</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-purple-light);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-purple-light</div>
+          <div class="swatch-value">#8A99FF</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-red);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-red</div>
+          <div class="swatch-value">#ff3d57</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-yellow);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-yellow</div>
+          <div class="swatch-value">#ffcb00</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-green);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-green</div>
+          <div class="swatch-value">#00c875</div>
+        </div>
+      </div>
+
+      <div class="swatch-group-title">Borders (theme-adaptive)</div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-border); border: 1px solid var(--color-border-strong);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-border</div>
+          <div class="swatch-value" id="val-border"></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-border-strong);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">--color-border-strong</div>
+          <div class="swatch-value" id="val-border-strong"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ TYPOGRAPHY -->
+  <section class="ds-section" id="typography">
+    <div class="ds-section-title">Typography</div>
+
+    <table class="type-table">
+      <tbody>
+        <tr class="type-row">
+          <td>--text-display<br>font-light</td>
+          <td><span class="text-display font-light" style="color:var(--color-text);">Display</span></td>
+          <td>10.5vmin · 300</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-h1<br>font-medium</td>
+          <td><span class="text-h1 font-medium" style="color:var(--color-text);">Heading 1</span></td>
+          <td>8vmin · 500</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-h2<br>font-regular</td>
+          <td><span class="text-h2" style="color:var(--color-text);">Heading 2</span></td>
+          <td>6vmin · 400</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-h3<br>font-regular</td>
+          <td><span class="text-h3" style="color:var(--color-text);">Heading 3</span></td>
+          <td>4vmin · 400</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-h4<br>font-regular</td>
+          <td><span class="text-h4" style="color:var(--color-text);">Heading 4</span></td>
+          <td>3vmin · 400</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-body</td>
+          <td><span class="text-body" style="color:var(--color-text);">Body text — the quick brown fox jumps over the lazy dog.</span></td>
+          <td>2.2vmin · 400</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-body-sm<br>font-light</td>
+          <td><span class="text-body-sm font-light" style="color:var(--color-text-secondary);">Body small — the quick brown fox jumps over the lazy dog.</span></td>
+          <td>1.8vmin · 300</td>
+        </tr>
+        <tr class="type-row">
+          <td>--text-caption</td>
+          <td><span class="text-caption" style="color:var(--color-text-muted);">Caption text — metadata, labels, timestamps.</span></td>
+          <td>1.4vmin · 400</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 28px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Weight-mixing technique (display headlines)</p>
+      <p style="font-size: 6vmin; line-height: 1.1; letter-spacing: -0.025em; color: var(--color-text); font-weight: 300;">
+        monday<span style="font-weight: 600;"> product</span><br>
+        <span style="font-weight: 600;">performance</span> review.
+      </p>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 16px;">.highlight — color only (never combine with font-weight)</p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+          <p style="font-size: 10px; color: var(--color-green); font-family: monospace; margin-bottom: 8px;">✓ Correct — color only</p>
+          <p style="font-size: 5vmin; font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text);">
+            Future-Proof<br>Your <span class="highlight">Stack.</span>
+          </p>
+        </div>
+        <div>
+          <p style="font-size: 10px; color: var(--color-red); font-family: monospace; margin-bottom: 8px;">✗ Incorrect — color + weight combined</p>
+          <p style="font-size: 5vmin; font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text); text-decoration: line-through; opacity: 0.5;">
+            Future-Proof<br>Your <span style="color: var(--color-yellow); font-weight: 600;">Stack.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 16px;">Heading reset — h1–h6 always get line-height: var(--leading-tight) = 1.1</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div style="background: var(--color-surface); border-radius: 12px; padding: 24px;">
+          <p style="font-size: 10px; color: var(--color-green); font-family: monospace; margin-bottom: 12px;">✓ With heading reset (design-system.css)</p>
+          <h2 style="font-size: 4vmin; font-weight: 500; line-height: var(--leading-tight); margin: 0; letter-spacing: -0.02em;">Security<br>Resolution<br>Distribution</h2>
+        </div>
+        <div style="background: var(--color-surface); border-radius: 12px; padding: 24px;">
+          <p style="font-size: 10px; color: var(--color-red); font-family: monospace; margin-bottom: 12px;">✗ Without heading reset (browser default ~1.3)</p>
+          <h2 style="font-size: 4vmin; font-weight: 500; line-height: 1.3; margin: 0; letter-spacing: -0.02em; opacity: 0.5; text-decoration: line-through;">Security<br>Resolution<br>Distribution</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ SURFACES & CARDS -->
+  <section class="ds-section" id="surfaces">
+    <div class="ds-section-title">Surfaces &amp; Cards</div>
+
+    <div class="surface-demos">
+      <div class="surface-demo surface-bg">
+        <div class="surface-demo-label">--color-bg (with border)</div>
+        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Page background. Used as the base of every slide.</p>
+      </div>
+      <div class="surface-demo surface-card">
+        <div class="surface-demo-label">--color-surface</div>
+        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Primary card/panel background. No border needed — surface provides contrast against bg.</p>
+      </div>
+      <div class="surface-demo surface-card-alt">
+        <div class="surface-demo-label">--color-surface-alt</div>
+        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Alternate surface for nested elements or subtle separation within a surface card.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Image placeholder system</p>
+      <div class="placeholder-demos">
+        <div class="placeholder-demo-item">
+          <div class="placeholder-box" data-image-placeholder="photo" style="width:160px;height:100px;"></div>
+          <span class="placeholder-demo-label">photo</span>
+        </div>
+        <div class="placeholder-demo-item">
+          <div class="placeholder-box" data-image-placeholder="portrait" style="width:100px;height:100px;border-radius:50%;"></div>
+          <span class="placeholder-demo-label">portrait</span>
+        </div>
+        <div class="placeholder-demo-item">
+          <div class="placeholder-box" data-image-placeholder="screenshot" style="width:180px;height:110px;border-radius:8px;"></div>
+          <span class="placeholder-demo-label">screenshot</span>
+        </div>
+        <div class="placeholder-demo-item">
+          <div class="placeholder-box" data-image-placeholder="icon" style="width:60px;height:60px;border-radius:12px;"></div>
+          <span class="placeholder-demo-label">icon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ SPACING -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-section-title">Spacing Scale</div>
+    <div class="spacing-grid">
+      <div class="spacing-row">
+        <span class="spacing-label">--space-1</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(0.5vmin * 4)"></div></div>
+        <span class="spacing-value">0.5vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-2</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(1vmin * 4)"></div></div>
+        <span class="spacing-value">1vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-3</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(1.5vmin * 4)"></div></div>
+        <span class="spacing-value">1.5vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-4</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(2vmin * 4)"></div></div>
+        <span class="spacing-value">2vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-5</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(3vmin * 4)"></div></div>
+        <span class="spacing-value">3vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-6</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(4vmin * 4)"></div></div>
+        <span class="spacing-value">4vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-7</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(5vmin * 4)"></div></div>
+        <span class="spacing-value">5vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-8</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(6vmin * 4)"></div></div>
+        <span class="spacing-value">6vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-9</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(8vmin * 4)"></div></div>
+        <span class="spacing-value">8vmin</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-10</span>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(10vmin * 4)"></div></div>
+        <span class="spacing-value">10vmin</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ BORDER RADIUS -->
+  <section class="ds-section" id="radius">
+    <div class="ds-section-title">Border Radius</div>
+    <div class="radius-grid">
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-xs);"></div>
+        <span class="radius-label">--radius-xs<br>0.5vmin</span>
+      </div>
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+        <span class="radius-label">--radius-sm<br>1vmin</span>
+      </div>
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+        <span class="radius-label">--radius-md<br>2vmin</span>
+      </div>
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+        <span class="radius-label">--radius-lg<br>3vmin</span>
+      </div>
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-xl);"></div>
+        <span class="radius-label">--radius-xl<br>4vmin</span>
+      </div>
+      <div class="radius-cell">
+        <div class="radius-box" style="border-radius: var(--radius-full);"></div>
+        <span class="radius-label">--radius-full<br>999px</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ ICON SIZES -->
+  <section class="ds-section" id="icon-sizes">
+    <div class="ds-section-title">Icon Sizes</div>
+
+    <div class="icon-size-row">
+      <div class="icon-size-cell">
+        <img src="Icons/Property 1=Star.svg" class="ds-icon ds-icon-xs ds-icon-white" alt="Star" style="display:block;">
+        <span class="icon-size-label">ds-icon-xs<br>3vmin</span>
+      </div>
+      <div class="icon-size-cell">
+        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-sm ds-icon-white" alt="Check" style="display:block;">
+        <span class="icon-size-label">ds-icon-sm<br>5vmin</span>
+      </div>
+      <div class="icon-size-cell">
+        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Check" style="display:block;">
+        <span class="icon-size-label">ds-icon-md<br>7vmin</span>
+      </div>
+      <div class="icon-size-cell">
+        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-lg ds-icon-white" alt="Check" style="display:block;">
+        <span class="icon-size-label">ds-icon-lg<br>10vmin</span>
+      </div>
+      <div class="icon-size-cell">
+        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-xl ds-icon-white" alt="Check" style="display:block;">
+        <span class="icon-size-label">ds-icon-xl<br>15vmin</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Icon filter classes (theme-adaptive)</p>
+      <div class="filter-demos">
+        <div class="filter-demo-cell">
+          <div class="filter-demo-box" style="background: var(--color-surface);">
+            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Chart">
+          </div>
+          <span class="filter-demo-label">ds-icon-white<br>on surface<br>(auto-adapts)</span>
+        </div>
+        <div class="filter-demo-cell">
+          <div class="filter-demo-box" style="background: var(--color-purple);">
+            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Chart">
+          </div>
+          <span class="filter-demo-label">ds-icon-white<br>on purple<br>(always white)</span>
+        </div>
+        <div class="filter-demo-cell">
+          <div class="filter-demo-box" style="background: var(--color-surface);">
+            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md" alt="Chart">
+          </div>
+          <span class="filter-demo-label">no filter<br>natural purple<br>(always #6164ff)</span>
+        </div>
+        <div class="filter-demo-cell">
+          <div class="filter-demo-box" style="background: var(--color-surface);">
+            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-dark" alt="Chart">
+          </div>
+          <span class="filter-demo-label">ds-icon-dark<br>on surface<br>(auto-adapts)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ ICON LIBRARY -->
+  <section class="ds-section" id="icons">
+    <div class="ds-section-title">Icon Library — 267 icons</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:20px;">Natural purple (#6164ff stroke). Path: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Icons/Property 1=Name.svg</code></p>
+
+    <div class="icon-grid">
+      <div class="icon-cell"><img src="Icons/Property 1=Academy.svg" alt="Academy"><span class="icon-name">Academy</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Alarm.svg" alt="Alarm"><span class="icon-name">Alarm</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Alarm check.svg" alt="Alarm check"><span class="icon-name">Alarm check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Anchor.svg" alt="Anchor"><span class="icon-name">Anchor</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Apps.svg" alt="Apps"><span class="icon-name">Apps</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Archive.svg" alt="Archive"><span class="icon-name">Archive</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Archive2.svg" alt="Archive2"><span class="icon-name">Archive2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Arrow Path.svg" alt="Arrow Path"><span class="icon-name">Arrow Path</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Arrow precentage.svg" alt="Arrow %"><span class="icon-name">Arrow %</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Arrow target.svg" alt="Arrow target"><span class="icon-name">Arrow target</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Arrow up.svg" alt="Arrow up"><span class="icon-name">Arrow up</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Arrows.svg" alt="Arrows"><span class="icon-name">Arrows</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Auction.svg" alt="Auction"><span class="icon-name">Auction</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Badge.svg" alt="Badge"><span class="icon-name">Badge</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Badge check.svg" alt="Badge check"><span class="icon-name">Badge check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Badge star.svg" alt="Badge star"><span class="icon-name">Badge star</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Badge2.svg" alt="Badge2"><span class="icon-name">Badge2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Bar Chart.svg" alt="Bar Chart"><span class="icon-name">Bar Chart</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Bar up.svg" alt="Bar up"><span class="icon-name">Bar up</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Battery.svg" alt="Battery"><span class="icon-name">Battery</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Battery charge.svg" alt="Battery charge"><span class="icon-name">Battery charge</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Bell.svg" alt="Bell"><span class="icon-name">Bell</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Book.svg" alt="Book"><span class="icon-name">Book</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Book bookmark.svg" alt="Book bookmark"><span class="icon-name">Book bookmark</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Book open.svg" alt="Book open"><span class="icon-name">Book open</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Book open2.svg" alt="Book open2"><span class="icon-name">Book open2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Bookmark.svg" alt="Bookmark"><span class="icon-name">Bookmark</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Box.svg" alt="Box"><span class="icon-name">Box</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Box arrows.svg" alt="Box arrows"><span class="icon-name">Box arrows</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Box2.svg" alt="Box2"><span class="icon-name">Box2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Bubble talk.svg" alt="Bubble talk"><span class="icon-name">Bubble talk</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Calendar.svg" alt="Calendar"><span class="icon-name">Calendar</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Calendar check.svg" alt="Calendar check"><span class="icon-name">Calendar check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Calendar plus.svg" alt="Calendar plus"><span class="icon-name">Calendar plus</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Camera.svg" alt="Camera"><span class="icon-name">Camera</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cash.svg" alt="Cash"><span class="icon-name">Cash</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Chart down.svg" alt="Chart down"><span class="icon-name">Chart down</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Chart up.svg" alt="Chart up"><span class="icon-name">Chart up</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Checklist.svg" alt="Checklist"><span class="icon-name">Checklist</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Checkmark.svg" alt="Checkmark"><span class="icon-name">Checkmark</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Chip.svg" alt="Chip"><span class="icon-name">Chip</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Chip2.svg" alt="Chip2"><span class="icon-name">Chip2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Circle.svg" alt="Circle"><span class="icon-name">Circle</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Click.svg" alt="Click"><span class="icon-name">Click</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Clip.svg" alt="Clip"><span class="icon-name">Clip</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Clipboard.svg" alt="Clipboard"><span class="icon-name">Clipboard</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Clipboard pen.svg" alt="Clipboard pen"><span class="icon-name">Clipboard pen</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Clock.svg" alt="Clock"><span class="icon-name">Clock</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Close.svg" alt="Close"><span class="icon-name">Close</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cloud.svg" alt="Cloud"><span class="icon-name">Cloud</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cloud flash.svg" alt="Cloud flash"><span class="icon-name">Cloud flash</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cloud2.svg" alt="Cloud2"><span class="icon-name">Cloud2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Coffee.svg" alt="Coffee"><span class="icon-name">Coffee</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Coins.svg" alt="Coins"><span class="icon-name">Coins</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Collaboration.svg" alt="Collaboration"><span class="icon-name">Collaboration</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Compass.svg" alt="Compass"><span class="icon-name">Compass</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Connection.svg" alt="Connection"><span class="icon-name">Connection</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Connection user.svg" alt="Connection user"><span class="icon-name">Connection user</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Container.svg" alt="Container"><span class="icon-name">Container</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Credit card.svg" alt="Credit card"><span class="icon-name">Credit card</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Crop.svg" alt="Crop"><span class="icon-name">Crop</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cube.svg" alt="Cube"><span class="icon-name">Cube</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cursor.svg" alt="Cursor"><span class="icon-name">Cursor</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Cursor finger.svg" alt="Cursor finger"><span class="icon-name">Cursor finger</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Database.svg" alt="Database"><span class="icon-name">Database</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Database2.svg" alt="Database2"><span class="icon-name">Database2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Desktop.svg" alt="Desktop"><span class="icon-name">Desktop</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Desktop check.svg" alt="Desktop check"><span class="icon-name">Desktop check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Desktop stats.svg" alt="Desktop stats"><span class="icon-name">Desktop stats</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Desktop2.svg" alt="Desktop2"><span class="icon-name">Desktop2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Diamond.svg" alt="Diamond"><span class="icon-name">Diamond</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Doc computer.svg" alt="Doc computer"><span class="icon-name">Doc computer</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Doc stats.svg" alt="Doc stats"><span class="icon-name">Doc stats</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Docs.svg" alt="Docs"><span class="icon-name">Docs</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Document.svg" alt="Document"><span class="icon-name">Document</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Document bar.svg" alt="Document bar"><span class="icon-name">Document bar</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Document text.svg" alt="Document text"><span class="icon-name">Document text</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Dollar.svg" alt="Dollar"><span class="icon-name">Dollar</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Door.svg" alt="Door"><span class="icon-name">Door</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Edit.svg" alt="Edit"><span class="icon-name">Edit</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Email.svg" alt="Email"><span class="icon-name">Email</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Envelope.svg" alt="Envelope"><span class="icon-name">Envelope</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Exclamation.svg" alt="Exclamation"><span class="icon-name">Exclamation</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Expand.svg" alt="Expand"><span class="icon-name">Expand</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Eye.svg" alt="Eye"><span class="icon-name">Eye</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Eye check.svg" alt="Eye check"><span class="icon-name">Eye check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Eye pie.svg" alt="Eye pie"><span class="icon-name">Eye pie</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Facebook.svg" alt="Facebook"><span class="icon-name">Facebook</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Feather.svg" alt="Feather"><span class="icon-name">Feather</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Film.svg" alt="Film"><span class="icon-name">Film</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Filter.svg" alt="Filter"><span class="icon-name">Filter</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Filter2.svg" alt="Filter2"><span class="icon-name">Filter2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Finger.svg" alt="Finger"><span class="icon-name">Finger</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Finger click.svg" alt="Finger click"><span class="icon-name">Finger click</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Fingerprint.svg" alt="Fingerprint"><span class="icon-name">Fingerprint</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Flag.svg" alt="Flag"><span class="icon-name">Flag</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Flash.svg" alt="Flash"><span class="icon-name">Flash</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Flash2.svg" alt="Flash2"><span class="icon-name">Flash2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Float.svg" alt="Float"><span class="icon-name">Float</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Flow.svg" alt="Flow"><span class="icon-name">Flow</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Folder.svg" alt="Folder"><span class="icon-name">Folder</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Folder download.svg" alt="Folder download"><span class="icon-name">Folder download</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Funnel.svg" alt="Funnel"><span class="icon-name">Funnel</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Gear.svg" alt="Gear"><span class="icon-name">Gear</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Gears.svg" alt="Gears"><span class="icon-name">Gears</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Gift.svg" alt="Gift"><span class="icon-name">Gift</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Globe.svg" alt="Globe"><span class="icon-name">Globe</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Goggles.svg" alt="Goggles"><span class="icon-name">Goggles</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph.svg" alt="Graph"><span class="icon-name">Graph</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph arrow down.svg" alt="Graph arrow down"><span class="icon-name">Graph ↓</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph arrow up.svg" alt="Graph arrow up"><span class="icon-name">Graph ↑</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph down.svg" alt="Graph down"><span class="icon-name">Graph down</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph up.svg" alt="Graph up"><span class="icon-name">Graph up</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Graph ups.svg" alt="Graph ups"><span class="icon-name">Graph ups</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=grid.svg" alt="grid"><span class="icon-name">grid</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Grid2.svg" alt="Grid2"><span class="icon-name">Grid2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Grid3.svg" alt="Grid3"><span class="icon-name">Grid3</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Hand gear.svg" alt="Hand gear"><span class="icon-name">Hand gear</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Handshake.svg" alt="Handshake"><span class="icon-name">Handshake</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Headphones.svg" alt="Headphones"><span class="icon-name">Headphones</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Headset.svg" alt="Headset"><span class="icon-name">Headset</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Heart.svg" alt="Heart"><span class="icon-name">Heart</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Hierachy.svg" alt="Hierarchy"><span class="icon-name">Hierarchy</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Hirarcy files.svg" alt="Hierarchy files"><span class="icon-name">Hierarchy files</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Home.svg" alt="Home"><span class="icon-name">Home</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Hourglass.svg" alt="Hourglass"><span class="icon-name">Hourglass</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=House.svg" alt="House"><span class="icon-name">House</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Image.svg" alt="Image"><span class="icon-name">Image</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Inbox.svg" alt="Inbox"><span class="icon-name">Inbox</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Info.svg" alt="Info"><span class="icon-name">Info</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Info2.svg" alt="Info2"><span class="icon-name">Info2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Instagram.svg" alt="Instagram"><span class="icon-name">Instagram</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Key.svg" alt="Key"><span class="icon-name">Key</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Label.svg" alt="Label"><span class="icon-name">Label</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Laptop.svg" alt="Laptop"><span class="icon-name">Laptop</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Launch.svg" alt="Launch"><span class="icon-name">Launch</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Layers.svg" alt="Layers"><span class="icon-name">Layers</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Layers2.svg" alt="Layers2"><span class="icon-name">Layers2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Lightbulb.svg" alt="Lightbulb"><span class="icon-name">Lightbulb</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Link.svg" alt="Link"><span class="icon-name">Link</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=LinkedIn.svg" alt="LinkedIn"><span class="icon-name">LinkedIn</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=List.svg" alt="List"><span class="icon-name">List</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Location.svg" alt="Location"><span class="icon-name">Location</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Lock.svg" alt="Lock"><span class="icon-name">Lock</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Lock network.svg" alt="Lock network"><span class="icon-name">Lock network</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Locker.svg" alt="Locker"><span class="icon-name">Locker</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Log in.svg" alt="Log in"><span class="icon-name">Log in</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Log Out.svg" alt="Log out"><span class="icon-name">Log out</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Loop.svg" alt="Loop"><span class="icon-name">Loop</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Magic wand.svg" alt="Magic wand"><span class="icon-name">Magic wand</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Magic wand2.svg" alt="Magic wand2"><span class="icon-name">Magic wand2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Magnet.svg" alt="Magnet"><span class="icon-name">Magnet</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Magnifying.svg" alt="Magnifying"><span class="icon-name">Magnifying</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Map.svg" alt="Map"><span class="icon-name">Map</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Megaphone.svg" alt="Megaphone"><span class="icon-name">Megaphone</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Microphone.svg" alt="Microphone"><span class="icon-name">Microphone</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Microphone mute.svg" alt="Mic mute"><span class="icon-name">Mic mute</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Minus.svg" alt="Minus"><span class="icon-name">Minus</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Molecular.svg" alt="Molecular"><span class="icon-name">Molecular</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Money bag.svg" alt="Money bag"><span class="icon-name">Money bag</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Money bags.svg" alt="Money bags"><span class="icon-name">Money bags</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Moon.svg" alt="Moon"><span class="icon-name">Moon</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Mountain.svg" alt="Mountain"><span class="icon-name">Mountain</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Music.svg" alt="Music"><span class="icon-name">Music</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Network.svg" alt="Network"><span class="icon-name">Network</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Network2.svg" alt="Network2"><span class="icon-name">Network2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No call.svg" alt="No call"><span class="icon-name">No call</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No cloud.svg" alt="No cloud"><span class="icon-name">No cloud</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No eye.svg" alt="No eye"><span class="icon-name">No eye</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No Image.svg" alt="No image"><span class="icon-name">No image</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No ring.svg" alt="No ring"><span class="icon-name">No ring</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=No video.svg" alt="No video"><span class="icon-name">No video</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Notification.svg" alt="Notification"><span class="icon-name">Notification</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Organization.svg" alt="Organization"><span class="icon-name">Organization</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Paper.svg" alt="Paper"><span class="icon-name">Paper</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Paper plane.svg" alt="Paper plane"><span class="icon-name">Paper plane</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Pen.svg" alt="Pen"><span class="icon-name">Pen</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Pen write.svg" alt="Pen write"><span class="icon-name">Pen write</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Pencil.svg" alt="Pencil"><span class="icon-name">Pencil</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Phone.svg" alt="Phone"><span class="icon-name">Phone</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Phone ring.svg" alt="Phone ring"><span class="icon-name">Phone ring</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Phone2.svg" alt="Phone2"><span class="icon-name">Phone2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Pie.svg" alt="Pie"><span class="icon-name">Pie</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Pin.svg" alt="Pin"><span class="icon-name">Pin</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Play Button.svg" alt="Play"><span class="icon-name">Play</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Plus.svg" alt="Plus"><span class="icon-name">Plus</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Point users.svg" alt="Point users"><span class="icon-name">Point users</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Printer.svg" alt="Printer"><span class="icon-name">Printer</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Prohibited.svg" alt="Prohibited"><span class="icon-name">Prohibited</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Puzzle.svg" alt="Puzzle"><span class="icon-name">Puzzle</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Question.svg" alt="Question"><span class="icon-name">Question</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Question brain.svg" alt="Question brain"><span class="icon-name">Question brain</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Radar.svg" alt="Radar"><span class="icon-name">Radar</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Rain.svg" alt="Rain"><span class="icon-name">Rain</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Rank star badge.svg" alt="Rank star"><span class="icon-name">Rank star</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Refresh.svg" alt="Refresh"><span class="icon-name">Refresh</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Refresh3.svg" alt="Refresh3"><span class="icon-name">Refresh3</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Resource.svg" alt="Resource"><span class="icon-name">Resource</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Sad smiley.svg" alt="Sad smiley"><span class="icon-name">Sad smiley</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Save.svg" alt="Save"><span class="icon-name">Save</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Scale balance.svg" alt="Scale balance"><span class="icon-name">Scale balance</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Scale target.svg" alt="Scale target"><span class="icon-name">Scale target</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Scissors.svg" alt="Scissors"><span class="icon-name">Scissors</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Search.svg" alt="Search"><span class="icon-name">Search</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Settings gear.svg" alt="Settings gear"><span class="icon-name">Settings gear</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Share.svg" alt="Share"><span class="icon-name">Share</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Shield check.svg" alt="Shield check"><span class="icon-name">Shield check</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Shield star.svg" alt="Shield star"><span class="icon-name">Shield star</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Shopping bag.svg" alt="Shopping bag"><span class="icon-name">Shopping bag</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Shopping Cart.svg" alt="Shopping cart"><span class="icon-name">Shopping cart</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Sign.svg" alt="Sign"><span class="icon-name">Sign</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Signal.svg" alt="Signal"><span class="icon-name">Signal</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Signal radar.svg" alt="Signal radar"><span class="icon-name">Signal radar</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Smiley.svg" alt="Smiley"><span class="icon-name">Smiley</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Snowflake.svg" alt="Snowflake"><span class="icon-name">Snowflake</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Spaceship.svg" alt="Spaceship"><span class="icon-name">Spaceship</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Spaceship dollars.svg" alt="Spaceship $"><span class="icon-name">Spaceship $</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Speaker.svg" alt="Speaker"><span class="icon-name">Speaker</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Speech bubble.svg" alt="Speech bubble"><span class="icon-name">Speech bubble</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Split.svg" alt="Split"><span class="icon-name">Split</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Stats.svg" alt="Stats"><span class="icon-name">Stats</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Stats doc.svg" alt="Stats doc"><span class="icon-name">Stats doc</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Stereo.svg" alt="Stereo"><span class="icon-name">Stereo</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Stethoscope.svg" alt="Stethoscope"><span class="icon-name">Stethoscope</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Suitcase.svg" alt="Suitcase"><span class="icon-name">Suitcase</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Sun.svg" alt="Sun"><span class="icon-name">Sun</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Sync.svg" alt="Sync"><span class="icon-name">Sync</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Sync serch.svg" alt="Sync search"><span class="icon-name">Sync search</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Tablet.svg" alt="Tablet"><span class="icon-name">Tablet</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Target.svg" alt="Target"><span class="icon-name">Target</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Target dollar.svg" alt="Target dollar"><span class="icon-name">Target $</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Target eye.svg" alt="Target eye"><span class="icon-name">Target eye</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Target win.svg" alt="Target win"><span class="icon-name">Target win</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Target2.svg" alt="Target2"><span class="icon-name">Target2</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Text.svg" alt="Text"><span class="icon-name">Text</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Thermometer.svg" alt="Thermometer"><span class="icon-name">Thermometer</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Thumbs Down.svg" alt="Thumbs down"><span class="icon-name">Thumbs down</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Thumbs Up.svg" alt="Thumbs up"><span class="icon-name">Thumbs up</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Toggle.svg" alt="Toggle"><span class="icon-name">Toggle</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Toggle box.svg" alt="Toggle box"><span class="icon-name">Toggle box</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Tool.svg" alt="Tool"><span class="icon-name">Tool</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Tools.svg" alt="Tools"><span class="icon-name">Tools</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Transfer money users.svg" alt="Transfer money"><span class="icon-name">Transfer money</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Translate.svg" alt="Translate"><span class="icon-name">Translate</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Trash.svg" alt="Trash"><span class="icon-name">Trash</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Trophy.svg" alt="Trophy"><span class="icon-name">Trophy</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Truck.svg" alt="Truck"><span class="icon-name">Truck</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=TV.svg" alt="TV"><span class="icon-name">TV</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Twitter.svg" alt="Twitter"><span class="icon-name">Twitter</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Umbrella.svg" alt="Umbrella"><span class="icon-name">Umbrella</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Unlock.svg" alt="Unlock"><span class="icon-name">Unlock</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=User.svg" alt="User"><span class="icon-name">User</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=User hand.svg" alt="User hand"><span class="icon-name">User hand</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Users.svg" alt="Users"><span class="icon-name">Users</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Users circle.svg" alt="Users circle"><span class="icon-name">Users circle</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Video.svg" alt="Video"><span class="icon-name">Video</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Wallet.svg" alt="Wallet"><span class="icon-name">Wallet</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Warning.svg" alt="Warning"><span class="icon-name">Warning</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Watch.svg" alt="Watch"><span class="icon-name">Watch</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Weather.svg" alt="Weather"><span class="icon-name">Weather</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Web chart.svg" alt="Web chart"><span class="icon-name">Web chart</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Web meter.svg" alt="Web meter"><span class="icon-name">Web meter</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=WiFi.svg" alt="WiFi"><span class="icon-name">WiFi</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Win.svg" alt="Win"><span class="icon-name">Win</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Wind.svg" alt="Wind"><span class="icon-name">Wind</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Window at.svg" alt="Window at"><span class="icon-name">Window at</span></div>
+      <div class="icon-cell"><img src="Icons/Property 1=Youtube.svg" alt="Youtube"><span class="icon-name">Youtube</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ VISUALS -->
+  <section class="ds-section" id="visuals">
+    <div class="ds-section-title">Visuals — Decorative SVG Assets</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:20px;">Path: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Visuals/Group XXXXXXXXXX.svg</code></p>
+    <div class="visuals-grid">
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165690.svg" alt="Visual 690">
+        <span class="visual-name">Group 1261165690</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165691.svg" alt="Visual 691">
+        <span class="visual-name">Group 1261165691</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165692.svg" alt="Visual 692">
+        <span class="visual-name">Group 1261165692</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165693.svg" alt="Visual 693">
+        <span class="visual-name">Group 1261165693</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165694.svg" alt="Visual 694">
+        <span class="visual-name">Group 1261165694</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165695.svg" alt="Visual 695">
+        <span class="visual-name">Group 1261165695</span>
+      </div>
+      <div class="visual-cell">
+        <img src="Visuals/Group 1261165696.svg" alt="Visual 696">
+        <span class="visual-name">Group 1261165696</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ CHARTS & DATA VIZ -->
+  <section class="ds-section" id="charts">
+    <div class="ds-section-title">Charts &amp; Data Viz</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
+      Component classes from <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">design-system.css</code>.
+      All colors use CSS vars — dark/light themes work automatically.
+    </p>
+
+    <!-- Bar Chart -->
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;">Bar Chart <code style="font-family:monospace; font-weight:400; font-size:11px;">.chart-container · .bar-group · .bar · .bar-[color]</code></div>
+    <div class="chart-container" style="height: 320px;">
+      <div class="chart-title">Quarterly Performance</div>
+      <div class="chart-body">
+        <div class="y-axis">
+          <span>100</span>
+          <span>75</span>
+          <span>50</span>
+          <span>25</span>
+          <span>0</span>
+        </div>
+        <div class="chart-plot">
+          <div class="grid-lines">
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+          </div>
+          <div class="bars-row">
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">62</div>
+                  <div class="bar bar-purple" style="height:62%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">45</div>
+                  <div class="bar bar-green" style="height:45%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q1</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">74</div>
+                  <div class="bar bar-purple" style="height:74%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">58</div>
+                  <div class="bar bar-green" style="height:58%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q2</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">88</div>
+                  <div class="bar bar-purple" style="height:88%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">71</div>
+                  <div class="bar bar-green" style="height:71%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q3</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">95</div>
+                  <div class="bar bar-purple" style="height:95%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">83</div>
+                  <div class="bar bar-green" style="height:83%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q4</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">79</div>
+                  <div class="bar bar-purple" style="height:79%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">66</div>
+                  <div class="bar bar-green" style="height:66%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q5</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar-group-bars">
+                <div class="bar-wrap">
+                  <div class="bar-top-label">91</div>
+                  <div class="bar bar-purple" style="height:91%"></div>
+                </div>
+                <div class="bar-wrap">
+                  <div class="bar-top-label">77</div>
+                  <div class="bar bar-green" style="height:77%"></div>
+                </div>
+              </div>
+              <div class="bar-x-label">Q6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--color-purple)"></div> Product A</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--color-green)"></div> Product B</div>
+      </div>
+    </div>
+
+    <!-- Bar color palette -->
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Bar Colors</div>
+    <div style="display:flex; gap:12px; align-items:flex-end; height:80px; background:var(--color-surface); border-radius:12px; padding:16px 20px 10px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+        <div class="bar bar-purple" style="height:60px;animation:none"></div>
+        <span style="font-size:11px;color:var(--color-text-muted)">purple</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+        <div class="bar bar-purple-light" style="height:60px;animation:none"></div>
+        <span style="font-size:11px;color:var(--color-text-muted)">purple-light</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+        <div class="bar bar-green" style="height:60px;animation:none"></div>
+        <span style="font-size:11px;color:var(--color-text-muted)">green</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+        <div class="bar bar-yellow" style="height:60px;animation:none"></div>
+        <span style="font-size:11px;color:var(--color-text-muted)">yellow</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+        <div class="bar bar-red" style="height:60px;animation:none"></div>
+        <span style="font-size:11px;color:var(--color-text-muted)">red</span>
+      </div>
+    </div>
+
+    <!-- Stat blocks -->
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Stat / Metric Blocks <code style="font-family:monospace; font-weight:400; font-size:11px;">.stat-block · .stat-value · .stat-label</code></div>
+    <div style="background:var(--color-surface); border-radius:12px; padding:32px; display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+      <div class="stat-block">
+        <div class="stat-value text-purple">180K</div>
+        <div class="stat-label">Active users this month</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value text-green">94%</div>
+        <div class="stat-label">Customer satisfaction score</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">3.2×</div>
+        <div class="stat-label">Revenue growth year over year</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value text-yellow">48h</div>
+        <div class="stat-label">Average time to resolution</div>
+      </div>
+    </div>
+
+    <!-- Hero metric -->
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Hero Metric <code style="font-family:monospace; font-weight:400; font-size:11px;">.stat-value-hero</code></div>
+    <div style="background:var(--color-surface); border-radius:12px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+      <div class="stat-value-hero text-purple" style="font-size:clamp(48px,8vw,120px)">$2.4B</div>
+      <div class="stat-label" style="font-size:18px; text-align:center;">Total platform value managed in 2024</div>
+    </div>
+  </section>
+
+  <!-- ============================================================ TABLE -->
+  <section class="ds-section" id="tables">
+    <div class="ds-section-title">Table</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
+      Zebra-stripe rows with rounded corners and gap spacing. From <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Deck_Dark_Page_089</code>.
+      Classes: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.table-container · .table-row · .header-row · .data-rows-wrapper · .data-row · .cell</code>.
+      Data rows have <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">border-radius: var(--radius-sm)</code> built in — never override to 0.
+    </p>
+
+    <div class="table-container">
+      <!-- Header row — set grid-template-columns per table -->
+      <div class="table-row header-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
+        <div class="cell"></div>
+        <div class="cell">Q1</div>
+        <div class="cell">Q2</div>
+        <div class="cell">Q3</div>
+        <div class="cell">Growth</div>
+        <div class="cell">Target</div>
+      </div>
+      <div class="data-rows-wrapper">
+        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
+          <div class="cell">Enterprise</div>
+          <div class="cell">$1.2M</div>
+          <div class="cell">$1.5M</div>
+          <div class="cell">$1.9M</div>
+          <div class="cell text-green">+58%</div>
+          <div class="cell">$2.0M</div>
+        </div>
+        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
+          <div class="cell">Mid-Market</div>
+          <div class="cell">$840K</div>
+          <div class="cell">$910K</div>
+          <div class="cell">$1.1M</div>
+          <div class="cell text-green">+31%</div>
+          <div class="cell">$1.2M</div>
+        </div>
+        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
+          <div class="cell">SMB</div>
+          <div class="cell">$320K</div>
+          <div class="cell">$295K</div>
+          <div class="cell">$340K</div>
+          <div class="cell text-yellow">+6%</div>
+          <div class="cell">$400K</div>
+        </div>
+        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
+          <div class="cell">Self-Serve</div>
+          <div class="cell">$180K</div>
+          <div class="cell">$210K</div>
+          <div class="cell">$175K</div>
+          <div class="cell text-red">−3%</div>
+          <div class="cell">$250K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:28px 0 12px;">Structure</div>
+    <div style="background:var(--color-surface); border-radius:12px; padding:20px 24px; font-family:monospace; font-size:13px; color:var(--color-text-secondary); line-height:2;">
+      <span style="color:var(--color-text-muted)">/* Wide label col + equal data cols — adjust fractions per content */</span><br>
+      .table-row { grid-template-columns: <span style="color:var(--color-purple)">2.5fr</span> repeat(<span style="color:var(--color-green)">N</span>, <span style="color:var(--color-purple-light)">1.2fr</span>); }<br>
+      <span style="color:var(--color-text-muted)">/* Odd data rows get surface bg; even rows are transparent */</span><br>
+      .data-rows-wrapper .data-row:nth-child(odd) { background: var(--color-surface); }
+    </div>
+  </section>
+
+  <!-- ============================================================ NUMBERED STEPS -->
+  <section class="ds-section" id="numbered-steps">
+    <div class="ds-section-title">Numbered Steps</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
+      Large number + colored accent dot + body text. From <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Deck_Dark_Page_043</code>.
+      Classes: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.step-card · .step-number · .step-text · .dot-[color]</code>
+    </p>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+      <div class="step-card">
+        <div class="step-number">1<span class="dot-purple">.</span></div>
+        <p class="step-text">Add a short message or key point here.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2<span class="dot-yellow">.</span></div>
+        <p class="step-text">This space is for a quick description or callout.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3<span class="dot-green">.</span></div>
+        <p class="step-text">Insert a concise statement to support the title.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4<span class="dot-red">.</span></div>
+        <p class="step-text">Your summary or key insight goes right in this area.</p>
+      </div>
+    </div>
+
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:28px 0 12px;">Dot color variants</div>
+    <div style="display:flex; gap:24px; align-items:baseline;">
+      <div style="display:flex; align-items:baseline; gap:4px;">
+        <span style="font-size:32px; font-weight:600; line-height:1;">1<span class="dot-purple">.</span></span>
+        <span style="font-size:13px; color:var(--color-text-muted);">dot-purple</span>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:4px;">
+        <span style="font-size:32px; font-weight:600; line-height:1;">2<span class="dot-yellow">.</span></span>
+        <span style="font-size:13px; color:var(--color-text-muted);">dot-yellow</span>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:4px;">
+        <span style="font-size:32px; font-weight:600; line-height:1;">3<span class="dot-green">.</span></span>
+        <span style="font-size:13px; color:var(--color-text-muted);">dot-green</span>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:4px;">
+        <span style="font-size:32px; font-weight:600; line-height:1;">4<span class="dot-red">.</span></span>
+        <span style="font-size:13px; color:var(--color-text-muted);">dot-red</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ PIE & DONUT CHARTS -->
+  <section class="ds-section" id="pie-charts">
+    <div class="ds-section-title">Pie &amp; Donut Charts</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
+      Pure CSS via <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">conic-gradient()</code>.
+      Set segment stops inline; structure classes come from <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">design-system.css</code>.
+    </p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+      <!-- Donut chart -->
+      <div class="chart-container" style="padding:32px;">
+        <div class="chart-title" style="margin-bottom:24px;">Market Share — Donut</div>
+        <div style="display:flex; align-items:center; gap:40px; justify-content:center;">
+          <div class="donut-wrap">
+            <div class="donut-chart" style="
+              width: 180px; height: 180px;
+              background: conic-gradient(
+                var(--color-purple)       0deg   130deg,
+                var(--color-green)      130deg   215deg,
+                var(--color-yellow)     215deg   270deg,
+                var(--color-purple-light) 270deg 360deg
+              );">
+            </div>
+            <div class="donut-center">
+              <div class="donut-center-value">100%</div>
+              <div class="donut-center-label">Total</div>
+            </div>
+          </div>
+          <div class="pie-legend">
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-purple)"></div>
+              <span class="pie-legend-label">Enterprise</span>
+              <span class="pie-legend-value">36%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-green)"></div>
+              <span class="pie-legend-label">Mid-Market</span>
+              <span class="pie-legend-value">24%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-yellow)"></div>
+              <span class="pie-legend-label">SMB</span>
+              <span class="pie-legend-value">15%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-purple-light)"></div>
+              <span class="pie-legend-label">Other</span>
+              <span class="pie-legend-value">25%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pie chart -->
+      <div class="chart-container" style="padding:32px;">
+        <div class="chart-title" style="margin-bottom:24px;">Revenue Split — Pie</div>
+        <div style="display:flex; align-items:center; gap:40px; justify-content:center;">
+          <div class="donut-wrap">
+            <div class="pie-chart" style="
+              width: 180px; height: 180px;
+              background: conic-gradient(
+                var(--color-purple)  0deg   162deg,
+                var(--color-green)  162deg  270deg,
+                var(--color-red)    270deg  324deg,
+                var(--color-yellow) 324deg  360deg
+              );">
+            </div>
+          </div>
+          <div class="pie-legend">
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-purple)"></div>
+              <span class="pie-legend-label">SaaS</span>
+              <span class="pie-legend-value">45%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-green)"></div>
+              <span class="pie-legend-label">Services</span>
+              <span class="pie-legend-value">30%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-red)"></div>
+              <span class="pie-legend-label">Marketplace</span>
+              <span class="pie-legend-value">15%</span>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-dot" style="background:var(--color-yellow)"></div>
+              <span class="pie-legend-label">Partners</span>
+              <span class="pie-legend-value">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Segment degree reference -->
+    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 12px;">How to set segments</div>
+    <div style="background:var(--color-surface); border-radius:12px; padding:20px 24px; font-family:monospace; font-size:13px; color:var(--color-text-secondary); line-height:1.8;">
+      <span style="color:var(--color-text-muted)">/* percent → degrees: value × 3.6 */</span><br>
+      background: conic-gradient(<br>
+      &nbsp;&nbsp;<span style="color:var(--color-purple)">var(--color-purple)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0deg &nbsp;&nbsp;<span style="color:var(--color-text)">130deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 36% */</span><br>
+      &nbsp;&nbsp;<span style="color:var(--color-green)">var(--color-green)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--color-text)">130deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">216deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 24% */</span><br>
+      &nbsp;&nbsp;<span style="color:var(--color-yellow)">var(--color-yellow)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--color-text)">216deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">270deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 15% */</span><br>
+      &nbsp;&nbsp;<span style="color:var(--color-purple-light)">var(--color-purple-light)</span>&nbsp;<span style="color:var(--color-text)">270deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">360deg</span>&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 25% */</span><br>
+      );
+    </div>
+  </section>
+
+  <!-- ============================================================ DESIGN RULES -->
+  <section class="ds-section" id="rules">
+    <div class="ds-section-title">Design Rules &amp; Anti-Patterns</div>
+    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
+      Mandatory rules enforced across all generated presentations. Every generated HTML file must pass these checks.
+    </p>
+
+    <!-- Rule 1: No uppercase -->
+    <div style="margin-bottom: 40px;">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 1 — No <code style="font-family:monospace; font-size:11px; background:var(--color-surface); padding:2px 6px; border-radius:4px;">text-transform: uppercase</code> anywhere</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
+          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:10px;">✓ Correct — letter-spacing for label emphasis</p>
+          <p style="font-size:1.4vmin; font-weight:600; letter-spacing:0.06em; color:var(--color-purple); margin:0;">Feature 01</p>
+          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">letter-spacing: 0.06em · Title Case</p>
+        </div>
+        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
+          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:10px;">✗ Banned — never use uppercase transform</p>
+          <p style="font-size:1.4vmin; font-weight:600; letter-spacing:0.12em; color:var(--color-purple); margin:0; text-transform:uppercase; text-decoration:line-through; opacity:0.5;">Feature 01</p>
+          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">text-transform: uppercase ← banned</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 2: No divider lines -->
+    <div style="margin-bottom: 40px;">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 2 — No divider &lt;div&gt; elements or border-right/border-left separators</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
+          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct — use gap for spacing</p>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="padding:12px; background:var(--color-surface-alt); border-radius:8px;">
+              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-purple);">70%</span>
+              <span style="font-size:1.8vmin; color:var(--color-text-secondary); margin-left:12px;">Automated</span>
+            </div>
+            <div style="padding:12px; background:var(--color-surface-alt); border-radius:8px;">
+              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-yellow);">20%</span>
+              <span style="font-size:1.8vmin; color:var(--color-text-secondary); margin-left:12px;">Guided</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
+          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — height:1px divider divs</p>
+          <div style="display:flex; flex-direction:column; opacity:0.5;">
+            <div style="padding:12px;">
+              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-purple); text-decoration:line-through;">70%</span>
+            </div>
+            <div style="height:1px; background:rgba(255,255,255,0.15); text-decoration:line-through;"></div>
+            <div style="padding:12px;">
+              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-yellow); text-decoration:line-through;">20%</span>
+            </div>
+          </div>
+          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">height:1px div ← banned</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 3: Alignment consistency -->
+    <div style="margin-bottom: 40px;">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 3 — Text alignment must be consistent per slide</p>
+      <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:16px;">
+        If any content block on a slide is left-aligned (table, bullet list, chart), all headlines and subheadings on that slide must also be left-aligned.
+        Only pure display slides (cover, stats-only, quote) use centered headings.
+      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--color-surface); border-radius:12px; padding:24px;">
+          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:16px;">✓ Consistent — headline matches content alignment</p>
+          <h3 style="font-size:3vmin; font-weight:500; line-height:1.1; margin:0 0 8px; text-align:left;">Security Distribution</h3>
+          <p style="font-size:1.8vmin; color:var(--color-text-muted); margin:0 0 16px; text-align:left;">How vulnerabilities are resolved</p>
+          <div style="font-size:1.8vmin; display:flex; flex-direction:column; gap:8px;">
+            <div style="background:var(--color-surface-alt); border-radius:6px; padding:8px 12px; display:flex; gap:12px;">
+              <span style="color:var(--color-purple); font-weight:600; min-width:40px;">70%</span><span style="color:var(--color-text-secondary);">Automated</span>
+            </div>
+            <div style="padding:8px 12px; display:flex; gap:12px;">
+              <span style="color:var(--color-yellow); font-weight:600; min-width:40px;">20%</span><span style="color:var(--color-text-secondary);">Guided</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--color-surface); border-radius:12px; padding:24px; opacity:0.5;">
+          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:16px;">✗ Mismatched — centered headline over left content</p>
+          <h3 style="font-size:3vmin; font-weight:500; line-height:1.1; margin:0 0 8px; text-align:center; text-decoration:line-through;">Security Distribution</h3>
+          <p style="font-size:1.8vmin; color:var(--color-text-muted); margin:0 0 16px; text-align:center; text-decoration:line-through;">How vulnerabilities are resolved</p>
+          <div style="font-size:1.8vmin; display:flex; flex-direction:column; gap:8px;">
+            <div style="background:var(--color-surface-alt); border-radius:6px; padding:8px 12px; display:flex; gap:12px;">
+              <span style="color:var(--color-purple); font-weight:600; min-width:40px;">70%</span><span style="color:var(--color-text-secondary);">Automated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 4: Table rounded corners -->
+    <div style="margin-bottom: 40px;">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 4 — Table data rows always have rounded corners</p>
+      <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:16px;">
+        The <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.data-row</code> class has <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">border-radius: var(--radius-sm)</code> built in. Never override to 0.
+      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div>
+          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct — rounded rows (.data-row)</p>
+          <div class="table-container">
+            <div class="table-row header-row" style="grid-template-columns:1fr 2fr 2fr;">
+              <div class="cell">Rate</div>
+              <div class="cell">Category</div>
+              <div class="cell">Status</div>
+            </div>
+            <div class="data-rows-wrapper">
+              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
+                <div class="cell" style="color:var(--color-purple); font-weight:600;">70%</div>
+                <div class="cell">Automated</div>
+                <div class="cell" style="color:var(--color-text-muted);">No action needed</div>
+              </div>
+              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
+                <div class="cell" style="color:var(--color-yellow); font-weight:600;">20%</div>
+                <div class="cell">Guided</div>
+                <div class="cell" style="color:var(--color-text-muted);">One-click patch</div>
+              </div>
+              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
+                <div class="cell" style="color:var(--color-red); font-weight:600;">10%</div>
+                <div class="cell">Manual</div>
+                <div class="cell" style="color:var(--color-text-muted);">Senior review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="opacity:0.5;">
+          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — sharp corners + height:1px dividers</p>
+          <div style="display:flex; flex-direction:column;">
+            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; color:var(--color-text-muted); text-decoration:line-through;">
+              <span>Rate</span><span>Category</span><span>Status</span>
+            </div>
+            <div style="height:1px; background:rgba(255,255,255,0.15);"></div>
+            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; background:var(--color-surface); border-radius:0; text-decoration:line-through;">
+              <span style="color:var(--color-purple);">70%</span><span>Automated</span><span style="color:var(--color-text-muted);">No action</span>
+            </div>
+            <div style="height:1px; background:rgba(255,255,255,0.15);"></div>
+            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; text-decoration:line-through;">
+              <span style="color:var(--color-yellow);">20%</span><span>Guided</span><span style="color:var(--color-text-muted);">Patch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 5: Highlight -->
+    <div style="margin-bottom: 40px;">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 5 — <code style="font-family:monospace; font-size:11px; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.highlight</code> = color only, never color + weight together</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--color-surface); border-radius:12px; padding:24px;">
+          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct</p>
+          <p style="font-size:4vmin; font-weight:300; line-height:1.1; letter-spacing:-0.02em; margin:0;">
+            Your <span class="highlight">Stack.</span>
+          </p>
+          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">&lt;span class="highlight"&gt; — color var(--color-yellow), inherits parent weight</p>
+        </div>
+        <div style="background:var(--color-surface); border-radius:12px; padding:24px; opacity:0.5;">
+          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — both color AND semibold</p>
+          <p style="font-size:4vmin; font-weight:300; line-height:1.1; letter-spacing:-0.02em; margin:0; text-decoration:line-through;">
+            Your <span style="color:var(--color-yellow); font-weight:600;">Stack.</span>
+          </p>
+          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">color + font-weight:600 ← banned together</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div><!-- /showcase -->
+
+<script>
+  /* ---- Theme toggle ---- */
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    btn.innerHTML = isDark
+      ? '<span class="icon-moon">☽</span> Switch to Dark'
+      : '<span class="icon-sun">☀</span> Switch to Light';
+    updateSwatchValues();
+  }
+
+  /* ---- Show computed CSS var values on color swatches ---- */
+  function updateSwatchValues() {
+    const style = getComputedStyle(document.documentElement);
+    const vars = {
+      'val-bg':            '--color-bg',
+      'val-surface':       '--color-surface',
+      'val-surface-alt':   '--color-surface-alt',
+      'val-text':          '--color-text',
+      'val-text-secondary':'--color-text-secondary',
+      'val-text-muted':    '--color-text-muted',
+      'val-border':        '--color-border',
+      'val-border-strong': '--color-border-strong',
+    };
+    for (const [id, varName] of Object.entries(vars)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = style.getPropertyValue(varName).trim();
+    }
+  }
+
+  updateSwatchValues();
+</script>
+</body>
+</html>

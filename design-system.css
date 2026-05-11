@@ -126,6 +126,11 @@ body {
   align-items: center;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  line-height: var(--leading-tight);
+}
+
 /* ============================================
    SLIDE CONTAINER (16:9 locked)
    ============================================ */
@@ -305,6 +310,45 @@ body {
 
 [data-image-placeholder]:has(.placeholder-icon)::after {
   display: none;
+}
+
+/* ============================================
+   IMAGE PLACEHOLDER (hero style)
+   Use .img-placeholder instead of
+   [data-image-placeholder] for screenshot/visual
+   slots. Renders a flex-centered surface box
+   with inline SVG icon + label — matches the
+   cover slide hero placeholder visual.
+
+   Required HTML pattern:
+     <div class="img-placeholder">
+       <svg ...>...</svg>
+       <span class="placeholder-label">[Description]</span>
+     </div>
+
+   Size is set by the layout container (e.g.
+   .image-col > div sets width/height). This
+   class only handles visual appearance.
+   ============================================ */
+
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.img-placeholder .placeholder-label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+}
+
+[data-theme="light"] .img-placeholder {
+  color: rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================
@@ -570,6 +614,7 @@ body {
 .data-row {
   padding: var(--space-4) 0;
   animation: chartFadeUp 0.5s ease-out both;
+  border-radius: var(--radius-sm);
 }
 
 .data-rows-wrapper .data-row:nth-child(odd) {
@@ -752,6 +797,7 @@ body {
 /* Placeholder icons are fill='white' — invert them so they read dark on light surfaces */
 [data-theme="light"] [data-image-placeholder]::after { filter: invert(1); }
 
-/* Highlight: yellow on dark, purple on light (yellow has poor contrast on white) */
-.highlight { color: var(--color-yellow); font-weight: var(--weight-semibold); }
+/* Highlight: color only — never combine with font-weight. Use one or the other, never both.
+   To emphasise with weight only: use .font-semibold or inline font-weight. Never add both. */
+.highlight { color: var(--color-yellow); }
 [data-theme="light"] .highlight { color: var(--color-purple); }

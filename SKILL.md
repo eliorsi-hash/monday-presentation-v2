@@ -58,6 +58,17 @@ AskUserQuestion({
         { label: "Dark", description: "Black background, white text — monday.com signature style" },
         { label: "Light", description: "White background, dark text — clean, print-friendly" }
       ]
+    },
+    {
+      question: "How many slides do you need?",
+      header: "Slide count",
+      multiSelect: false,
+      options: [
+        { label: "Short (5–8)", description: "Quick update, status brief, or announcement" },
+        { label: "Standard (10–15)", description: "Typical length for most presentations and pitches" },
+        { label: "Extended (20+)", description: "Training session, workshop, or detailed deep-dive" },
+        { label: "Match the recipe", description: "Use the default count from the recipe I chose" }
+      ]
     }
   ]
 })
@@ -102,6 +113,138 @@ If user has content, ask them to paste or upload it.
 
 **If `content.md` exists in cwd**, skip questions and read it directly.
 
+### Step 0.3: Data Visualization Needs
+
+**Use `AskUserQuestion`** to find out if the deck needs data-driven visuals:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "Do you want any data-driven visuals in your deck?",
+      header: "Data visuals",
+      multiSelect: true,
+      options: [
+        { label: "Bar or line charts", description: "Compare values across categories or over time" },
+        { label: "Pie or donut charts", description: "Show proportions, breakdowns, or share" },
+        { label: "Stats and KPIs", description: "Large hero numbers, scorecard tiles, or metrics grid" },
+        { label: "No data visuals", description: "Text, bullets, and layout only — skip this step" }
+      ]
+    }
+  ]
+})
+```
+
+**If the user wants any data visuals**, follow up immediately with a data source question:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "How will you provide the data for your charts?",
+      header: "Data source",
+      multiSelect: false,
+      options: [
+        { label: "I'll paste it now", description: "Type or paste numbers directly into the chat" },
+        { label: "CSV file", description: "Provide a path to a local CSV file" },
+        { label: "Google Sheets", description: "Share a public Google Sheets link" },
+        { label: "Monday.com board", description: "Pull live data from a Monday board (if MCP is configured)" }
+      ]
+    }
+  ]
+})
+```
+
+**Handle each data source:**
+- **Paste now** — user provides numbers inline; use them directly in chart components
+- **CSV** — read the file with the `Read` tool; parse columns for chart data
+- **Google Sheets** — fetch the public URL; extract the table; use for chart data
+- **Monday board** — treat identically to Step 0.5 Monday board enrichment (see below)
+
+**Map data to design-system components** (see Phase 3 for full component reference):
+- Comparisons across categories → `.chart-container` bar chart
+- Proportions or breakdowns → `.pie-chart` / `.donut-chart`
+- KPIs or single metrics → `.stat-block` or `.stat-value-hero`
+
+---
+
+### Step 0.4: Media & Assets
+
+**Before generating, ask the user about available visual assets:**
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "Do you have any visual assets to include in the deck?",
+      header: "Assets",
+      multiSelect: true,
+      options: [
+        { label: "Product screenshots", description: "App UI, dashboard, or feature screens" },
+        { label: "Company / partner logos", description: "Brand lockups, partner marks, or customer logos" },
+        { label: "Photos or illustrations", description: "Team photos, lifestyle imagery, or branded illustrations" },
+        { label: "No assets — use placeholders", description: "Generate styled placeholder blocks for all visuals" }
+      ]
+    }
+  ]
+})
+```
+
+**If the user has assets:**
+- Ask them to list what they have (filenames, URLs, or descriptions)
+- In Phase 1, actively choose layouts that include image slots (e.g., `tmpl-content-img`, `Deck_Dark_Page_038`) for slides where visuals were provided
+- In the generated HTML, reference images with `<img src="path/to/asset.png" ...>` inside `.image-placeholder` containers, and note them clearly in the code so the user can update paths
+
+**If no assets:**
+- Use `.image-placeholder` styled blocks (from design-system.css) with descriptive labels like `[Product Screenshot]`, `[Customer Logo]`, `[Team Photo]`
+- Still prefer layouts that mix visual blocks with text — avoid all-text slides wherever possible
+
+---
+
+### Step 0.5: External Data Enrichment
+
+**Check if the Monday.com MCP is available** by attempting to list its tools. If Monday MCP is present:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "Want to pull live data from a Monday.com board into your deck?",
+      header: "Monday data",
+      multiSelect: false,
+      options: [
+        { label: "Yes — use a board", description: "Paste a Monday board link to fetch items, statuses, or metrics" },
+        { label: "No — skip this", description: "Proceed with the content already provided" }
+      ]
+    }
+  ]
+})
+```
+
+**If the user says yes:** Ask them to paste the Monday board URL. Use the Monday MCP to fetch board data (items, column values, statuses, owners). Map that data to the appropriate slide types — status breakdowns → stat blocks or bar charts; item lists → bullet slides or table slides.
+
+**If Monday MCP is not available:** Skip this step entirely — do not mention it to the user.
+
+**Also ask about any other enrichment data** (regardless of Monday MCP availability):
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "Is there any other context or data that should shape this deck?",
+      header: "More context",
+      multiSelect: false,
+      options: [
+        { label: "Yes — I have more", description: "Paste additional notes, data, or background" },
+        { label: "No — I'm ready", description: "Proceed to layout planning" }
+      ]
+    }
+  ]
+})
+```
+
+If the user has more context, ask them to paste it before moving to Phase 1.
+
 ---
 
 ## Phase 1: Layout Mapping
@@ -125,6 +268,70 @@ If user has content, ask them to paste or upload it.
 > **Note:** Bar charts, pie/donut charts, stat blocks, numbered step cards, and tables are now **reusable CSS classes in design-system.css** — use those directly instead of hand-rolling CSS from VISUAL_PATTERNS. VISUAL_PATTERNS remains the reference for timeline, orbital, and decorative patterns not yet in the component library.
 
 **CRITICAL RULE:** Use ONLY templates listed in SLIDE_INVENTORY.md. Never mix elements from different slides. Never create new layouts—work only with existing templates.
+
+> **Opener exception:** The cover slide (Slide 1) may use any of six opener templates — see Step 1.0b for the selection decision tree. Closing slide always uses Page_001.
+
+### Step 1.0b: Opener Template Selection (MANDATORY for Slide 1)
+
+The cover/opening slide is **not always Page_001**. Six opener templates are available — read each one and pick the best match for the content and presentation context.
+
+**Available opener templates (all in `Selected/`):**
+
+| Template | Layout | Best used when… |
+|----------|--------|-----------------|
+| `Deck_Dark_Page_001` | Centered h1 + subtitle + bottom logo | Abstract, formal, minimalist — no speaker, no images, brand-driven |
+| `Deck_Dark_Page_007` | Display h1 in bordered top card + purple subtitle strip | Bold editorial tone — strong single statement, casual/creative feel, internal pitch |
+| `Deck_Dark_Page_009` | Left: logo + h1 + subtitle; Right: large image placeholder | Product launch or feature reveal — works best when a product screenshot/hero visual is available |
+| `Deck_Dark_Page_010` | Grid: bordered display h1 left (full height) + 2 photo slots + purple info card (dept/date) | Workshop, conference, event — has context images, department name, or specific date |
+| `Deck_Dark_Page_011` | Bordered top card (h1) + single circular portrait + purple name/role card | Single-speaker presentation — speaker's name and title are part of the content |
+| `Deck_Dark_Page_012` | Bordered top card (h1) + two portrait+name pairs | Two-speaker or panel presentation — two presenters listed in the content |
+
+**Selection logic — read the user's content and apply the first matching rule:**
+
+1. **Two speakers or a panel named in the content** → `Page_012`
+2. **One speaker named (name + title)** → `Page_011`
+3. **Workshop, event, conference with department/date metadata** → `Page_010`
+4. **Product launch or feature reveal with a screenshot/hero image** → `Page_009`
+5. **Bold, casual, or editorial tone — informal internal pitch** → `Page_007`
+6. **Everything else: formal, abstract, brand-driven, or topic-only** → `Page_001`
+
+**How to use the selected template:**
+- Read the matching `Deck_Dark_Page_XXX.html` from `Selected/`
+- Extract its CSS and HTML structure exactly
+- Replace placeholder text with actual content (title, subtitle, speaker names, etc.)
+- Replace `<img src="monday_logo.svg">` with the inlined SVG from `Logos/monday_White.svg`
+- For image placeholder slots (`data-image-placeholder`): if user provided assets use them; otherwise keep the placeholder div/styling
+
+**Closing slide always uses `Deck_Dark_Page_001`** — read and extract it exactly the same way.
+
+---
+
+### Step 1.0c: Visual Balance Strategy
+
+**Before mapping content to templates, assess the visual mix of the deck.** Presentations that are entirely text-based feel empty and read like documents. Actively counter this:
+
+**Target ratio:** aim for at least 1 visual slide (image, chart, illustration, or icon-heavy layout) for every 2–3 text slides.
+
+**Visual enrichment options by slide type:**
+- **Stats or KPIs available** → dedicate a full slide to `.stat-block` or `.stat-value-hero` instead of burying numbers in bullet lists
+- **Feature or capability list** → prefer `Deck_Dark_Page_044` (2×2 icon grid) over a plain bullet list slide
+- **User has images or screenshots** → use `tmpl-content-img` (`Deck_Dark_Page_038`) to pair text with visual; reserve full-text templates for slides where no visual fits
+- **Step-by-step flow** → use `.step-card` numbered cards rather than a flat ordered list
+- **Comparative info** → use `tmpl-compare` side-by-side panels, not a two-column text list
+- **Data provided** → always surface it as a chart or stat block, never as inline text numbers
+
+**Image placeholder discipline:**
+- If a slide would otherwise be text-only and an image placeholder adds context, add one — label it clearly (e.g. `[Product Screenshot]`, `[Customer Logo]`)
+- When the user has provided assets (Step 0.4), reference them by filename in the placeholder
+- Never leave more than 2 consecutive text-only slides without introducing a visual break
+- **Screenshot/visual placeholders must use `.img-placeholder`** — the hero-style flex box. Never use `[data-image-placeholder="screenshot"]` for large visual slots. The correct HTML pattern:
+  ```html
+  <div class="img-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="width:8vmin;height:8vmin;opacity:0.3;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span class="placeholder-label">[Product Screenshot]</span>
+  </div>
+  ```
+  This renders as: `var(--color-surface)` grey background, `border-radius: var(--radius-lg)`, centered monitor SVG at 30% opacity, label text below. Size is set by the layout container — `.img-placeholder` only handles the visual appearance.
 
 ### Step 1.1: Map Content to Recipe Slides
 
@@ -346,9 +553,15 @@ Slide 7 (Track 1 - Training):
 - Use only CSS variables for sizing (no hardcoded px)
 - Font: Poppins from Google Fonts `wght@300;400;500;600`
 - Logo: Inline SVG from [BRAND_ASSETS.md](BRAND_ASSETS.md)
-- No `text-transform: uppercase` — use letter-spacing instead
+- **Highlight rule — never combine color + weight:** The `.highlight` class applies color only (yellow on dark, purple on light). Never add `font-weight` to `.highlight`. To emphasise with weight, use `.font-semibold` separately on a different span — never on the same span as `.highlight`. Pick one mechanism per highlighted word.
+- **ABSOLUTE BAN on `text-transform: uppercase`** — never apply uppercase to any element: not section labels, not feature tags, not captions, not any text anywhere. Use `letter-spacing: 0.05em–0.08em` for label emphasis if needed. HTML text must be written in Title Case or Sentence case; CSS must never transform it to uppercase
 - **Multi-slide architecture:** Use `.slide-container:not(.slide-active) { display: none !important }` to hide inactive slides. Each template class (`.tmpl-xxx.slide-active`) defines its own display type (flex or grid). NEVER use inline `style.display` from JavaScript.
 - **Slide centering:** Use `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)` on `.slide-container` for proper viewport centering across all screen sizes.
+- **No divider lines:** Never use `<div>` elements as visual separators (e.g. `style="height:1px;background:..."`). Never use `border-right` or `border-left` as column dividers. Use `gap` for spacing between items instead.
+- **Tabular data:** When displaying data with consistent columns across rows (percentage + label + description, metric + category + note, etc.) always use the `.table-container` design system component — never a custom row-and-divider pattern. Always set `grid-template-columns` inline on every `.table-row` (both header and data rows). The design system `.data-row` already includes `border-radius: var(--radius-sm)` — never override this to 0.
+- **Alignment consistency:** All text elements on a slide must share the same alignment. Never mix centered headings with left-aligned content. Rule: if any content block on a slide is left-aligned (table, bullet list, image+text), all headlines, subheadings, and labels on that slide must also be left-aligned. Only pure centered slides (stat blocks, single quote, cover) use `text-align: center`. Override `.slide-header { text-align: left; width: 100%; }` whenever needed.
+- **Content-heavy slides → left-align:** Slides with tables, multi-column layouts, feature grids, or mixed chart+text content use left alignment for headings and body. Reserve centered headings for minimal/display slides (cover, stats-only, quote).
+- **Image placeholders — use `.img-placeholder`:** For any slide that needs a visual/screenshot placeholder, use the `.img-placeholder` class with an inline SVG monitor icon and a `.placeholder-label` span — never `[data-image-placeholder="screenshot"]`. This class must be in the inline `<style>` block: `display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-3); background-color:var(--color-surface); border-radius:var(--radius-lg); color:rgba(255,255,255,0.4);`. The container (e.g. `.image-col > div`) sets the width/height.
 
 **Per-Slide Requirements:**
 1. `.slide-container` with `data-slide-index="N"`, a template class (e.g., `tmpl-twocol`), AND a unique class like `.slide-1`, `.slide-2`, etc.
@@ -535,6 +748,30 @@ open <filename>.html
 
 **Optional:** Offer to create a `content.md` template for future updates.
 
+### Step 5.1: Post-Delivery Refinement Loop
+
+After the file is open in the browser, ask:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "What would you like to do next?",
+      header: "Next step",
+      multiSelect: false,
+      options: [
+        { label: "Edit content", description: "Change text, headlines, bullets, or talking points on any slide" },
+        { label: "Add or swap images", description: "Drop in screenshots, logos, or illustrations" },
+        { label: "Adjust layout or design", description: "Change a slide template, color accent, or visual structure" },
+        { label: "All done!", description: "The deck is ready — nothing else needed" }
+      ]
+    }
+  ]
+})
+```
+
+**If the user picks any option other than "All done!"** — handle the request, save the updated file, re-open it in the browser, and return to this step to offer further refinements. Continue until the user selects "All done!".
+
 ---
 
 ## `content.md` Format (Optional)
@@ -655,6 +892,7 @@ Before delivery, ensure:
 
 - [ ] All slides fit within viewport (no scroll)
 - [ ] Typography uses only Poppins 300/400/500/600
+- [ ] **Heading line-height**: every `<h1>`–`<h4>` has explicit `line-height: var(--leading-tight)` (never rely on browser default — it causes large gaps in multi-line headings)
 - [ ] Colors use CSS variables from design system
 - [ ] No external images/scripts (all inline or relative paths)
 - [ ] Keyboard navigation works (arrows, space, slide counter)
@@ -671,6 +909,12 @@ Before delivery, ensure:
 - [ ] **Light mode**: no hardcoded hex colors (`#000`, `#232427`, `#1f1f1f`) or `rgba(255,255,255,...)` in generated CSS — all replaced with `var(--color-*)` vars
 - [ ] **Logo**: correct variant inlined — `monday_White.svg` for dark, `monday_Black.svg` for light
 - [ ] **Bar charts**: `grid-template-columns` set on `.table-row`; bars use `.bar-[color]` classes not inline background
-- [ ] **Tables**: `grid-template-columns` set inline on every `.table-row`; `.data-rows-wrapper` wraps all data rows (not `.table-container`)
+- [ ] **No divider lines**: no `<div>` height:1px separators; no `border-right`/`border-left` column dividers — use `gap` for spacing instead
+- [ ] **Tables**: structured tabular data uses `.table-container` / `.data-rows-wrapper` / `.table-row.data-row` / `.cell`. `grid-template-columns` set inline on every `.table-row`. Data rows have `border-radius: var(--radius-sm)` from design system — not overridden
+- [ ] **Alignment consistency**: no slide has centered headlines above left-aligned content. Content-heavy slides (table, chart+table, bullets) use left-aligned headings. Pure display slides (cover, stats-only, quote) use centered headings
+- [ ] **No uppercase text**: zero instances of `text-transform: uppercase` in generated CSS. Section labels and tags use letter-spacing only
+- [ ] **Highlight = color OR weight, never both**: no span has both `.highlight` and a font-weight modifier simultaneously
+- [ ] **Bar charts dominant**: chart-outer uses `width:100%; flex:1; min-height:0` so bars fill available slide height. Value labels use at least `var(--text-h2)` size. Bar width is 100% of its flex slot. Bars have `border-radius: var(--radius-md) var(--radius-md) 0 0`
 - [ ] **Pie/donut**: `conic-gradient` stops sum to 360deg; donut uses CSS `mask` not a white center circle overlay
+- [ ] **Image placeholders**: large visual slots (screenshots, hero images) use `.img-placeholder` with inline SVG + `.placeholder-label` span — not `[data-image-placeholder="screenshot"]`. Background is `var(--color-surface)`, icon opacity 0.3, border-radius from container
 
