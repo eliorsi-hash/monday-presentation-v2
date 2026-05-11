@@ -551,9 +551,14 @@ Slide 7 (Track 1 - Training):
 **Critical CSS Rules:**
 - Inline the **entire** [design-system.css](design-system.css) into the `<style>` block first
 - Use only CSS variables for sizing (no hardcoded px)
-- Font: Poppins from Google Fonts `wght@300;400;500;600`
+- Font: Poppins from Google Fonts — **`wght@400;600` only** (not 300/500). The design system imports only Regular (400) and SemiBold (600); `--weight-light` and `--weight-medium` tokens both resolve to these two values. Never load or reference other weights.
 - Logo: Inline SVG from [BRAND_ASSETS.md](BRAND_ASSETS.md)
-- **Highlight rule — never combine color + weight:** The `.highlight` class applies color only (yellow on dark, purple on light). Never add `font-weight` to `.highlight`. To emphasise with weight, use `.font-semibold` separately on a different span — never on the same span as `.highlight`. Pick one mechanism per highlighted word.
+- **Highlight rule — EITHER color OR weight, never both.** Two classes available:
+  - `.highlight` — color only. Yellow on dark, purple on light. `font-weight: inherit` so it never adds boldness.
+  - `.highlight--bold` — semibold weight only. `color: inherit` so it never changes color.
+  Use at most one highlight per headline. Never combine both classes on the same span.
+- **Letter-spacing ban:** All `--tracking-*` tokens resolve to 0. Never add `letter-spacing` to any slide element. The type lockdown CSS (`letter-spacing: normal !important` on `.slide-container *`) enforces this automatically. Use `letter-spacing: 0.05–0.08em` for label emphasis only if the lockdown block isn't present.
+- **Italic ban:** Italics are not part of the design system. Never use `font-style: italic`, `<em>`, or `<i>` in slide markup. The CSS lockdown (`em, i, .italic { font-style: normal !important }`) enforces this. Write emphasis through weight or color only.
 - **ABSOLUTE BAN on `text-transform: uppercase`** — never apply uppercase to any element: not section labels, not feature tags, not captions, not any text anywhere. Use `letter-spacing: 0.05em–0.08em` for label emphasis if needed. HTML text must be written in Title Case or Sentence case; CSS must never transform it to uppercase
 - **Multi-slide architecture:** Use `.slide-container:not(.slide-active) { display: none !important }` to hide inactive slides. Each template class (`.tmpl-xxx.slide-active`) defines its own display type (flex or grid). NEVER use inline `style.display` from JavaScript.
 - **Slide centering:** Use `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)` on `.slide-container` for proper viewport centering across all screen sizes.
@@ -913,8 +918,11 @@ Before delivery, ensure:
 - [ ] **Tables**: structured tabular data uses `.table-container` / `.data-rows-wrapper` / `.table-row.data-row` / `.cell`. `grid-template-columns` set inline on every `.table-row`. Data rows have `border-radius: var(--radius-sm)` from design system — not overridden
 - [ ] **Alignment consistency**: no slide has centered headlines above left-aligned content. Content-heavy slides (table, chart+table, bullets) use left-aligned headings. Pure display slides (cover, stats-only, quote) use centered headings
 - [ ] **No uppercase text**: zero instances of `text-transform: uppercase` in generated CSS. Section labels and tags use letter-spacing only
-- [ ] **Highlight = color OR weight, never both**: no span has both `.highlight` and a font-weight modifier simultaneously
+- [ ] **Highlight = color OR weight, never both**: `.highlight` spans use color only (`font-weight: inherit`). Weight-only emphasis uses `.highlight--bold` (`color: inherit`). Never combine both on the same span.
 - [ ] **Bar charts dominant**: chart-outer uses `width:100%; flex:1; min-height:0` so bars fill available slide height. Value labels use at least `var(--text-h2)` size. Bar width is 100% of its flex slot. Bars have `border-radius: var(--radius-md) var(--radius-md) 0 0`
 - [ ] **Pie/donut**: `conic-gradient` stops sum to 360deg; donut uses CSS `mask` not a white center circle overlay
 - [ ] **Image placeholders**: large visual slots (screenshots, hero images) use `.img-placeholder` with inline SVG + `.placeholder-label` span — not `[data-image-placeholder="screenshot"]`. Background is `var(--color-surface)`, icon opacity 0.3, border-radius from container
+- [ ] **Font weights**: only two visual weights used — Regular (400) and SemiBold (600). Google Fonts import is `wght@400;600`. No 300/500 weights anywhere.
+- [ ] **Letter-spacing**: zero custom `letter-spacing` in generated CSS. Type lockdown block present: `.slide-container, .slide-container * { letter-spacing: normal !important }`.
+- [ ] **No italics**: zero `font-style: italic`, `<em>`, or `<i>` in slide markup. Italic ban block present: `em, i, .italic { font-style: normal !important }`.
 

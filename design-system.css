@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+/* monday.com Design System — type rule: Poppins Regular (400) + SemiBold (600) only.
+   Importing only these two weights; any font-weight value falls back to the nearest. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
   /* ============================================
@@ -15,10 +17,11 @@
   --text-body-sm: 1.8vmin;
   --text-caption: 1.4vmin;
 
-  /* Font Weights */
-  --weight-light: 300;
+  /* Font Weights — Poppins ships only Regular (400) and SemiBold (600).
+     Light and Medium tokens collapse onto these to enforce the two-weight rule. */
+  --weight-light: 400;
   --weight-regular: 400;
-  --weight-medium: 500;
+  --weight-medium: 600;
   --weight-semibold: 600;
 
   /* Line Heights */
@@ -27,9 +30,10 @@
   --leading-normal: 1.5;
   --leading-relaxed: 1.7;
 
-  /* Letter Spacing */
-  --tracking-tight: -0.025em;
-  --tracking-normal: -0.01em;
+  /* Letter Spacing — system-wide value is 0 (Poppins default).
+     Tokens preserved for back-compat but all resolve to normal. */
+  --tracking-tight: 0;
+  --tracking-normal: 0;
   --tracking-none: 0;
 
   /* ============================================
@@ -797,7 +801,50 @@ h1, h2, h3, h4, h5, h6 {
 /* Placeholder icons are fill='white' — invert them so they read dark on light surfaces */
 [data-theme="light"] [data-image-placeholder]::after { filter: invert(1); }
 
-/* Highlight: color only — never combine with font-weight. Use one or the other, never both.
-   To emphasise with weight only: use .font-semibold or inline font-weight. Never add both. */
-.highlight { color: var(--color-yellow); }
+/* ============================================
+   HEADLINE HIGHLIGHT — RULE
+   ============================================
+   Use AT MOST ONE highlight per headline.
+   Apply EITHER color OR semibold weight — never both.
+
+   .highlight        → color only (yellow on dark, purple on light)
+   .highlight--bold  → semibold only (no color shift)
+
+   Both variants stay at headline weight otherwise (regular).
+   Combining color + weight reads as "two highlights" and breaks the rule. */
+.highlight       { color: var(--color-yellow); font-weight: inherit; }
 [data-theme="light"] .highlight { color: var(--color-purple); }
+.highlight--bold { color: inherit; font-weight: var(--weight-semibold); }
+
+/* ============================================
+   HEADLINE LETTER-SPACING LOCKDOWN
+   Poppins ships at the right tracking — never
+   tighten or open headlines.
+   ============================================ */
+.slide-container h1, .slide-container h2, .slide-container h3,
+.slide-container h4, .slide-container h5, .slide-container h6,
+.slide-container .stat-value, .slide-container .stat-value-hero,
+.slide-container .donut-center-value, .slide-container [class*="display"],
+.slide-container [class*="title"], .slide-container [class*="headline"] {
+  letter-spacing: 0 !important;
+  word-spacing: normal !important;
+}
+
+/* ============================================
+   TYPE LOCKDOWN — Poppins Regular + SemiBold only
+   ============================================ */
+
+/* Force every text element to use Poppins. No serif fallbacks, no system fonts. */
+html, body, h1, h2, h3, h4, h5, h6, p, span, div, li, a, button, input, textarea,
+.slide-container, .slide-container * {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Code blocks may use mono — but everything else is Poppins. */
+code, pre, kbd, samp, .mono { font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace !important; }
+
+/* Strip all custom letter-spacing across slides. Poppins ships with the right tracking. */
+.slide-container, .slide-container * { letter-spacing: normal !important; }
+
+/* Italic is not part of the system. Any element marked italic renders upright. */
+em, i, .italic, [style*="italic"] { font-style: normal !important; }
