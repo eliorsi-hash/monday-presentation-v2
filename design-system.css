@@ -817,6 +817,76 @@ h1, h2, h3, h4, h5, h6 {
 .highlight--bold { color: inherit; font-weight: var(--weight-semibold); }
 
 /* ============================================
+   SLIDE TEMPLATE CLASSES
+   Eight layout archetypes for Strategy B decks.
+   Inline design-system.css and apply these
+   classes to .slide-container elements.
+
+   Usage: class="slide-container tmpl-xxx slide-N"
+   Always pair with:
+     .slide-container:not(.slide-active){display:none!important}
+   ============================================ */
+
+.tmpl-cover.slide-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tmpl-center.slide-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.tmpl-twocol.slide-active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+.tmpl-compare.slide-active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  align-items: stretch;
+}
+
+.tmpl-features.slide-active {
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+.tmpl-content-img.slide-active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+/* NEW: full-slide metrics/KPI overview */
+.tmpl-stats.slide-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-7);
+}
+
+/* NEW: process/workflow with horizontal step cards */
+.tmpl-steps.slide-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+/* ============================================
    HEADLINE LETTER-SPACING LOCKDOWN
    Poppins ships at the right tracking — never
    tighten or open headlines.

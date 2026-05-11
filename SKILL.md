@@ -395,90 +395,57 @@ Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
 
 ## Phase 3: Generate Presentation
 
-When generating, **read these files:**
-1. [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) — Confirm exact template structure
-2. [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) — CSS recipes for visual polish, data viz, image placeholders
-3. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, layouts)
+When generating, **read this file:**
+1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 8 template classes)
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
-### Step 3.0: Choose Generation Strategy
+### Step 3.0: Generation Strategy
 
-There are **two approaches** depending on deck size. Choose the right one:
+**Always use Strategy B — Template Class Architecture.** The `Selected/` folder of individual HTML template files is deprecated. Never read from it.
 
-#### Strategy A: Exact Template Copy (for small decks, 3-10 slides)
+All 8 template classes are now defined in `design-system.css` itself — they are automatically available when you inline it. No additional file reads needed for layout structure.
 
-For each slide mapped in Phase 1:
-1. **Read the source `Deck_Dark_Page_*.html` file** from `/Selected/` directory
-2. **Extract EXACTLY** the `.slide-container` HTML and CSS
-3. **Replace ONLY the editable content** per SLIDE_INVENTORY specs
-4. **Preserve all structural HTML** — do not modify classes, grid, flex, etc.
+**The 8 template classes:**
 
-This is the safest approach but becomes impractical for large decks (20+ slides) because:
-- You'd need to read 8-10 template files individually
-- CSS class names collide across templates (both use `.main-title`, `.bullet-list`, etc.)
-- Each template has its own `<style>` block that must be merged and de-duplicated
-
-**Light Mode Safety (when theme = "light"):** Templates in `Selected/` are dark-mode source files. When extracting CSS from them for a light mode deck:
-- ✅ `var(--color-*)` references — safe, adapt automatically via CSS cascade
-- ✅ `.ds-icon-white` class — safe, design-system.css flips it to dark in light theme automatically
-- ❌ Hardcoded hex colors (`#232427`, `#000`, `#1f1f1f`, `#333`, etc.) — **do not copy**; replace with the nearest CSS var (`var(--color-surface)`, `var(--color-bg)`, etc.)
-- ❌ `rgba(255,255,255,...)` for overlays, grid lines, or borders — replace with `var(--color-border)` or `var(--color-border-strong)`
-
-**When in doubt for light mode, prefer Strategy B** — its centralized template classes are entirely var-based and convert seamlessly.
-
-#### Strategy B: Template Class Architecture (for large decks, 15+ slides) — RECOMMENDED
-
-Instead of copying each template file verbatim, **extract the layout patterns into reusable CSS template classes**. This was validated in production on a 44-slide workshop deck.
-
-**The 6 template classes** (mapped from Deck_Dark_Page templates):
-
-| Template Class | Source Template | Display | Purpose |
-|---------------|----------------|---------|---------|
-| `tmpl-cover` | Page_001 | `flex` (column, centered) | Title, closing, minimal slides |
-| `tmpl-center` | Page_021 | `flex` (column, centered) | Quotes, code blocks, centered content |
-| `tmpl-twocol` | Page_030 | `grid` (1fr 1fr) | Title left + content right |
-| `tmpl-compare` | Page_034 | `grid` (1fr 1fr) | Side-by-side comparison panels |
-| `tmpl-features` | Page_044 | `grid` (0.6fr 1.4fr) | Title left + 2x2 feature grid right |
-| `tmpl-content-img` | Page_038 | `grid` (1fr 1fr) | Title + bullets left, image right |
+| Template Class | Display | Purpose |
+|---------------|---------|---------|
+| `tmpl-cover` | `flex` (column, centered) | Cover slide, closing slide, minimal single-focus |
+| `tmpl-center` | `flex` (column, centered + gap) | Pull quotes, code blocks, stat hero, section break |
+| `tmpl-twocol` | `grid` (1fr 1fr) | Title left + content/bullets right |
+| `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side comparison panels (before/after, A vs B) |
+| `tmpl-features` | `grid` (0.6fr 1.4fr) | Narrow title left + wide 2×2 feature icon grid right |
+| `tmpl-content-img` | `grid` (1fr 1fr) | Title + bullets left, image placeholder right |
+| `tmpl-stats` | `flex` (column, centered) | Full-slide metrics — header above row of stat blocks |
+| `tmpl-steps` | `flex` (column, centered) | Process/workflow — header above horizontal step cards |
 
 **How it works:**
-1. Define all 6 template classes in `<style>` once — each with `.tmpl-xxx.slide-active { display: flex/grid; ... }` rules
+1. Inline **design-system.css** into `<style>` — all 8 template classes come with it
 2. Each slide gets: `class="slide-container tmpl-xxx slide-N"` and `data-slide-index="N"`
-3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }`
+3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }` (already in design-system.css)
 4. Navigation JS only toggles `slide-active` class — never touches `style.display`
 
 **CSS structure in the `<head>`:**
 ```css
-/* 1. Design system variables (:root) */
-/* 2. Reset + body */
-/* 3. Slide base (.slide-container positioning + :not(.slide-active) hide rule) */
-/* 4. Template classes (.tmpl-cover, .tmpl-center, etc.) */
-/* 5. Shared components (.code-block, .quote-text, .part-label, etc.) */
+/* 1. Design system CSS inlined verbatim (includes tokens, components, template classes) */
+/* 2. Slide centering: position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) */
+/* 3. Per-slide overrides only (e.g. .slide-6.tmpl-center.slide-active { align-items: flex-start }) */
+/* 4. Shared local components not in design-system.css (.left-col, .bullet-list, etc.) */
 ```
 
-**Benefits:**
-- No CSS class name collisions — template classes are unique
-- Easy to add/remove slides without touching CSS
-- Grid/flex display types are always correct (never overridden by JS)
-- Forward/backward navigation never breaks grid layouts
-- Much smaller CSS footprint than duplicating per-slide styles
-
-**Slide centering (critical for viewport fit):**
+**Slide centering (add to inline `<style>`, not in design-system.css):**
 ```css
 .slide-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 56.25vw;
-    max-height: 100vh;
-    max-width: 177.78vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 ```
 
-**When to extend:** If content doesn't fit any of the 6 template classes, first try adapting the content to fit. If truly needed, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide.
+**When to extend:** If content genuinely doesn't fit any of the 8 classes, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide — always define a named class.
+
+**Reference:** See [slide-templates.html](slide-templates.html) for live previews of all 8 template types.
 
 ### Step 3.1: Icon Selection
 
