@@ -277,6 +277,44 @@
       padding: 20px 48px; text-align: center;
       font-size: 10px; color: var(--color-text-muted);
     }
+
+    /* ============ CHART EXAMPLES ============ */
+    @keyframes chartBarGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes chartScaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .chart-ex { background: var(--color-surface); border-radius: 10px; padding: 18px 20px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .chart-ex-title { font-size: 13px; font-weight: 600; color: var(--color-text); }
+    .chart-ex-body { display: flex; gap: 8px; height: 140px; }
+    .chart-ex-yaxis { display: flex; flex-direction: column-reverse; justify-content: space-between; width: 28px; font-size: 9px; color: var(--color-text-muted); padding-bottom: 18px; }
+    .chart-ex-plot { flex: 1; position: relative; display: flex; flex-direction: column; }
+    .chart-ex-gridlines { position: absolute; inset: 0 0 18px 0; display: flex; flex-direction: column-reverse; justify-content: space-between; pointer-events: none; }
+    .chart-ex-gridline { height: 1px; background: var(--color-border); }
+    .chart-ex-bars { flex: 1; display: flex; gap: 8px; align-items: flex-end; padding-bottom: 18px; }
+    .chart-ex-group { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+    .chart-ex-group-bars { flex: 1; display: flex; gap: 3px; align-items: flex-end; width: 100%; }
+    .chart-ex-barwrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .chart-ex-bar-label { font-size: 9px; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+    .chart-ex-bar { width: 100%; border-radius: 3px 3px 0 0; transform-origin: bottom; animation: chartBarGrow 0.6s ease-out both; }
+    .chart-ex-group:nth-child(1) .chart-ex-bar { animation-delay: 0.10s; }
+    .chart-ex-group:nth-child(2) .chart-ex-bar { animation-delay: 0.18s; }
+    .chart-ex-group:nth-child(3) .chart-ex-bar { animation-delay: 0.26s; }
+    .chart-ex-group:nth-child(4) .chart-ex-bar { animation-delay: 0.34s; }
+    .chart-ex-xlabel { font-size: 9px; color: var(--color-text-muted); margin-top: 4px; }
+    .bar-purple { background: #6164ff; }
+    .bar-light  { background: #8A99FF; }
+    .chart-ex-legend { display: flex; justify-content: center; gap: 20px; }
+    .chart-ex-leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--color-text-secondary); }
+    .chart-ex-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .donut-ex-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .donut-ex-chart { width: 110px; height: 110px; border-radius: 50%; background: conic-gradient(#6164ff 0% 62%, #ffcb00 62% 86%, #00c875 86% 100%); -webkit-mask: radial-gradient(closest-side, transparent 54%, black 55%); mask: radial-gradient(closest-side, transparent 54%, black 55%); animation: chartScaleIn 0.6s ease-out both; }
+    .donut-ex-center { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+    .donut-ex-val { font-size: 18px; font-weight: 600; line-height: 1; }
+    .donut-ex-lbl { font-size: 9px; color: var(--color-text-muted); margin-top: 2px; }
+    .pie-ex-chart { width: 110px; height: 110px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#6164ff 0% 45%, #00c875 45% 78%, #ffcb00 78% 92%, #ff3d57 92% 100%); animation: chartScaleIn 0.6s ease-out both; }
+    .donut-ex-legend { display: flex; flex-direction: column; gap: 8px; }
+    .donut-ex-leg { display: flex; align-items: center; gap: 8px; }
+    .donut-ex-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .donut-ex-name { font-size: 11px; color: var(--color-text-secondary); flex: 1; }
+    .donut-ex-pct { font-size: 11px; font-weight: 600; color: var(--color-text); padding-left: 12px; }
   </style>
 </head>
 <body>
@@ -296,6 +334,7 @@
       <a class="nav-link" href="#type">Typography</a>
       <a class="nav-link" href="#spacing">Spacing</a>
       <a class="nav-link" href="#components">Components</a>
+      <a class="nav-link" href="#charts">Charts</a>
       <a class="nav-link" href="#templates">Templates</a>
       <a class="nav-link" href="#rules">Rules</a>
     </nav>
@@ -570,6 +609,113 @@
         </div>
         <div class="callout" style="margin-top:12px">
           Odd rows get <code>--color-surface</code> via <code>:nth-child(odd)</code>. Border-radius is <code>--radius-sm</code>. Set <code>grid-template-columns</code> per table.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================== CHARTS -->
+<section class="section" id="charts">
+  <div class="section-head">
+    <h2 class="section-title">Charts &amp; Data Viz</h2>
+    <span class="section-note">Pure CSS — no external libraries · animated on load · all colors via token vars</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+
+    <!-- Bar chart — full width -->
+    <div class="card">
+      <div class="label">Bar Chart — .chart-container / .bars-row / .bar-group / .bar / .bar-purple / .bar-purple-light</div>
+      <div class="chart-ex">
+        <div class="chart-ex-title">Deployment Velocity — Q1 → Q4</div>
+        <div class="chart-ex-body">
+          <div class="chart-ex-yaxis">
+            <span>120</span><span>90</span><span>60</span><span>30</span><span>0</span>
+          </div>
+          <div class="chart-ex-plot">
+            <div class="chart-ex-gridlines">
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
+            </div>
+            <div class="chart-ex-bars">
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">72</div><div class="chart-ex-bar bar-purple" style="height:60%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">85</div><div class="chart-ex-bar bar-light" style="height:71%"></div></div>
+                </div>
+                <div class="chart-ex-xlabel">Q1</div>
+              </div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">91</div><div class="chart-ex-bar bar-purple" style="height:76%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">90</div><div class="chart-ex-bar bar-light" style="height:75%"></div></div>
+                </div>
+                <div class="chart-ex-xlabel">Q2</div>
+              </div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">108</div><div class="chart-ex-bar bar-purple" style="height:90%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">95</div><div class="chart-ex-bar bar-light" style="height:79%"></div></div>
+                </div>
+                <div class="chart-ex-xlabel">Q3</div>
+              </div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">119</div><div class="chart-ex-bar bar-purple" style="height:99%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">100</div><div class="chart-ex-bar bar-light" style="height:83%"></div></div>
+                </div>
+                <div class="chart-ex-xlabel">Q4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-ex-legend">
+          <div class="chart-ex-leg-item"><div class="chart-ex-dot" style="background:#6164ff"></div><span>Actual</span></div>
+          <div class="chart-ex-leg-item"><div class="chart-ex-dot" style="background:#8A99FF"></div><span>Target</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <!-- Donut chart -->
+      <div class="card">
+        <div class="label">Donut Chart — .donut-chart / .donut-wrap / .donut-center / .pie-legend</div>
+        <div style="display:flex;align-items:center;gap:32px;padding:8px 0">
+          <div class="donut-ex-wrap">
+            <div class="donut-ex-chart"></div>
+            <div class="donut-ex-center">
+              <div class="donut-ex-val" style="color:#fff">62%</div>
+              <div class="donut-ex-lbl">Core</div>
+            </div>
+          </div>
+          <div class="donut-ex-legend">
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#6164ff"></div><span class="donut-ex-name">Core Platform</span><span class="donut-ex-pct">62%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ffcb00"></div><span class="donut-ex-name">Integrations</span><span class="donut-ex-pct">24%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#00c875"></div><span class="donut-ex-name">Analytics</span><span class="donut-ex-pct">14%</span></div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:12px">
+          Set <code>background: conic-gradient(#6164ff 0% 62%, #ffcb00 62% 86%, #00c875 86% 100%)</code> on <code>.donut-chart</code>. The mask punches a hole at 54% radius.
+        </div>
+      </div>
+
+      <!-- Pie chart -->
+      <div class="card">
+        <div class="label">Pie Chart — .pie-chart / .pie-wrap / .pie-legend</div>
+        <div style="display:flex;align-items:center;gap:32px;padding:8px 0">
+          <div class="pie-ex-chart"></div>
+          <div class="donut-ex-legend">
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#6164ff"></div><span class="donut-ex-name">Enterprise</span><span class="donut-ex-pct">45%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#00c875"></div><span class="donut-ex-name">Mid-market</span><span class="donut-ex-pct">33%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ffcb00"></div><span class="donut-ex-name">SMB</span><span class="donut-ex-pct">14%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ff3d57"></div><span class="donut-ex-name">Other</span><span class="donut-ex-pct">8%</span></div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:12px">
+          Same conic-gradient as donut, without the mask. Use <code>.pie-chart</code> for filled segments, <code>.donut-chart</code> for ring variant.
         </div>
       </div>
     </div>
@@ -856,7 +1002,12 @@
 </main>
 
 <footer class="page-footer">
-  monday.com Design System v2 &nbsp;·&nbsp; Poppins wght@400;600 &nbsp;·&nbsp; 8 slide templates &nbsp;·&nbsp; 6 design rules
+  <svg style="height:14px;width:auto;vertical-align:middle;margin-right:6px;" viewBox="0 0 48 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/>
+    <path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/>
+    <path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/>
+  </svg>
+  Design System v2 &nbsp;·&nbsp; Poppins wght@400;600 &nbsp;·&nbsp; 8 slide templates &nbsp;·&nbsp; 6 design rules
 </footer>
 
 <script>
