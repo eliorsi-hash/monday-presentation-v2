@@ -395,90 +395,57 @@ Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
 
 ## Phase 3: Generate Presentation
 
-When generating, **read these files:**
-1. [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) — Confirm exact template structure
-2. [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) — CSS recipes for visual polish, data viz, image placeholders
-3. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, layouts)
+When generating, **read this file:**
+1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 8 template classes)
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
-### Step 3.0: Choose Generation Strategy
+### Step 3.0: Generation Strategy
 
-There are **two approaches** depending on deck size. Choose the right one:
+**Always use Strategy B — Template Class Architecture.** The `Selected/` folder of individual HTML template files is deprecated. Never read from it.
 
-#### Strategy A: Exact Template Copy (for small decks, 3-10 slides)
+All 8 template classes are now defined in `design-system.css` itself — they are automatically available when you inline it. No additional file reads needed for layout structure.
 
-For each slide mapped in Phase 1:
-1. **Read the source `Deck_Dark_Page_*.html` file** from `/Selected/` directory
-2. **Extract EXACTLY** the `.slide-container` HTML and CSS
-3. **Replace ONLY the editable content** per SLIDE_INVENTORY specs
-4. **Preserve all structural HTML** — do not modify classes, grid, flex, etc.
+**The 8 template classes:**
 
-This is the safest approach but becomes impractical for large decks (20+ slides) because:
-- You'd need to read 8-10 template files individually
-- CSS class names collide across templates (both use `.main-title`, `.bullet-list`, etc.)
-- Each template has its own `<style>` block that must be merged and de-duplicated
-
-**Light Mode Safety (when theme = "light"):** Templates in `Selected/` are dark-mode source files. When extracting CSS from them for a light mode deck:
-- ✅ `var(--color-*)` references — safe, adapt automatically via CSS cascade
-- ✅ `.ds-icon-white` class — safe, design-system.css flips it to dark in light theme automatically
-- ❌ Hardcoded hex colors (`#232427`, `#000`, `#1f1f1f`, `#333`, etc.) — **do not copy**; replace with the nearest CSS var (`var(--color-surface)`, `var(--color-bg)`, etc.)
-- ❌ `rgba(255,255,255,...)` for overlays, grid lines, or borders — replace with `var(--color-border)` or `var(--color-border-strong)`
-
-**When in doubt for light mode, prefer Strategy B** — its centralized template classes are entirely var-based and convert seamlessly.
-
-#### Strategy B: Template Class Architecture (for large decks, 15+ slides) — RECOMMENDED
-
-Instead of copying each template file verbatim, **extract the layout patterns into reusable CSS template classes**. This was validated in production on a 44-slide workshop deck.
-
-**The 6 template classes** (mapped from Deck_Dark_Page templates):
-
-| Template Class | Source Template | Display | Purpose |
-|---------------|----------------|---------|---------|
-| `tmpl-cover` | Page_001 | `flex` (column, centered) | Title, closing, minimal slides |
-| `tmpl-center` | Page_021 | `flex` (column, centered) | Quotes, code blocks, centered content |
-| `tmpl-twocol` | Page_030 | `grid` (1fr 1fr) | Title left + content right |
-| `tmpl-compare` | Page_034 | `grid` (1fr 1fr) | Side-by-side comparison panels |
-| `tmpl-features` | Page_044 | `grid` (0.6fr 1.4fr) | Title left + 2x2 feature grid right |
-| `tmpl-content-img` | Page_038 | `grid` (1fr 1fr) | Title + bullets left, image right |
+| Template Class | Display | Purpose |
+|---------------|---------|---------|
+| `tmpl-cover` | `flex` (column, centered) | Cover slide, closing slide, minimal single-focus |
+| `tmpl-center` | `flex` (column, centered + gap) | Pull quotes, code blocks, stat hero, section break |
+| `tmpl-twocol` | `grid` (1fr 1fr) | Title left + content/bullets right |
+| `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side comparison panels (before/after, A vs B) |
+| `tmpl-features` | `grid` (0.6fr 1.4fr) | Narrow title left + wide 2×2 feature icon grid right |
+| `tmpl-content-img` | `grid` (1fr 1fr) | Title + bullets left, image placeholder right |
+| `tmpl-stats` | `flex` (column, centered) | Full-slide metrics — header above row of stat blocks |
+| `tmpl-steps` | `flex` (column, centered) | Process/workflow — header above horizontal step cards |
 
 **How it works:**
-1. Define all 6 template classes in `<style>` once — each with `.tmpl-xxx.slide-active { display: flex/grid; ... }` rules
+1. Inline **design-system.css** into `<style>` — all 8 template classes come with it
 2. Each slide gets: `class="slide-container tmpl-xxx slide-N"` and `data-slide-index="N"`
-3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }`
+3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }` (already in design-system.css)
 4. Navigation JS only toggles `slide-active` class — never touches `style.display`
 
 **CSS structure in the `<head>`:**
 ```css
-/* 1. Design system variables (:root) */
-/* 2. Reset + body */
-/* 3. Slide base (.slide-container positioning + :not(.slide-active) hide rule) */
-/* 4. Template classes (.tmpl-cover, .tmpl-center, etc.) */
-/* 5. Shared components (.code-block, .quote-text, .part-label, etc.) */
+/* 1. Design system CSS inlined verbatim (includes tokens, components, template classes) */
+/* 2. Slide centering: position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) */
+/* 3. Per-slide overrides only (e.g. .slide-6.tmpl-center.slide-active { align-items: flex-start }) */
+/* 4. Shared local components not in design-system.css (.left-col, .bullet-list, etc.) */
 ```
 
-**Benefits:**
-- No CSS class name collisions — template classes are unique
-- Easy to add/remove slides without touching CSS
-- Grid/flex display types are always correct (never overridden by JS)
-- Forward/backward navigation never breaks grid layouts
-- Much smaller CSS footprint than duplicating per-slide styles
-
-**Slide centering (critical for viewport fit):**
+**Slide centering (add to inline `<style>`, not in design-system.css):**
 ```css
 .slide-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 56.25vw;
-    max-height: 100vh;
-    max-width: 177.78vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 ```
 
-**When to extend:** If content doesn't fit any of the 6 template classes, first try adapting the content to fit. If truly needed, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide.
+**When to extend:** If content genuinely doesn't fit any of the 8 classes, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide — always define a named class.
+
+**Reference:** See [slide-templates.html](slide-templates.html) for live previews of all 8 template types.
 
 ### Step 3.1: Icon Selection
 
@@ -551,9 +518,14 @@ Slide 7 (Track 1 - Training):
 **Critical CSS Rules:**
 - Inline the **entire** [design-system.css](design-system.css) into the `<style>` block first
 - Use only CSS variables for sizing (no hardcoded px)
-- Font: Poppins from Google Fonts `wght@300;400;500;600`
+- Font: Poppins from Google Fonts — **`wght@400;600` only** (not 300/500). The design system imports only Regular (400) and SemiBold (600); `--weight-light` and `--weight-medium` tokens both resolve to these two values. Never load or reference other weights.
 - Logo: Inline SVG from [BRAND_ASSETS.md](BRAND_ASSETS.md)
-- **Highlight rule — never combine color + weight:** The `.highlight` class applies color only (yellow on dark, purple on light). Never add `font-weight` to `.highlight`. To emphasise with weight, use `.font-semibold` separately on a different span — never on the same span as `.highlight`. Pick one mechanism per highlighted word.
+- **Highlight rule — EITHER color OR weight, never both.** Two classes available:
+  - `.highlight` — color only. Yellow on dark, purple on light. `font-weight: inherit` so it never adds boldness.
+  - `.highlight--bold` — semibold weight only. `color: inherit` so it never changes color.
+  Use at most one highlight per headline. Never combine both classes on the same span.
+- **Letter-spacing ban:** All `--tracking-*` tokens resolve to 0. Never add `letter-spacing` to any slide element. The type lockdown CSS (`letter-spacing: normal !important` on `.slide-container *`) enforces this automatically. Use `letter-spacing: 0.05–0.08em` for label emphasis only if the lockdown block isn't present.
+- **Italic ban:** Italics are not part of the design system. Never use `font-style: italic`, `<em>`, or `<i>` in slide markup. The CSS lockdown (`em, i, .italic { font-style: normal !important }`) enforces this. Write emphasis through weight or color only.
 - **ABSOLUTE BAN on `text-transform: uppercase`** — never apply uppercase to any element: not section labels, not feature tags, not captions, not any text anywhere. Use `letter-spacing: 0.05em–0.08em` for label emphasis if needed. HTML text must be written in Title Case or Sentence case; CSS must never transform it to uppercase
 - **Multi-slide architecture:** Use `.slide-container:not(.slide-active) { display: none !important }` to hide inactive slides. Each template class (`.tmpl-xxx.slide-active`) defines its own display type (flex or grid). NEVER use inline `style.display` from JavaScript.
 - **Slide centering:** Use `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)` on `.slide-container` for proper viewport centering across all screen sizes.
@@ -913,8 +885,11 @@ Before delivery, ensure:
 - [ ] **Tables**: structured tabular data uses `.table-container` / `.data-rows-wrapper` / `.table-row.data-row` / `.cell`. `grid-template-columns` set inline on every `.table-row`. Data rows have `border-radius: var(--radius-sm)` from design system — not overridden
 - [ ] **Alignment consistency**: no slide has centered headlines above left-aligned content. Content-heavy slides (table, chart+table, bullets) use left-aligned headings. Pure display slides (cover, stats-only, quote) use centered headings
 - [ ] **No uppercase text**: zero instances of `text-transform: uppercase` in generated CSS. Section labels and tags use letter-spacing only
-- [ ] **Highlight = color OR weight, never both**: no span has both `.highlight` and a font-weight modifier simultaneously
+- [ ] **Highlight = color OR weight, never both**: `.highlight` spans use color only (`font-weight: inherit`). Weight-only emphasis uses `.highlight--bold` (`color: inherit`). Never combine both on the same span.
 - [ ] **Bar charts dominant**: chart-outer uses `width:100%; flex:1; min-height:0` so bars fill available slide height. Value labels use at least `var(--text-h2)` size. Bar width is 100% of its flex slot. Bars have `border-radius: var(--radius-md) var(--radius-md) 0 0`
 - [ ] **Pie/donut**: `conic-gradient` stops sum to 360deg; donut uses CSS `mask` not a white center circle overlay
 - [ ] **Image placeholders**: large visual slots (screenshots, hero images) use `.img-placeholder` with inline SVG + `.placeholder-label` span — not `[data-image-placeholder="screenshot"]`. Background is `var(--color-surface)`, icon opacity 0.3, border-radius from container
+- [ ] **Font weights**: only two visual weights used — Regular (400) and SemiBold (600). Google Fonts import is `wght@400;600`. No 300/500 weights anywhere.
+- [ ] **Letter-spacing**: zero custom `letter-spacing` in generated CSS. Type lockdown block present: `.slide-container, .slide-container * { letter-spacing: normal !important }`.
+- [ ] **No italics**: zero `font-style: italic`, `<em>`, or `<i>` in slide markup. Italic ban block present: `em, i, .italic { font-style: normal !important }`.
 

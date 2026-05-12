@@ -3,1646 +3,1020 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>monday.com Design System Showcase</title>
-  <link rel="stylesheet" href="design-system.css">
+  <title>monday.com Design System — v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* ============================================================
-       SHOWCASE PAGE LAYOUT
-       Not a 16:9 slide — this is a scrollable reference page.
-       All colors use CSS vars so the dark/light toggle works.
-       ============================================================ */
+    /* ============ TOKENS ============ */
+    :root {
+      --color-bg:             #000000;
+      --color-surface:        #232427;
+      --color-surface-alt:    #2D3035;
+      --color-text:           #ffffff;
+      --color-text-secondary: #c3ced8;
+      --color-text-muted:     #a0a0a0;
+      --color-purple:         #6164ff;
+      --color-purple-light:   #8A99FF;
+      --color-red:            #ff3d57;
+      --color-yellow:         #ffcb00;
+      --color-green:          #00c875;
+      --color-border:         rgba(255,255,255,0.12);
+      --color-border-mid:     rgba(255,255,255,0.07);
+      --page-bg:  #0a0a0a;
+      --card-bg:  #111215;
+    }
+    [data-theme="light"] {
+      --color-bg:             #ffffff;
+      --color-surface:        #F0F2F5;
+      --color-surface-alt:    #E3E6EE;
+      --color-text:           #1F2D3D;
+      --color-text-secondary: #455A73;
+      --color-text-muted:     #8FA0B3;
+      --color-border:         rgba(0,0,0,0.10);
+      --color-border-mid:     rgba(0,0,0,0.05);
+      --page-bg:  #f4f5f7;
+      --card-bg:  #ffffff;
+    }
 
+    /* ============ RESET ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      overflow: auto;
-      display: block;
-      background-color: var(--color-bg);
+      font-family: 'Poppins', sans-serif;
+      background: var(--page-bg);
       color: var(--color-text);
-      padding: 0;
-      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .showcase {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
-    }
-
-    /* ---- Sticky header ---- */
-    .showcase-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* ============ HEADER ============ */
+    .page-header {
+      position: sticky; top: 0; z-index: 100;
       background: var(--color-bg);
       border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-      margin-bottom: 0;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .showcase-header .monday-logo {
-      height: 28px;
-      width: auto;
-    }
-
-    /* Logo variant switching — no JS needed */
-    .logo-for-light { display: none; }
-    [data-theme="light"] .logo-for-dark  { display: none; }
-    [data-theme="light"] .logo-for-light { display: block; }
-
-    .header-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--color-text-muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--color-surface);
-      border: none;
-      border-radius: 999px;
-      color: var(--color-text);
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .theme-toggle:hover { background: var(--color-surface-alt); }
-
-    .theme-toggle .icon-sun, .theme-toggle .icon-moon { font-size: 15px; }
-
-    /* ---- Section chrome ---- */
-    .ds-section {
-      margin-top: 60px;
-    }
-
-    .ds-section-title {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: 12px;
-      margin-bottom: 28px;
-    }
-
-    /* ---- Color swatches ---- */
-    .swatch-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-    }
-
-    .swatch-group-title {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin: 24px 0 10px;
-      grid-column: 1 / -1;
-    }
-
-    .swatch {
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--color-surface);
-    }
-
-    .swatch-color {
-      height: 56px;
-      width: 100%;
-    }
-
-    .swatch-info {
-      padding: 8px 10px;
-    }
-
-    .swatch-name {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--color-text);
-      font-family: 'Courier New', monospace;
-    }
-
-    .swatch-value {
-      font-size: 10px;
-      color: var(--color-text-muted);
-      font-family: 'Courier New', monospace;
-      margin-top: 2px;
-    }
-
-    /* ---- Typography ---- */
-    .type-table { width: 100%; border-collapse: collapse; }
-    .type-row { border-bottom: 1px solid var(--color-border); }
-    .type-row td { padding: 16px 0; vertical-align: middle; }
-    .type-row td:first-child {
-      width: 160px;
-      font-size: 11px;
-      font-family: 'Courier New', monospace;
-      color: var(--color-text-muted);
-    }
-    .type-row td:last-child {
-      width: 100px;
-      font-size: 11px;
-      color: var(--color-text-muted);
-      text-align: right;
-    }
-
-    /* ---- Spacing scale ---- */
-    .spacing-grid { display: flex; flex-direction: column; gap: 10px; }
-    .spacing-row { display: flex; align-items: center; gap: 16px; }
-    .spacing-bar-wrap { flex: 1; }
-    .spacing-bar {
-      background: var(--color-purple);
-      height: 8px;
-      border-radius: 4px;
-      opacity: 0.7;
-    }
-    .spacing-label {
-      width: 80px;
-      font-size: 11px;
-      font-family: 'Courier New', monospace;
-      color: var(--color-text-muted);
-    }
-    .spacing-value {
-      width: 60px;
-      font-size: 11px;
-      color: var(--color-text-muted);
-      text-align: right;
-    }
-
-    /* ---- Radius scale ---- */
-    .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
-    .radius-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .radius-box {
-      width: 60px;
+      padding: 0 48px;
       height: 60px;
-      background: var(--color-purple);
-      opacity: 0.8;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .radius-label {
-      font-size: 10px;
-      font-family: 'Courier New', monospace;
-      color: var(--color-text-muted);
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-title { font-size: 17px; font-weight: 600; }
+    .v-badge {
+      background: var(--color-purple); color: #fff;
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 999px;
     }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-link {
+      font-size: 12px; color: var(--color-text-muted);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--color-text); }
+    .theme-toggle {
+      display: flex; background: var(--color-surface);
+      border: 1px solid var(--color-border); border-radius: 999px; padding: 3px;
+    }
+    .theme-btn {
+      font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+      padding: 3px 14px; border-radius: 999px; border: none;
+      background: transparent; color: var(--color-text-muted); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .theme-btn.active { background: var(--color-purple); color: #fff; }
 
-    /* ---- Icon sizes ---- */
-    .icon-size-row { display: flex; gap: 32px; align-items: flex-end; }
-    .icon-size-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .icon-size-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); }
-
-    /* ---- Icon library grid ---- */
-    .icon-filter {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    /* ============ LAYOUT ============ */
+    .content { max-width: 1160px; margin: 0 auto; padding: 48px 48px 80px; }
+    .section { margin-bottom: 60px; }
+    .section-head {
+      display: flex; align-items: baseline; gap: 10px;
+      margin-bottom: 22px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
     }
-    .icon-filter-btn {
-      padding: 6px 14px;
-      background: var(--color-surface);
-      border: none;
-      border-radius: 999px;
-      color: var(--color-text-secondary);
-      font-family: 'Poppins', sans-serif;
-      font-size: 12px;
-      cursor: pointer;
+    .section-title { font-size: 20px; font-weight: 600; }
+    .section-note { font-size: 11px; color: var(--color-text-muted); font-weight: 400; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--color-border);
+      border-radius: 14px; padding: 22px;
     }
-    .icon-filter-btn.active {
-      background: var(--color-purple);
-      color: #fff;
+    .label {
+      font-size: 10px; font-weight: 600; color: var(--color-text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
     }
-
-    .icon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-      gap: 8px;
-    }
-
-    .icon-cell {
-      background: var(--color-surface);
-      border-radius: 8px;
-      padding: 12px 8px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      cursor: default;
-      transition: background 0.15s;
-    }
-
-    .icon-cell:hover { background: var(--color-surface-alt); }
-
-    .icon-cell img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      /* Natural purple — no filter. On dark, purple is visible. On light, purple on white also passes. */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .span2 { grid-column: 1/-1; }
+    code {
+      font-family: 'SF Mono','Fira Code',monospace; font-size: 11px;
+      background: var(--color-surface-alt); padding: 1px 6px; border-radius: 4px;
     }
 
-    .icon-cell .icon-name {
-      font-size: 9px;
-      color: var(--color-text-muted);
-      text-align: center;
-      line-height: 1.3;
-      word-break: break-word;
+    /* ============ COLORS ============ */
+    .swatch-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .swatch { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .swatch-box { width: 56px; height: 40px; border-radius: 8px; border: 1px solid var(--color-border); }
+    .swatch-name { font-size: 10px; color: var(--color-text-secondary); text-align: center; max-width: 72px; }
+    .swatch-val { font-size: 9px; color: var(--color-text-muted); font-family: monospace; }
+
+    /* ============ TYPOGRAPHY ============ */
+    .type-row {
+      display: flex; align-items: baseline; gap: 20px;
+      padding: 13px 0; border-bottom: 1px solid var(--color-border-mid);
+    }
+    .type-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .type-meta { min-width: 130px; flex-shrink: 0; }
+    .type-token { font-size: 11px; font-weight: 600; color: var(--color-text-muted); }
+    .type-detail { font-size: 10px; color: var(--color-text-muted); font-family: monospace; margin-top: 2px; }
+    .weight-row {
+      display: flex; align-items: center; gap: 20px;
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-mid);
+    }
+    .weight-row:last-child { border-bottom: none; }
+    .weight-meta { min-width: 150px; font-size: 10px; font-family: monospace; color: var(--color-text-muted); }
+    .hl-sample { font-size: 20px; font-weight: 400; }
+    .hl-color { color: var(--color-yellow); }
+    [data-theme="light"] .hl-color { color: var(--color-purple); }
+    .hl-bold { font-weight: 600; }
+    .callout {
+      border-left: 3px solid var(--color-purple);
+      padding: 10px 14px; background: var(--color-surface);
+      border-radius: 0 8px 8px 0; font-size: 11px;
+      color: var(--color-text-secondary); line-height: 1.6; margin-top: 14px;
+    }
+    .callout.warn { border-color: var(--color-red); }
+
+    /* ============ SPACING ============ */
+    .space-row { display: flex; align-items: center; gap: 12px; padding: 5px 0; }
+    .space-token { font-size: 10px; font-family: monospace; color: var(--color-text-muted); min-width: 80px; }
+    .space-val { font-size: 10px; color: var(--color-text-secondary); min-width: 56px; }
+    .space-bar { background: var(--color-purple); height: 18px; border-radius: 3px; opacity: 0.75; }
+    .radius-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-end; margin-top: 4px; }
+    .radius-item { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .radius-box { width: 48px; height: 32px; background: var(--color-surface); border: 2px solid var(--color-purple); }
+    .radius-lbl { font-size: 10px; font-family: monospace; color: var(--color-text-muted); }
+
+    /* ============ COMPONENTS ============ */
+    .stat-val { font-size: 32px; font-weight: 600; line-height: 1; }
+    .stat-lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+    .step-demo {
+      background: var(--color-surface); border-radius: 10px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .step-num { font-size: 26px; font-weight: 600; line-height: 1; }
+    .step-txt { font-size: 12px; color: var(--color-text-secondary); }
+    .dot-p { color: #6164ff; }
+    .dot-y { color: #ffcb00; }
+    .dot-g { color: #00c875; }
+    .img-ph-demo {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; background: var(--color-surface); border-radius: 14px;
+      color: rgba(255,255,255,0.35); height: 120px;
+    }
+    [data-theme="light"] .img-ph-demo { color: rgba(0,0,0,0.25); }
+    .img-ph-demo .ph-lbl { font-size: 11px; font-weight: 600; }
+    .data-row-demo {
+      background: var(--color-surface); border-radius: 6px;
+      display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr;
+      padding: 9px 14px; font-size: 12px;
+    }
+    .data-row-demo.even { background: transparent; }
+
+    /* ============ SLIDE TEMPLATES ============ */
+    .tmpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .tmpl-card {
+      background: var(--card-bg); border: 1px solid var(--color-border);
+      border-radius: 14px; overflow: hidden;
+    }
+    .tmpl-info { padding: 14px 16px 10px; }
+    .tmpl-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+    .tmpl-badge {
+      font-size: 9px; font-weight: 600; font-family: monospace;
+      background: var(--color-purple); color: #fff;
+      padding: 2px 7px; border-radius: 999px; flex-shrink: 0;
+    }
+    .tmpl-badge.new-badge { background: var(--color-green); color: #000; }
+    .tmpl-desc { font-size: 11px; color: var(--color-text-muted); }
+    .tmpl-use { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+
+    /* Mini slide previews — always dark-on-black (slides are dark-first) */
+    .slide-stage {
+      margin: 0 14px 14px;
+      aspect-ratio: 16/9;
+      background: #111;
+      border-radius: 8px; overflow: hidden;
+      position: relative;
+    }
+    /* .sp fills the stage absolutely so aspect-ratio is respected */
+    .sp {
+      position: absolute; inset: 0;
+      padding: 6% 8%; display: flex;
+    }
+    .sp-cover   { flex-direction: column; align-items: center; justify-content: center; gap: 5%; }
+    .sp-center  { flex-direction: column; align-items: center; justify-content: center; gap: 4%; }
+    .sp-twocol  { display: grid !important; grid-template-columns: 1fr 1fr; gap: 4%; align-items: center; }
+    .sp-compare { display: grid !important; grid-template-columns: 1fr 1fr; gap: 3%; align-items: stretch; }
+    /* features: stretch rows so the 2x2 grid fills its column */
+    .sp-feat    { display: grid !important; grid-template-columns: 0.6fr 1.4fr; gap: 4%; align-items: stretch; }
+    .sp-img     { display: grid !important; grid-template-columns: 1fr 1fr; gap: 4%; align-items: stretch; }
+    .sp-stats   { flex-direction: column; justify-content: center; gap: 5%; }
+    .sp-steps   { flex-direction: column; justify-content: center; gap: 4%; }
+
+    /* Preview blocks — simplified wireframe shapes on a dark slide surface.
+       Colors are intentionally abstract (not theme-aware) since these
+       always represent a dark-theme slide interior. Only accent uses a token. */
+    .pb { border-radius: 3px; }
+    .pb-hero   { background: rgba(255,255,255,0.20); height: 20%; width: 55%; }
+    .pb-title  { background: rgba(255,255,255,0.15); height: 14%; }
+    .pb-sub    { background: rgba(255,255,255,0.09); height: 9%; width: 45%; }
+    .pb-line   { background: rgba(255,255,255,0.08); height: 8%; }
+    .pb-logo   { width: 12%; aspect-ratio:1; background: var(--color-purple); border-radius: 50%; margin-bottom: 3%; }
+    .pb-panel  { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; }
+    .pb-imgbox {
+      background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      /* must fill the grid cell */
+      width: 100%; height: 100%;
+    }
+    .pb-imgicon { width: 20%; height: 30%; background: rgba(255,255,255,0.12); border-radius: 3px; }
+    /* pb-col: centers content vertically in a flex column; fills its grid cell */
+    .pb-col    { display: flex; flex-direction: column; gap: 7%; height: 100%; justify-content: center; }
+    /* pb-grid22: fills its grid cell using align-self + explicit height */
+    .pb-grid22 {
+      display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+      gap: 3%; width: 100%; height: 100%; align-self: stretch;
+    }
+    .pb-cell   { background: rgba(255,255,255,0.09); border-radius: 3px; }
+    .pb-statrow { display: flex; gap: 3%; height: 28%; }
+    .pb-stat   { background: rgba(255,255,255,0.09); border-radius: 4px; flex: 1; }
+    /* purple accent stat block uses token */
+    .pb-stathi { background: color-mix(in srgb, var(--color-purple) 35%, transparent); }
+    .pb-steprow { display: flex; gap: 3%; height: 22%; }
+    .pb-step   { background: rgba(255,255,255,0.09); border-radius: 3px; flex: 1; }
+    .pb-panelinner { padding: 8% 10%; display: flex; flex-direction: column; gap: 8%; height: 100%; }
+    /* purple accent panel border uses token */
+    .pb-panelhi { border-color: color-mix(in srgb, var(--color-purple) 60%, transparent) !important; }
+
+    /* ============ DESIGN RULES ============ */
+    .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rule-card {
+      background: var(--card-bg); border: 1px solid var(--color-border);
+      border-radius: 14px; padding: 18px;
+    }
+    .rule-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .rule-icon {
+      width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rule-icon svg { width: 15px; height: 15px; }
+    .rule-title { font-size: 13px; font-weight: 600; }
+    .rule-body { font-size: 11px; color: var(--color-text-secondary); line-height: 1.65; }
+    .do   { color: var(--color-green); font-weight: 600; }
+    .dont { color: var(--color-red);   font-weight: 600; }
+
+    /* ============ FOOTER ============ */
+    .page-footer {
+      border-top: 1px solid var(--color-border);
+      padding: 20px 48px; text-align: center;
+      font-size: 10px; color: var(--color-text-muted);
     }
 
-    /* ---- Card & surface demos ---- */
-    .surface-demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-
-    .surface-demo {
-      border-radius: 12px;
-      padding: 20px;
-    }
-
-    .surface-bg { background: var(--color-bg); border: 1px solid var(--color-border); }
-    .surface-card { background: var(--color-surface); }
-    .surface-card-alt { background: var(--color-surface-alt); }
-
-    .surface-demo-label {
-      font-size: 10px;
-      font-family: 'Courier New', monospace;
-      color: var(--color-text-muted);
-      margin-bottom: 8px;
-    }
-
-    /* ---- Image placeholder demo ---- */
-    .placeholder-demos { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
-    .placeholder-demo-item { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-    .placeholder-demo-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); }
-
-    .placeholder-box {
-      border-radius: 8px;
-    }
-
-    /* ---- Visuals assets ---- */
-    .visuals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-    }
-    .visual-cell {
-      background: var(--color-surface);
-      border-radius: 8px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .visual-cell img { width: 100%; height: 100px; object-fit: contain; }
-    .visual-cell .visual-name { font-size: 9px; color: var(--color-text-muted); font-family: 'Courier New', monospace; }
-
-    /* ---- Icon with filter demo ---- */
-    .filter-demos { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
-    .filter-demo-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .filter-demo-box {
-      width: 64px;
-      height: 64px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .filter-demo-label { font-size: 10px; font-family: 'Courier New', monospace; color: var(--color-text-muted); text-align: center; }
-
-    /* ---- Brand color pills ---- */
-    .brand-colors { display: flex; gap: 12px; flex-wrap: wrap; }
-    .brand-pill {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-    }
-    .brand-pill-dot { width: 14px; height: 14px; border-radius: 50%; }
-    .brand-pill-text { font-size: 12px; font-family: 'Courier New', monospace; font-weight: 600; }
+    /* ============ CHART EXAMPLES ============ */
+    @keyframes chartBarGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes chartScaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .chart-ex { background: var(--color-surface); border-radius: 10px; padding: 18px 20px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .chart-ex-title { font-size: 13px; font-weight: 600; color: var(--color-text); }
+    .chart-ex-body { display: flex; gap: 8px; height: 140px; }
+    .chart-ex-yaxis { display: flex; flex-direction: column-reverse; justify-content: space-between; width: 28px; font-size: 9px; color: var(--color-text-muted); padding-bottom: 18px; }
+    .chart-ex-plot { flex: 1; position: relative; display: flex; flex-direction: column; }
+    .chart-ex-gridlines { position: absolute; inset: 0 0 18px 0; display: flex; flex-direction: column-reverse; justify-content: space-between; pointer-events: none; }
+    .chart-ex-gridline { height: 1px; background: var(--color-border); }
+    .chart-ex-bars { flex: 1; display: flex; gap: 8px; align-items: flex-end; padding-bottom: 18px; }
+    .chart-ex-group { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+    .chart-ex-group-bars { flex: 1; display: flex; gap: 3px; align-items: flex-end; width: 100%; }
+    .chart-ex-barwrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .chart-ex-bar-label { font-size: 9px; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+    .chart-ex-bar { width: 100%; border-radius: 3px 3px 0 0; transform-origin: bottom; animation: chartBarGrow 0.6s ease-out both; }
+    .chart-ex-group:nth-child(1) .chart-ex-bar { animation-delay: 0.10s; }
+    .chart-ex-group:nth-child(2) .chart-ex-bar { animation-delay: 0.18s; }
+    .chart-ex-group:nth-child(3) .chart-ex-bar { animation-delay: 0.26s; }
+    .chart-ex-group:nth-child(4) .chart-ex-bar { animation-delay: 0.34s; }
+    .chart-ex-xlabel { font-size: 9px; color: var(--color-text-muted); margin-top: 4px; }
+    .bar-purple { background: #6164ff; }
+    .bar-light  { background: #8A99FF; }
+    .chart-ex-legend { display: flex; justify-content: center; gap: 20px; }
+    .chart-ex-leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--color-text-secondary); }
+    .chart-ex-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .donut-ex-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .donut-ex-chart { width: 110px; height: 110px; border-radius: 50%; background: conic-gradient(#6164ff 0% 62%, #ffcb00 62% 86%, #00c875 86% 100%); -webkit-mask: radial-gradient(closest-side, transparent 54%, black 55%); mask: radial-gradient(closest-side, transparent 54%, black 55%); animation: chartScaleIn 0.6s ease-out both; }
+    .donut-ex-center { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+    .donut-ex-val { font-size: 18px; font-weight: 600; line-height: 1; }
+    .donut-ex-lbl { font-size: 9px; color: var(--color-text-muted); margin-top: 2px; }
+    .pie-ex-chart { width: 110px; height: 110px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#6164ff 0% 45%, #00c875 45% 78%, #ffcb00 78% 92%, #ff3d57 92% 100%); animation: chartScaleIn 0.6s ease-out both; }
+    .donut-ex-legend { display: flex; flex-direction: column; gap: 8px; }
+    .donut-ex-leg { display: flex; align-items: center; gap: 8px; }
+    .donut-ex-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .donut-ex-name { font-size: 11px; color: var(--color-text-secondary); flex: 1; }
+    .donut-ex-pct { font-size: 11px; font-weight: 600; color: var(--color-text); padding-left: 12px; }
   </style>
 </head>
 <body>
-<div class="showcase">
 
-  <!-- ============================================================ HEADER -->
-  <header class="showcase-header">
-    <div class="header-left">
-      <img class="monday-logo logo-for-dark"  src="Logos/monday_White.svg" alt="monday.com">
-      <img class="monday-logo logo-for-light" src="Logos/monday_Black.svg" alt="monday.com">
-      <span class="header-title">Design System</span>
-    </div>
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
-      <span class="icon-sun">☀</span> Switch to Light
-    </button>
-  </header>
+<!-- =========================================== HEADER -->
+<header class="page-header">
+  <div class="header-left">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+      <circle cx="4"  cy="14" r="4" fill="#ff3d57"/>
+      <circle cx="14" cy="14" r="4" fill="#ffcb00"/>
+      <circle cx="24" cy="14" r="4" fill="#6164ff"/>
+    </svg>
+    <span class="header-title">Design System</span>
+    <span class="v-badge">v2</span>
+    <nav class="nav-links">
+      <a class="nav-link" href="#colors">Colors</a>
+      <a class="nav-link" href="#type">Typography</a>
+      <a class="nav-link" href="#spacing">Spacing</a>
+      <a class="nav-link" href="#components">Components</a>
+      <a class="nav-link" href="#charts">Charts</a>
+      <a class="nav-link" href="#templates">Templates</a>
+      <a class="nav-link" href="#rules">Rules</a>
+    </nav>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn active" id="btn-dark"  onclick="setTheme('dark')">Dark</button>
+    <button class="theme-btn"        id="btn-light" onclick="setTheme('light')">Light</button>
+  </div>
+</header>
 
-  <!-- ============================================================ COLORS -->
-  <section class="ds-section" id="colors">
-    <div class="ds-section-title">Colors</div>
+<main class="content">
 
-    <div class="swatch-grid">
-      <div class="swatch-group-title">Backgrounds (theme-adaptive)</div>
-
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-bg);"></div>
-        <div class="swatch-info">
+<!-- =========================================== COLORS -->
+<section class="section" id="colors">
+  <div class="section-head">
+    <h2 class="section-title">Colors</h2>
+    <span class="section-note">Toggle theme to see dark / light values</span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="label">Backgrounds</div>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-bg)"></div>
           <div class="swatch-name">--color-bg</div>
-          <div class="swatch-value" id="val-bg"></div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-surface);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-surface)"></div>
           <div class="swatch-name">--color-surface</div>
-          <div class="swatch-value" id="val-surface"></div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-surface-alt);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-surface-alt)"></div>
           <div class="swatch-name">--color-surface-alt</div>
-          <div class="swatch-value" id="val-surface-alt"></div>
         </div>
       </div>
-
-      <div class="swatch-group-title">Text (theme-adaptive)</div>
-
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-text);"></div>
-        <div class="swatch-info">
+    </div>
+    <div class="card">
+      <div class="label">Text</div>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-text)"></div>
           <div class="swatch-name">--color-text</div>
-          <div class="swatch-value" id="val-text"></div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-text-secondary);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-text-secondary)"></div>
           <div class="swatch-name">--color-text-secondary</div>
-          <div class="swatch-value" id="val-text-secondary"></div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-text-muted);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:var(--color-text-muted)"></div>
           <div class="swatch-name">--color-text-muted</div>
-          <div class="swatch-value" id="val-text-muted"></div>
         </div>
       </div>
-
-      <div class="swatch-group-title">Brand Accents (always fixed)</div>
-
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-purple);"></div>
-        <div class="swatch-info">
+    </div>
+    <div class="card span2">
+      <div class="label">Brand Accents — unchanged across themes</div>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-box" style="background:#6164ff"></div>
           <div class="swatch-name">--color-purple</div>
-          <div class="swatch-value">#6164ff</div>
+          <div class="swatch-val">#6164ff</div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-purple-light);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:#8A99FF"></div>
           <div class="swatch-name">--color-purple-light</div>
-          <div class="swatch-value">#8A99FF</div>
+          <div class="swatch-val">#8A99FF</div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-red);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:#ff3d57"></div>
           <div class="swatch-name">--color-red</div>
-          <div class="swatch-value">#ff3d57</div>
+          <div class="swatch-val">#ff3d57</div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-yellow);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:#ffcb00"></div>
           <div class="swatch-name">--color-yellow</div>
-          <div class="swatch-value">#ffcb00</div>
+          <div class="swatch-val">#ffcb00</div>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-green);"></div>
-        <div class="swatch-info">
+        <div class="swatch">
+          <div class="swatch-box" style="background:#00c875"></div>
           <div class="swatch-name">--color-green</div>
-          <div class="swatch-value">#00c875</div>
-        </div>
-      </div>
-
-      <div class="swatch-group-title">Borders (theme-adaptive)</div>
-
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-border); border: 1px solid var(--color-border-strong);"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">--color-border</div>
-          <div class="swatch-value" id="val-border"></div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="swatch-color" style="background: var(--color-border-strong);"></div>
-        <div class="swatch-info">
-          <div class="swatch-name">--color-border-strong</div>
-          <div class="swatch-value" id="val-border-strong"></div>
+          <div class="swatch-val">#00c875</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============================================================ TYPOGRAPHY -->
-  <section class="ds-section" id="typography">
-    <div class="ds-section-title">Typography</div>
-
-    <table class="type-table">
-      <tbody>
-        <tr class="type-row">
-          <td>--text-display<br>font-light</td>
-          <td><span class="text-display font-light" style="color:var(--color-text);">Display</span></td>
-          <td>10.5vmin · 300</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-h1<br>font-medium</td>
-          <td><span class="text-h1 font-medium" style="color:var(--color-text);">Heading 1</span></td>
-          <td>8vmin · 500</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-h2<br>font-regular</td>
-          <td><span class="text-h2" style="color:var(--color-text);">Heading 2</span></td>
-          <td>6vmin · 400</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-h3<br>font-regular</td>
-          <td><span class="text-h3" style="color:var(--color-text);">Heading 3</span></td>
-          <td>4vmin · 400</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-h4<br>font-regular</td>
-          <td><span class="text-h4" style="color:var(--color-text);">Heading 4</span></td>
-          <td>3vmin · 400</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-body</td>
-          <td><span class="text-body" style="color:var(--color-text);">Body text — the quick brown fox jumps over the lazy dog.</span></td>
-          <td>2.2vmin · 400</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-body-sm<br>font-light</td>
-          <td><span class="text-body-sm font-light" style="color:var(--color-text-secondary);">Body small — the quick brown fox jumps over the lazy dog.</span></td>
-          <td>1.8vmin · 300</td>
-        </tr>
-        <tr class="type-row">
-          <td>--text-caption</td>
-          <td><span class="text-caption" style="color:var(--color-text-muted);">Caption text — metadata, labels, timestamps.</span></td>
-          <td>1.4vmin · 400</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="margin-top: 28px;">
-      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Weight-mixing technique (display headlines)</p>
-      <p style="font-size: 6vmin; line-height: 1.1; letter-spacing: -0.025em; color: var(--color-text); font-weight: 300;">
-        monday<span style="font-weight: 600;"> product</span><br>
-        <span style="font-weight: 600;">performance</span> review.
-      </p>
+<!-- =========================================== TYPOGRAPHY -->
+<section class="section" id="type">
+  <div class="section-head">
+    <h2 class="section-title">Typography</h2>
+    <span class="section-note">Poppins · import wght@400;600 only · letter-spacing always 0</span>
+  </div>
+  <div class="grid2">
+    <div class="card span2">
+      <div class="label">Type Scale</div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">display</div><div class="type-detail">10.5vmin · 400</div></div>
+        <div style="font-size:34px;font-weight:400">Display Headline</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">h1</div><div class="type-detail">8vmin · 600</div></div>
+        <div style="font-size:28px;font-weight:600">Heading One</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">h2</div><div class="type-detail">6vmin · 400</div></div>
+        <div style="font-size:21px;font-weight:400">Heading Two</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">h3</div><div class="type-detail">4vmin · 400</div></div>
+        <div style="font-size:15px;font-weight:400">Heading Three</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">body</div><div class="type-detail">2.2vmin · 400</div></div>
+        <div style="font-size:13px;font-weight:400;color:var(--color-text-secondary)">Body copy — slide descriptions, bullet points, supporting text</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">body-sm</div><div class="type-detail">1.8vmin · 400</div></div>
+        <div style="font-size:12px;font-weight:400;color:var(--color-text-secondary)">Small body — labels, tags, captions</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-token">caption</div><div class="type-detail">1.4vmin · 400</div></div>
+        <div style="font-size:10px;font-weight:400;color:var(--color-text-muted)">Caption — chart axis labels, footnotes, timestamps</div>
+      </div>
     </div>
 
-    <div style="margin-top: 28px;">
-      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 16px;">.highlight — color only (never combine with font-weight)</p>
-      <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div class="card">
+      <div class="label">Font Weights — Two Only</div>
+      <div class="weight-row">
+        <div class="weight-meta">400 · Regular</div>
+        <div style="font-size:17px;font-weight:400">Ship faster with monday</div>
+      </div>
+      <div class="weight-row">
+        <div class="weight-meta">600 · SemiBold</div>
+        <div style="font-size:17px;font-weight:600">Ship faster with monday</div>
+      </div>
+      <div class="callout">
+        Only <code>wght@400;600</code> is imported. Tokens <code>--weight-light</code> and <code>--weight-medium</code> resolve to 400 and 600 respectively. Never use 300, 500, or 700.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Headline Highlight — One Rule Per Headline</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
         <div>
-          <p style="font-size: 10px; color: var(--color-green); font-family: monospace; margin-bottom: 8px;">✓ Correct — color only</p>
-          <p style="font-size: 5vmin; font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text);">
-            Future-Proof<br>Your <span class="highlight">Stack.</span>
-          </p>
+          <div style="font-size:10px;font-weight:600;color:var(--color-text-muted);margin-bottom:6px">.highlight — color only, weight unchanged</div>
+          <div class="hl-sample">Build with <span class="hl-color">monday</span> AI</div>
+          <div style="font-size:10px;color:var(--color-text-muted);margin-top:4px">Yellow on dark · Purple on light · font-weight: inherit</div>
         </div>
         <div>
-          <p style="font-size: 10px; color: var(--color-red); font-family: monospace; margin-bottom: 8px;">✗ Incorrect — color + weight combined</p>
-          <p style="font-size: 5vmin; font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-text); text-decoration: line-through; opacity: 0.5;">
-            Future-Proof<br>Your <span style="color: var(--color-yellow); font-weight: 600;">Stack.</span>
-          </p>
+          <div style="font-size:10px;font-weight:600;color:var(--color-text-muted);margin-bottom:6px">.highlight--bold — weight only, color unchanged</div>
+          <div class="hl-sample">Ship <span class="hl-bold">10× faster</span> today</div>
+          <div style="font-size:10px;color:var(--color-text-muted);margin-top:4px">color: inherit · font-weight: 600</div>
+        </div>
+        <div class="callout warn">Never combine both on the same span — choose color OR weight, never both</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================== SPACING -->
+<section class="section" id="spacing">
+  <div class="section-head">
+    <h2 class="section-title">Spacing &amp; Geometry</h2>
+    <span class="section-note">vmin units — scale proportionally with viewport</span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="label">Space Scale</div>
+      <div class="space-row"><div class="space-token">--space-1</div><div class="space-val">0.5vmin</div><div class="space-bar" style="width:5%"></div></div>
+      <div class="space-row"><div class="space-token">--space-2</div><div class="space-val">1vmin</div><div class="space-bar" style="width:10%"></div></div>
+      <div class="space-row"><div class="space-token">--space-3</div><div class="space-val">1.5vmin</div><div class="space-bar" style="width:15%"></div></div>
+      <div class="space-row"><div class="space-token">--space-4</div><div class="space-val">2vmin</div><div class="space-bar" style="width:20%"></div></div>
+      <div class="space-row"><div class="space-token">--space-5</div><div class="space-val">3vmin</div><div class="space-bar" style="width:30%"></div></div>
+      <div class="space-row"><div class="space-token">--space-6</div><div class="space-val">4vmin</div><div class="space-bar" style="width:40%"></div></div>
+      <div class="space-row"><div class="space-token">--space-7</div><div class="space-val">5vmin</div><div class="space-bar" style="width:50%"></div></div>
+      <div class="space-row"><div class="space-token">--space-8</div><div class="space-val">6vmin</div><div class="space-bar" style="width:60%"></div></div>
+      <div class="space-row"><div class="space-token">--space-9</div><div class="space-val">8vmin</div><div class="space-bar" style="width:78%"></div></div>
+      <div class="space-row"><div class="space-token">--space-10</div><div class="space-val">10vmin</div><div class="space-bar" style="width:100%"></div></div>
+    </div>
+    <div class="card">
+      <div class="label">Border Radius</div>
+      <div class="radius-row">
+        <div class="radius-item"><div class="radius-box" style="border-radius:2px"></div><div class="radius-lbl">xs · 0.5vmin</div></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-lbl">sm · 1vmin</div></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-lbl">md · 2vmin</div></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-lbl">lg · 3vmin</div></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-lbl">xl · 4vmin</div></div>
+        <div class="radius-item"><div class="radius-box" style="border-radius:999px"></div><div class="radius-lbl">full</div></div>
+      </div>
+      <div class="label" style="margin-top:22px">Letter Spacing</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.7">
+        All <code>--tracking-*</code> tokens resolve to <code>0</code>. Poppins ships at the correct optical tracking — the CSS lockdown block enforces <code>letter-spacing: normal !important</code> on all <code>.slide-container *</code>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================== COMPONENTS -->
+<section class="section" id="components">
+  <div class="section-head">
+    <h2 class="section-title">Components</h2>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+
+    <div class="card">
+      <div class="label">Stat Blocks — .stat-block / .stat-value / .stat-label</div>
+      <div style="display:flex;gap:48px">
+        <div><div class="stat-val" style="color:#6164ff">47K</div><div class="stat-lbl">Active users</div></div>
+        <div><div class="stat-val" style="color:#00c875">98%</div><div class="stat-lbl">Uptime SLA</div></div>
+        <div><div class="stat-val" style="color:#ffcb00">3.2×</div><div class="stat-lbl">Productivity gain</div></div>
+        <div><div class="stat-val">12 min</div><div class="stat-lbl">Avg. time to ship</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Step Cards — .step-card / .step-number / .step-text + .dot-purple / .dot-yellow / .dot-green</div>
+      <div class="grid3">
+        <div class="step-demo">
+          <div class="step-num">1<span class="dot-p">.</span></div>
+          <div class="step-txt">Define your workflow and connect your data sources</div>
+        </div>
+        <div class="step-demo">
+          <div class="step-num">2<span class="dot-y">.</span></div>
+          <div class="step-txt">Build automations using monday's no-code editor</div>
+        </div>
+        <div class="step-demo">
+          <div class="step-num">3<span class="dot-g">.</span></div>
+          <div class="step-txt">Ship to production and monitor in real time</div>
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 28px;">
-      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-text-muted); margin-bottom: 16px;">Heading reset — h1–h6 always get line-height: var(--leading-tight) = 1.1</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-        <div style="background: var(--color-surface); border-radius: 12px; padding: 24px;">
-          <p style="font-size: 10px; color: var(--color-green); font-family: monospace; margin-bottom: 12px;">✓ With heading reset (design-system.css)</p>
-          <h2 style="font-size: 4vmin; font-weight: 500; line-height: var(--leading-tight); margin: 0; letter-spacing: -0.02em;">Security<br>Resolution<br>Distribution</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="label">Image Placeholder — .img-placeholder + .placeholder-label</div>
+        <div class="img-ph-demo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="width:28px;height:28px;opacity:0.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span class="ph-lbl">[Product Screenshot]</span>
         </div>
-        <div style="background: var(--color-surface); border-radius: 12px; padding: 24px;">
-          <p style="font-size: 10px; color: var(--color-red); font-family: monospace; margin-bottom: 12px;">✗ Without heading reset (browser default ~1.3)</p>
-          <h2 style="font-size: 4vmin; font-weight: 500; line-height: 1.3; margin: 0; letter-spacing: -0.02em; opacity: 0.5; text-decoration: line-through;">Security<br>Resolution<br>Distribution</h2>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ SURFACES & CARDS -->
-  <section class="ds-section" id="surfaces">
-    <div class="ds-section-title">Surfaces &amp; Cards</div>
-
-    <div class="surface-demos">
-      <div class="surface-demo surface-bg">
-        <div class="surface-demo-label">--color-bg (with border)</div>
-        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Page background. Used as the base of every slide.</p>
-      </div>
-      <div class="surface-demo surface-card">
-        <div class="surface-demo-label">--color-surface</div>
-        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Primary card/panel background. No border needed — surface provides contrast against bg.</p>
-      </div>
-      <div class="surface-demo surface-card-alt">
-        <div class="surface-demo-label">--color-surface-alt</div>
-        <p class="text-body-sm" style="color:var(--color-text-secondary); margin-top:8px;">Alternate surface for nested elements or subtle separation within a surface card.</p>
-      </div>
-    </div>
-
-    <div style="margin-top: 20px;">
-      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Image placeholder system</p>
-      <div class="placeholder-demos">
-        <div class="placeholder-demo-item">
-          <div class="placeholder-box" data-image-placeholder="photo" style="width:160px;height:100px;"></div>
-          <span class="placeholder-demo-label">photo</span>
-        </div>
-        <div class="placeholder-demo-item">
-          <div class="placeholder-box" data-image-placeholder="portrait" style="width:100px;height:100px;border-radius:50%;"></div>
-          <span class="placeholder-demo-label">portrait</span>
-        </div>
-        <div class="placeholder-demo-item">
-          <div class="placeholder-box" data-image-placeholder="screenshot" style="width:180px;height:110px;border-radius:8px;"></div>
-          <span class="placeholder-demo-label">screenshot</span>
-        </div>
-        <div class="placeholder-demo-item">
-          <div class="placeholder-box" data-image-placeholder="icon" style="width:60px;height:60px;border-radius:12px;"></div>
-          <span class="placeholder-demo-label">icon</span>
+        <div class="callout" style="margin-top:12px">
+          Include inline SVG + <code>.placeholder-label</code> span. Flex-centered in surface background with <code>--radius-lg</code>. Use for any visual slot — screenshots, photos, illustrations.
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ SPACING -->
-  <section class="ds-section" id="spacing">
-    <div class="ds-section-title">Spacing Scale</div>
-    <div class="spacing-grid">
-      <div class="spacing-row">
-        <span class="spacing-label">--space-1</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(0.5vmin * 4)"></div></div>
-        <span class="spacing-value">0.5vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-2</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(1vmin * 4)"></div></div>
-        <span class="spacing-value">1vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-3</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(1.5vmin * 4)"></div></div>
-        <span class="spacing-value">1.5vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-4</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(2vmin * 4)"></div></div>
-        <span class="spacing-value">2vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-5</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(3vmin * 4)"></div></div>
-        <span class="spacing-value">3vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-6</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(4vmin * 4)"></div></div>
-        <span class="spacing-value">4vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-7</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(5vmin * 4)"></div></div>
-        <span class="spacing-value">5vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-8</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(6vmin * 4)"></div></div>
-        <span class="spacing-value">6vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-9</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(8vmin * 4)"></div></div>
-        <span class="spacing-value">8vmin</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-10</span>
-        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width: calc(10vmin * 4)"></div></div>
-        <span class="spacing-value">10vmin</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ BORDER RADIUS -->
-  <section class="ds-section" id="radius">
-    <div class="ds-section-title">Border Radius</div>
-    <div class="radius-grid">
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-xs);"></div>
-        <span class="radius-label">--radius-xs<br>0.5vmin</span>
-      </div>
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
-        <span class="radius-label">--radius-sm<br>1vmin</span>
-      </div>
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-md);"></div>
-        <span class="radius-label">--radius-md<br>2vmin</span>
-      </div>
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
-        <span class="radius-label">--radius-lg<br>3vmin</span>
-      </div>
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-xl);"></div>
-        <span class="radius-label">--radius-xl<br>4vmin</span>
-      </div>
-      <div class="radius-cell">
-        <div class="radius-box" style="border-radius: var(--radius-full);"></div>
-        <span class="radius-label">--radius-full<br>999px</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ ICON SIZES -->
-  <section class="ds-section" id="icon-sizes">
-    <div class="ds-section-title">Icon Sizes</div>
-
-    <div class="icon-size-row">
-      <div class="icon-size-cell">
-        <img src="Icons/Property 1=Star.svg" class="ds-icon ds-icon-xs ds-icon-white" alt="Star" style="display:block;">
-        <span class="icon-size-label">ds-icon-xs<br>3vmin</span>
-      </div>
-      <div class="icon-size-cell">
-        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-sm ds-icon-white" alt="Check" style="display:block;">
-        <span class="icon-size-label">ds-icon-sm<br>5vmin</span>
-      </div>
-      <div class="icon-size-cell">
-        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Check" style="display:block;">
-        <span class="icon-size-label">ds-icon-md<br>7vmin</span>
-      </div>
-      <div class="icon-size-cell">
-        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-lg ds-icon-white" alt="Check" style="display:block;">
-        <span class="icon-size-label">ds-icon-lg<br>10vmin</span>
-      </div>
-      <div class="icon-size-cell">
-        <img src="Icons/Property 1=Badge check.svg" class="ds-icon ds-icon-xl ds-icon-white" alt="Check" style="display:block;">
-        <span class="icon-size-label">ds-icon-xl<br>15vmin</span>
-      </div>
-    </div>
-
-    <div style="margin-top: 32px;">
-      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px;">Icon filter classes (theme-adaptive)</p>
-      <div class="filter-demos">
-        <div class="filter-demo-cell">
-          <div class="filter-demo-box" style="background: var(--color-surface);">
-            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Chart">
+      <div class="card">
+        <div class="label">Data Table — .data-row / .table-row / .cell</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div class="data-row-demo even" style="font-size:10px;font-weight:600;color:var(--color-text-muted)">
+            <span>Feature</span><span>Q1</span><span>Q2</span><span>Q3</span>
           </div>
-          <span class="filter-demo-label">ds-icon-white<br>on surface<br>(auto-adapts)</span>
-        </div>
-        <div class="filter-demo-cell">
-          <div class="filter-demo-box" style="background: var(--color-purple);">
-            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-white" alt="Chart">
+          <div class="data-row-demo">
+            <span>AI Builder</span>
+            <span style="color:#00c875">Done</span>
+            <span style="color:#6164ff">In progress</span>
+            <span style="color:#a0a0a0">—</span>
           </div>
-          <span class="filter-demo-label">ds-icon-white<br>on purple<br>(always white)</span>
-        </div>
-        <div class="filter-demo-cell">
-          <div class="filter-demo-box" style="background: var(--color-surface);">
-            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md" alt="Chart">
+          <div class="data-row-demo even">
+            <span>Automations</span>
+            <span style="color:#00c875">Done</span>
+            <span style="color:#00c875">Done</span>
+            <span style="color:#6164ff">In progress</span>
           </div>
-          <span class="filter-demo-label">no filter<br>natural purple<br>(always #6164ff)</span>
-        </div>
-        <div class="filter-demo-cell">
-          <div class="filter-demo-box" style="background: var(--color-surface);">
-            <img src="Icons/Property 1=Bar Chart.svg" class="ds-icon ds-icon-md ds-icon-dark" alt="Chart">
+          <div class="data-row-demo">
+            <span>API v3</span>
+            <span style="color:#a0a0a0">—</span>
+            <span style="color:#ffcb00">Planned</span>
+            <span style="color:#6164ff">In progress</span>
           </div>
-          <span class="filter-demo-label">ds-icon-dark<br>on surface<br>(auto-adapts)</span>
+        </div>
+        <div class="callout" style="margin-top:12px">
+          Odd rows get <code>--color-surface</code> via <code>:nth-child(odd)</code>. Border-radius is <code>--radius-sm</code>. Set <code>grid-template-columns</code> per table.
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ============================================================ ICON LIBRARY -->
-  <section class="ds-section" id="icons">
-    <div class="ds-section-title">Icon Library — 267 icons</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:20px;">Natural purple (#6164ff stroke). Path: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Icons/Property 1=Name.svg</code></p>
+  </div>
+</section>
 
-    <div class="icon-grid">
-      <div class="icon-cell"><img src="Icons/Property 1=Academy.svg" alt="Academy"><span class="icon-name">Academy</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Alarm.svg" alt="Alarm"><span class="icon-name">Alarm</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Alarm check.svg" alt="Alarm check"><span class="icon-name">Alarm check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Anchor.svg" alt="Anchor"><span class="icon-name">Anchor</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Apps.svg" alt="Apps"><span class="icon-name">Apps</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Archive.svg" alt="Archive"><span class="icon-name">Archive</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Archive2.svg" alt="Archive2"><span class="icon-name">Archive2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Arrow Path.svg" alt="Arrow Path"><span class="icon-name">Arrow Path</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Arrow precentage.svg" alt="Arrow %"><span class="icon-name">Arrow %</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Arrow target.svg" alt="Arrow target"><span class="icon-name">Arrow target</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Arrow up.svg" alt="Arrow up"><span class="icon-name">Arrow up</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Arrows.svg" alt="Arrows"><span class="icon-name">Arrows</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Auction.svg" alt="Auction"><span class="icon-name">Auction</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Badge.svg" alt="Badge"><span class="icon-name">Badge</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Badge check.svg" alt="Badge check"><span class="icon-name">Badge check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Badge star.svg" alt="Badge star"><span class="icon-name">Badge star</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Badge2.svg" alt="Badge2"><span class="icon-name">Badge2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Bar Chart.svg" alt="Bar Chart"><span class="icon-name">Bar Chart</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Bar up.svg" alt="Bar up"><span class="icon-name">Bar up</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Battery.svg" alt="Battery"><span class="icon-name">Battery</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Battery charge.svg" alt="Battery charge"><span class="icon-name">Battery charge</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Bell.svg" alt="Bell"><span class="icon-name">Bell</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Book.svg" alt="Book"><span class="icon-name">Book</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Book bookmark.svg" alt="Book bookmark"><span class="icon-name">Book bookmark</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Book open.svg" alt="Book open"><span class="icon-name">Book open</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Book open2.svg" alt="Book open2"><span class="icon-name">Book open2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Bookmark.svg" alt="Bookmark"><span class="icon-name">Bookmark</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Box.svg" alt="Box"><span class="icon-name">Box</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Box arrows.svg" alt="Box arrows"><span class="icon-name">Box arrows</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Box2.svg" alt="Box2"><span class="icon-name">Box2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Bubble talk.svg" alt="Bubble talk"><span class="icon-name">Bubble talk</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Calendar.svg" alt="Calendar"><span class="icon-name">Calendar</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Calendar check.svg" alt="Calendar check"><span class="icon-name">Calendar check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Calendar plus.svg" alt="Calendar plus"><span class="icon-name">Calendar plus</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Camera.svg" alt="Camera"><span class="icon-name">Camera</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cash.svg" alt="Cash"><span class="icon-name">Cash</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Chart down.svg" alt="Chart down"><span class="icon-name">Chart down</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Chart up.svg" alt="Chart up"><span class="icon-name">Chart up</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Checklist.svg" alt="Checklist"><span class="icon-name">Checklist</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Checkmark.svg" alt="Checkmark"><span class="icon-name">Checkmark</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Chip.svg" alt="Chip"><span class="icon-name">Chip</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Chip2.svg" alt="Chip2"><span class="icon-name">Chip2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Circle.svg" alt="Circle"><span class="icon-name">Circle</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Click.svg" alt="Click"><span class="icon-name">Click</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Clip.svg" alt="Clip"><span class="icon-name">Clip</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Clipboard.svg" alt="Clipboard"><span class="icon-name">Clipboard</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Clipboard pen.svg" alt="Clipboard pen"><span class="icon-name">Clipboard pen</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Clock.svg" alt="Clock"><span class="icon-name">Clock</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Close.svg" alt="Close"><span class="icon-name">Close</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cloud.svg" alt="Cloud"><span class="icon-name">Cloud</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cloud flash.svg" alt="Cloud flash"><span class="icon-name">Cloud flash</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cloud2.svg" alt="Cloud2"><span class="icon-name">Cloud2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Coffee.svg" alt="Coffee"><span class="icon-name">Coffee</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Coins.svg" alt="Coins"><span class="icon-name">Coins</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Collaboration.svg" alt="Collaboration"><span class="icon-name">Collaboration</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Compass.svg" alt="Compass"><span class="icon-name">Compass</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Connection.svg" alt="Connection"><span class="icon-name">Connection</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Connection user.svg" alt="Connection user"><span class="icon-name">Connection user</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Container.svg" alt="Container"><span class="icon-name">Container</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Credit card.svg" alt="Credit card"><span class="icon-name">Credit card</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Crop.svg" alt="Crop"><span class="icon-name">Crop</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cube.svg" alt="Cube"><span class="icon-name">Cube</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cursor.svg" alt="Cursor"><span class="icon-name">Cursor</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Cursor finger.svg" alt="Cursor finger"><span class="icon-name">Cursor finger</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Database.svg" alt="Database"><span class="icon-name">Database</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Database2.svg" alt="Database2"><span class="icon-name">Database2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Desktop.svg" alt="Desktop"><span class="icon-name">Desktop</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Desktop check.svg" alt="Desktop check"><span class="icon-name">Desktop check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Desktop stats.svg" alt="Desktop stats"><span class="icon-name">Desktop stats</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Desktop2.svg" alt="Desktop2"><span class="icon-name">Desktop2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Diamond.svg" alt="Diamond"><span class="icon-name">Diamond</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Doc computer.svg" alt="Doc computer"><span class="icon-name">Doc computer</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Doc stats.svg" alt="Doc stats"><span class="icon-name">Doc stats</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Docs.svg" alt="Docs"><span class="icon-name">Docs</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Document.svg" alt="Document"><span class="icon-name">Document</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Document bar.svg" alt="Document bar"><span class="icon-name">Document bar</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Document text.svg" alt="Document text"><span class="icon-name">Document text</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Dollar.svg" alt="Dollar"><span class="icon-name">Dollar</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Door.svg" alt="Door"><span class="icon-name">Door</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Edit.svg" alt="Edit"><span class="icon-name">Edit</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Email.svg" alt="Email"><span class="icon-name">Email</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Envelope.svg" alt="Envelope"><span class="icon-name">Envelope</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Exclamation.svg" alt="Exclamation"><span class="icon-name">Exclamation</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Expand.svg" alt="Expand"><span class="icon-name">Expand</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Eye.svg" alt="Eye"><span class="icon-name">Eye</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Eye check.svg" alt="Eye check"><span class="icon-name">Eye check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Eye pie.svg" alt="Eye pie"><span class="icon-name">Eye pie</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Facebook.svg" alt="Facebook"><span class="icon-name">Facebook</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Feather.svg" alt="Feather"><span class="icon-name">Feather</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Film.svg" alt="Film"><span class="icon-name">Film</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Filter.svg" alt="Filter"><span class="icon-name">Filter</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Filter2.svg" alt="Filter2"><span class="icon-name">Filter2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Finger.svg" alt="Finger"><span class="icon-name">Finger</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Finger click.svg" alt="Finger click"><span class="icon-name">Finger click</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Fingerprint.svg" alt="Fingerprint"><span class="icon-name">Fingerprint</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Flag.svg" alt="Flag"><span class="icon-name">Flag</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Flash.svg" alt="Flash"><span class="icon-name">Flash</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Flash2.svg" alt="Flash2"><span class="icon-name">Flash2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Float.svg" alt="Float"><span class="icon-name">Float</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Flow.svg" alt="Flow"><span class="icon-name">Flow</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Folder.svg" alt="Folder"><span class="icon-name">Folder</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Folder download.svg" alt="Folder download"><span class="icon-name">Folder download</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Funnel.svg" alt="Funnel"><span class="icon-name">Funnel</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Gear.svg" alt="Gear"><span class="icon-name">Gear</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Gears.svg" alt="Gears"><span class="icon-name">Gears</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Gift.svg" alt="Gift"><span class="icon-name">Gift</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Globe.svg" alt="Globe"><span class="icon-name">Globe</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Goggles.svg" alt="Goggles"><span class="icon-name">Goggles</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph.svg" alt="Graph"><span class="icon-name">Graph</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph arrow down.svg" alt="Graph arrow down"><span class="icon-name">Graph ↓</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph arrow up.svg" alt="Graph arrow up"><span class="icon-name">Graph ↑</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph down.svg" alt="Graph down"><span class="icon-name">Graph down</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph up.svg" alt="Graph up"><span class="icon-name">Graph up</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Graph ups.svg" alt="Graph ups"><span class="icon-name">Graph ups</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=grid.svg" alt="grid"><span class="icon-name">grid</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Grid2.svg" alt="Grid2"><span class="icon-name">Grid2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Grid3.svg" alt="Grid3"><span class="icon-name">Grid3</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Hand gear.svg" alt="Hand gear"><span class="icon-name">Hand gear</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Handshake.svg" alt="Handshake"><span class="icon-name">Handshake</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Headphones.svg" alt="Headphones"><span class="icon-name">Headphones</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Headset.svg" alt="Headset"><span class="icon-name">Headset</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Heart.svg" alt="Heart"><span class="icon-name">Heart</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Hierachy.svg" alt="Hierarchy"><span class="icon-name">Hierarchy</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Hirarcy files.svg" alt="Hierarchy files"><span class="icon-name">Hierarchy files</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Home.svg" alt="Home"><span class="icon-name">Home</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Hourglass.svg" alt="Hourglass"><span class="icon-name">Hourglass</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=House.svg" alt="House"><span class="icon-name">House</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Image.svg" alt="Image"><span class="icon-name">Image</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Inbox.svg" alt="Inbox"><span class="icon-name">Inbox</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Info.svg" alt="Info"><span class="icon-name">Info</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Info2.svg" alt="Info2"><span class="icon-name">Info2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Instagram.svg" alt="Instagram"><span class="icon-name">Instagram</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Key.svg" alt="Key"><span class="icon-name">Key</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Label.svg" alt="Label"><span class="icon-name">Label</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Laptop.svg" alt="Laptop"><span class="icon-name">Laptop</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Launch.svg" alt="Launch"><span class="icon-name">Launch</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Layers.svg" alt="Layers"><span class="icon-name">Layers</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Layers2.svg" alt="Layers2"><span class="icon-name">Layers2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Lightbulb.svg" alt="Lightbulb"><span class="icon-name">Lightbulb</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Link.svg" alt="Link"><span class="icon-name">Link</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=LinkedIn.svg" alt="LinkedIn"><span class="icon-name">LinkedIn</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=List.svg" alt="List"><span class="icon-name">List</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Location.svg" alt="Location"><span class="icon-name">Location</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Lock.svg" alt="Lock"><span class="icon-name">Lock</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Lock network.svg" alt="Lock network"><span class="icon-name">Lock network</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Locker.svg" alt="Locker"><span class="icon-name">Locker</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Log in.svg" alt="Log in"><span class="icon-name">Log in</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Log Out.svg" alt="Log out"><span class="icon-name">Log out</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Loop.svg" alt="Loop"><span class="icon-name">Loop</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Magic wand.svg" alt="Magic wand"><span class="icon-name">Magic wand</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Magic wand2.svg" alt="Magic wand2"><span class="icon-name">Magic wand2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Magnet.svg" alt="Magnet"><span class="icon-name">Magnet</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Magnifying.svg" alt="Magnifying"><span class="icon-name">Magnifying</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Map.svg" alt="Map"><span class="icon-name">Map</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Megaphone.svg" alt="Megaphone"><span class="icon-name">Megaphone</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Microphone.svg" alt="Microphone"><span class="icon-name">Microphone</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Microphone mute.svg" alt="Mic mute"><span class="icon-name">Mic mute</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Minus.svg" alt="Minus"><span class="icon-name">Minus</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Molecular.svg" alt="Molecular"><span class="icon-name">Molecular</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Money bag.svg" alt="Money bag"><span class="icon-name">Money bag</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Money bags.svg" alt="Money bags"><span class="icon-name">Money bags</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Moon.svg" alt="Moon"><span class="icon-name">Moon</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Mountain.svg" alt="Mountain"><span class="icon-name">Mountain</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Music.svg" alt="Music"><span class="icon-name">Music</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Network.svg" alt="Network"><span class="icon-name">Network</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Network2.svg" alt="Network2"><span class="icon-name">Network2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No call.svg" alt="No call"><span class="icon-name">No call</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No cloud.svg" alt="No cloud"><span class="icon-name">No cloud</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No eye.svg" alt="No eye"><span class="icon-name">No eye</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No Image.svg" alt="No image"><span class="icon-name">No image</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No ring.svg" alt="No ring"><span class="icon-name">No ring</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=No video.svg" alt="No video"><span class="icon-name">No video</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Notification.svg" alt="Notification"><span class="icon-name">Notification</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Organization.svg" alt="Organization"><span class="icon-name">Organization</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Paper.svg" alt="Paper"><span class="icon-name">Paper</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Paper plane.svg" alt="Paper plane"><span class="icon-name">Paper plane</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Pen.svg" alt="Pen"><span class="icon-name">Pen</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Pen write.svg" alt="Pen write"><span class="icon-name">Pen write</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Pencil.svg" alt="Pencil"><span class="icon-name">Pencil</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Phone.svg" alt="Phone"><span class="icon-name">Phone</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Phone ring.svg" alt="Phone ring"><span class="icon-name">Phone ring</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Phone2.svg" alt="Phone2"><span class="icon-name">Phone2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Pie.svg" alt="Pie"><span class="icon-name">Pie</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Pin.svg" alt="Pin"><span class="icon-name">Pin</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Play Button.svg" alt="Play"><span class="icon-name">Play</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Plus.svg" alt="Plus"><span class="icon-name">Plus</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Point users.svg" alt="Point users"><span class="icon-name">Point users</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Printer.svg" alt="Printer"><span class="icon-name">Printer</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Prohibited.svg" alt="Prohibited"><span class="icon-name">Prohibited</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Puzzle.svg" alt="Puzzle"><span class="icon-name">Puzzle</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Question.svg" alt="Question"><span class="icon-name">Question</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Question brain.svg" alt="Question brain"><span class="icon-name">Question brain</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Radar.svg" alt="Radar"><span class="icon-name">Radar</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Rain.svg" alt="Rain"><span class="icon-name">Rain</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Rank star badge.svg" alt="Rank star"><span class="icon-name">Rank star</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Refresh.svg" alt="Refresh"><span class="icon-name">Refresh</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Refresh3.svg" alt="Refresh3"><span class="icon-name">Refresh3</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Resource.svg" alt="Resource"><span class="icon-name">Resource</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Sad smiley.svg" alt="Sad smiley"><span class="icon-name">Sad smiley</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Save.svg" alt="Save"><span class="icon-name">Save</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Scale balance.svg" alt="Scale balance"><span class="icon-name">Scale balance</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Scale target.svg" alt="Scale target"><span class="icon-name">Scale target</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Scissors.svg" alt="Scissors"><span class="icon-name">Scissors</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Search.svg" alt="Search"><span class="icon-name">Search</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Settings gear.svg" alt="Settings gear"><span class="icon-name">Settings gear</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Share.svg" alt="Share"><span class="icon-name">Share</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Shield check.svg" alt="Shield check"><span class="icon-name">Shield check</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Shield star.svg" alt="Shield star"><span class="icon-name">Shield star</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Shopping bag.svg" alt="Shopping bag"><span class="icon-name">Shopping bag</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Shopping Cart.svg" alt="Shopping cart"><span class="icon-name">Shopping cart</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Sign.svg" alt="Sign"><span class="icon-name">Sign</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Signal.svg" alt="Signal"><span class="icon-name">Signal</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Signal radar.svg" alt="Signal radar"><span class="icon-name">Signal radar</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Smiley.svg" alt="Smiley"><span class="icon-name">Smiley</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Snowflake.svg" alt="Snowflake"><span class="icon-name">Snowflake</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Spaceship.svg" alt="Spaceship"><span class="icon-name">Spaceship</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Spaceship dollars.svg" alt="Spaceship $"><span class="icon-name">Spaceship $</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Speaker.svg" alt="Speaker"><span class="icon-name">Speaker</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Speech bubble.svg" alt="Speech bubble"><span class="icon-name">Speech bubble</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Split.svg" alt="Split"><span class="icon-name">Split</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Stats.svg" alt="Stats"><span class="icon-name">Stats</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Stats doc.svg" alt="Stats doc"><span class="icon-name">Stats doc</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Stereo.svg" alt="Stereo"><span class="icon-name">Stereo</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Stethoscope.svg" alt="Stethoscope"><span class="icon-name">Stethoscope</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Suitcase.svg" alt="Suitcase"><span class="icon-name">Suitcase</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Sun.svg" alt="Sun"><span class="icon-name">Sun</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Sync.svg" alt="Sync"><span class="icon-name">Sync</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Sync serch.svg" alt="Sync search"><span class="icon-name">Sync search</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Tablet.svg" alt="Tablet"><span class="icon-name">Tablet</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Target.svg" alt="Target"><span class="icon-name">Target</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Target dollar.svg" alt="Target dollar"><span class="icon-name">Target $</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Target eye.svg" alt="Target eye"><span class="icon-name">Target eye</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Target win.svg" alt="Target win"><span class="icon-name">Target win</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Target2.svg" alt="Target2"><span class="icon-name">Target2</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Text.svg" alt="Text"><span class="icon-name">Text</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Thermometer.svg" alt="Thermometer"><span class="icon-name">Thermometer</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Thumbs Down.svg" alt="Thumbs down"><span class="icon-name">Thumbs down</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Thumbs Up.svg" alt="Thumbs up"><span class="icon-name">Thumbs up</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Toggle.svg" alt="Toggle"><span class="icon-name">Toggle</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Toggle box.svg" alt="Toggle box"><span class="icon-name">Toggle box</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Tool.svg" alt="Tool"><span class="icon-name">Tool</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Tools.svg" alt="Tools"><span class="icon-name">Tools</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Transfer money users.svg" alt="Transfer money"><span class="icon-name">Transfer money</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Translate.svg" alt="Translate"><span class="icon-name">Translate</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Trash.svg" alt="Trash"><span class="icon-name">Trash</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Trophy.svg" alt="Trophy"><span class="icon-name">Trophy</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Truck.svg" alt="Truck"><span class="icon-name">Truck</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=TV.svg" alt="TV"><span class="icon-name">TV</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Twitter.svg" alt="Twitter"><span class="icon-name">Twitter</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Umbrella.svg" alt="Umbrella"><span class="icon-name">Umbrella</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Unlock.svg" alt="Unlock"><span class="icon-name">Unlock</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=User.svg" alt="User"><span class="icon-name">User</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=User hand.svg" alt="User hand"><span class="icon-name">User hand</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Users.svg" alt="Users"><span class="icon-name">Users</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Users circle.svg" alt="Users circle"><span class="icon-name">Users circle</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Video.svg" alt="Video"><span class="icon-name">Video</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Wallet.svg" alt="Wallet"><span class="icon-name">Wallet</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Warning.svg" alt="Warning"><span class="icon-name">Warning</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Watch.svg" alt="Watch"><span class="icon-name">Watch</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Weather.svg" alt="Weather"><span class="icon-name">Weather</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Web chart.svg" alt="Web chart"><span class="icon-name">Web chart</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Web meter.svg" alt="Web meter"><span class="icon-name">Web meter</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=WiFi.svg" alt="WiFi"><span class="icon-name">WiFi</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Win.svg" alt="Win"><span class="icon-name">Win</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Wind.svg" alt="Wind"><span class="icon-name">Wind</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Window at.svg" alt="Window at"><span class="icon-name">Window at</span></div>
-      <div class="icon-cell"><img src="Icons/Property 1=Youtube.svg" alt="Youtube"><span class="icon-name">Youtube</span></div>
-    </div>
-  </section>
+<!-- =========================================== CHARTS -->
+<section class="section" id="charts">
+  <div class="section-head">
+    <h2 class="section-title">Charts &amp; Data Viz</h2>
+    <span class="section-note">Pure CSS — no external libraries · animated on load · all colors via token vars</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
 
-  <!-- ============================================================ VISUALS -->
-  <section class="ds-section" id="visuals">
-    <div class="ds-section-title">Visuals — Decorative SVG Assets</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:20px;">Path: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Visuals/Group XXXXXXXXXX.svg</code></p>
-    <div class="visuals-grid">
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165690.svg" alt="Visual 690">
-        <span class="visual-name">Group 1261165690</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165691.svg" alt="Visual 691">
-        <span class="visual-name">Group 1261165691</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165692.svg" alt="Visual 692">
-        <span class="visual-name">Group 1261165692</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165693.svg" alt="Visual 693">
-        <span class="visual-name">Group 1261165693</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165694.svg" alt="Visual 694">
-        <span class="visual-name">Group 1261165694</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165695.svg" alt="Visual 695">
-        <span class="visual-name">Group 1261165695</span>
-      </div>
-      <div class="visual-cell">
-        <img src="Visuals/Group 1261165696.svg" alt="Visual 696">
-        <span class="visual-name">Group 1261165696</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ CHARTS & DATA VIZ -->
-  <section class="ds-section" id="charts">
-    <div class="ds-section-title">Charts &amp; Data Viz</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
-      Component classes from <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">design-system.css</code>.
-      All colors use CSS vars — dark/light themes work automatically.
-    </p>
-
-    <!-- Bar Chart -->
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px;">Bar Chart <code style="font-family:monospace; font-weight:400; font-size:11px;">.chart-container · .bar-group · .bar · .bar-[color]</code></div>
-    <div class="chart-container" style="height: 320px;">
-      <div class="chart-title">Quarterly Performance</div>
-      <div class="chart-body">
-        <div class="y-axis">
-          <span>100</span>
-          <span>75</span>
-          <span>50</span>
-          <span>25</span>
-          <span>0</span>
-        </div>
-        <div class="chart-plot">
-          <div class="grid-lines">
-            <div class="grid-line"></div>
-            <div class="grid-line"></div>
-            <div class="grid-line"></div>
-            <div class="grid-line"></div>
+    <!-- Bar chart — full width -->
+    <div class="card">
+      <div class="label">Bar Chart — .chart-container / .bars-row / .bar-group / .bar / .bar-purple / .bar-purple-light</div>
+      <div class="chart-ex">
+        <div class="chart-ex-title">Deployment Velocity — Q1 → Q4</div>
+        <div class="chart-ex-body">
+          <div class="chart-ex-yaxis">
+            <span>120</span><span>90</span><span>60</span><span>30</span><span>0</span>
           </div>
-          <div class="bars-row">
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">62</div>
-                  <div class="bar bar-purple" style="height:62%"></div>
-                </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">45</div>
-                  <div class="bar bar-green" style="height:45%"></div>
-                </div>
-              </div>
-              <div class="bar-x-label">Q1</div>
+          <div class="chart-ex-plot">
+            <div class="chart-ex-gridlines">
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
+              <div class="chart-ex-gridline"></div>
             </div>
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">74</div>
-                  <div class="bar bar-purple" style="height:74%"></div>
+            <div class="chart-ex-bars">
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">72</div><div class="chart-ex-bar bar-purple" style="height:60%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">85</div><div class="chart-ex-bar bar-light" style="height:71%"></div></div>
                 </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">58</div>
-                  <div class="bar bar-green" style="height:58%"></div>
-                </div>
+                <div class="chart-ex-xlabel">Q1</div>
               </div>
-              <div class="bar-x-label">Q2</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">88</div>
-                  <div class="bar bar-purple" style="height:88%"></div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">91</div><div class="chart-ex-bar bar-purple" style="height:76%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">90</div><div class="chart-ex-bar bar-light" style="height:75%"></div></div>
                 </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">71</div>
-                  <div class="bar bar-green" style="height:71%"></div>
-                </div>
+                <div class="chart-ex-xlabel">Q2</div>
               </div>
-              <div class="bar-x-label">Q3</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">95</div>
-                  <div class="bar bar-purple" style="height:95%"></div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">108</div><div class="chart-ex-bar bar-purple" style="height:90%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">95</div><div class="chart-ex-bar bar-light" style="height:79%"></div></div>
                 </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">83</div>
-                  <div class="bar bar-green" style="height:83%"></div>
-                </div>
+                <div class="chart-ex-xlabel">Q3</div>
               </div>
-              <div class="bar-x-label">Q4</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">79</div>
-                  <div class="bar bar-purple" style="height:79%"></div>
+              <div class="chart-ex-group">
+                <div class="chart-ex-group-bars">
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">119</div><div class="chart-ex-bar bar-purple" style="height:99%"></div></div>
+                  <div class="chart-ex-barwrap"><div class="chart-ex-bar-label">100</div><div class="chart-ex-bar bar-light" style="height:83%"></div></div>
                 </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">66</div>
-                  <div class="bar bar-green" style="height:66%"></div>
-                </div>
+                <div class="chart-ex-xlabel">Q4</div>
               </div>
-              <div class="bar-x-label">Q5</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar-group-bars">
-                <div class="bar-wrap">
-                  <div class="bar-top-label">91</div>
-                  <div class="bar bar-purple" style="height:91%"></div>
-                </div>
-                <div class="bar-wrap">
-                  <div class="bar-top-label">77</div>
-                  <div class="bar bar-green" style="height:77%"></div>
-                </div>
-              </div>
-              <div class="bar-x-label">Q6</div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--color-purple)"></div> Product A</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--color-green)"></div> Product B</div>
-      </div>
-    </div>
-
-    <!-- Bar color palette -->
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Bar Colors</div>
-    <div style="display:flex; gap:12px; align-items:flex-end; height:80px; background:var(--color-surface); border-radius:12px; padding:16px 20px 10px;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-        <div class="bar bar-purple" style="height:60px;animation:none"></div>
-        <span style="font-size:11px;color:var(--color-text-muted)">purple</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-        <div class="bar bar-purple-light" style="height:60px;animation:none"></div>
-        <span style="font-size:11px;color:var(--color-text-muted)">purple-light</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-        <div class="bar bar-green" style="height:60px;animation:none"></div>
-        <span style="font-size:11px;color:var(--color-text-muted)">green</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-        <div class="bar bar-yellow" style="height:60px;animation:none"></div>
-        <span style="font-size:11px;color:var(--color-text-muted)">yellow</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-        <div class="bar bar-red" style="height:60px;animation:none"></div>
-        <span style="font-size:11px;color:var(--color-text-muted)">red</span>
-      </div>
-    </div>
-
-    <!-- Stat blocks -->
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Stat / Metric Blocks <code style="font-family:monospace; font-weight:400; font-size:11px;">.stat-block · .stat-value · .stat-label</code></div>
-    <div style="background:var(--color-surface); border-radius:12px; padding:32px; display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
-      <div class="stat-block">
-        <div class="stat-value text-purple">180K</div>
-        <div class="stat-label">Active users this month</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-value text-green">94%</div>
-        <div class="stat-label">Customer satisfaction score</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-value">3.2×</div>
-        <div class="stat-label">Revenue growth year over year</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-value text-yellow">48h</div>
-        <div class="stat-label">Average time to resolution</div>
-      </div>
-    </div>
-
-    <!-- Hero metric -->
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 16px;">Hero Metric <code style="font-family:monospace; font-weight:400; font-size:11px;">.stat-value-hero</code></div>
-    <div style="background:var(--color-surface); border-radius:12px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:8px;">
-      <div class="stat-value-hero text-purple" style="font-size:clamp(48px,8vw,120px)">$2.4B</div>
-      <div class="stat-label" style="font-size:18px; text-align:center;">Total platform value managed in 2024</div>
-    </div>
-  </section>
-
-  <!-- ============================================================ TABLE -->
-  <section class="ds-section" id="tables">
-    <div class="ds-section-title">Table</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
-      Zebra-stripe rows with rounded corners and gap spacing. From <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Deck_Dark_Page_089</code>.
-      Classes: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.table-container · .table-row · .header-row · .data-rows-wrapper · .data-row · .cell</code>.
-      Data rows have <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">border-radius: var(--radius-sm)</code> built in — never override to 0.
-    </p>
-
-    <div class="table-container">
-      <!-- Header row — set grid-template-columns per table -->
-      <div class="table-row header-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
-        <div class="cell"></div>
-        <div class="cell">Q1</div>
-        <div class="cell">Q2</div>
-        <div class="cell">Q3</div>
-        <div class="cell">Growth</div>
-        <div class="cell">Target</div>
-      </div>
-      <div class="data-rows-wrapper">
-        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
-          <div class="cell">Enterprise</div>
-          <div class="cell">$1.2M</div>
-          <div class="cell">$1.5M</div>
-          <div class="cell">$1.9M</div>
-          <div class="cell text-green">+58%</div>
-          <div class="cell">$2.0M</div>
-        </div>
-        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
-          <div class="cell">Mid-Market</div>
-          <div class="cell">$840K</div>
-          <div class="cell">$910K</div>
-          <div class="cell">$1.1M</div>
-          <div class="cell text-green">+31%</div>
-          <div class="cell">$1.2M</div>
-        </div>
-        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
-          <div class="cell">SMB</div>
-          <div class="cell">$320K</div>
-          <div class="cell">$295K</div>
-          <div class="cell">$340K</div>
-          <div class="cell text-yellow">+6%</div>
-          <div class="cell">$400K</div>
-        </div>
-        <div class="table-row data-row" style="grid-template-columns: 2.5fr 1.2fr 1.2fr 1.2fr 1.2fr 1.2fr;">
-          <div class="cell">Self-Serve</div>
-          <div class="cell">$180K</div>
-          <div class="cell">$210K</div>
-          <div class="cell">$175K</div>
-          <div class="cell text-red">−3%</div>
-          <div class="cell">$250K</div>
+        <div class="chart-ex-legend">
+          <div class="chart-ex-leg-item"><div class="chart-ex-dot" style="background:#6164ff"></div><span>Actual</span></div>
+          <div class="chart-ex-leg-item"><div class="chart-ex-dot" style="background:#8A99FF"></div><span>Target</span></div>
         </div>
       </div>
     </div>
 
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:28px 0 12px;">Structure</div>
-    <div style="background:var(--color-surface); border-radius:12px; padding:20px 24px; font-family:monospace; font-size:13px; color:var(--color-text-secondary); line-height:2;">
-      <span style="color:var(--color-text-muted)">/* Wide label col + equal data cols — adjust fractions per content */</span><br>
-      .table-row { grid-template-columns: <span style="color:var(--color-purple)">2.5fr</span> repeat(<span style="color:var(--color-green)">N</span>, <span style="color:var(--color-purple-light)">1.2fr</span>); }<br>
-      <span style="color:var(--color-text-muted)">/* Odd data rows get surface bg; even rows are transparent */</span><br>
-      .data-rows-wrapper .data-row:nth-child(odd) { background: var(--color-surface); }
-    </div>
-  </section>
-
-  <!-- ============================================================ NUMBERED STEPS -->
-  <section class="ds-section" id="numbered-steps">
-    <div class="ds-section-title">Numbered Steps</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
-      Large number + colored accent dot + body text. From <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">Deck_Dark_Page_043</code>.
-      Classes: <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.step-card · .step-number · .step-text · .dot-[color]</code>
-    </p>
-
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
-      <div class="step-card">
-        <div class="step-number">1<span class="dot-purple">.</span></div>
-        <p class="step-text">Add a short message or key point here.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">2<span class="dot-yellow">.</span></div>
-        <p class="step-text">This space is for a quick description or callout.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">3<span class="dot-green">.</span></div>
-        <p class="step-text">Insert a concise statement to support the title.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">4<span class="dot-red">.</span></div>
-        <p class="step-text">Your summary or key insight goes right in this area.</p>
-      </div>
-    </div>
-
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:28px 0 12px;">Dot color variants</div>
-    <div style="display:flex; gap:24px; align-items:baseline;">
-      <div style="display:flex; align-items:baseline; gap:4px;">
-        <span style="font-size:32px; font-weight:600; line-height:1;">1<span class="dot-purple">.</span></span>
-        <span style="font-size:13px; color:var(--color-text-muted);">dot-purple</span>
-      </div>
-      <div style="display:flex; align-items:baseline; gap:4px;">
-        <span style="font-size:32px; font-weight:600; line-height:1;">2<span class="dot-yellow">.</span></span>
-        <span style="font-size:13px; color:var(--color-text-muted);">dot-yellow</span>
-      </div>
-      <div style="display:flex; align-items:baseline; gap:4px;">
-        <span style="font-size:32px; font-weight:600; line-height:1;">3<span class="dot-green">.</span></span>
-        <span style="font-size:13px; color:var(--color-text-muted);">dot-green</span>
-      </div>
-      <div style="display:flex; align-items:baseline; gap:4px;">
-        <span style="font-size:32px; font-weight:600; line-height:1;">4<span class="dot-red">.</span></span>
-        <span style="font-size:13px; color:var(--color-text-muted);">dot-red</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ PIE & DONUT CHARTS -->
-  <section class="ds-section" id="pie-charts">
-    <div class="ds-section-title">Pie &amp; Donut Charts</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
-      Pure CSS via <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">conic-gradient()</code>.
-      Set segment stops inline; structure classes come from <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">design-system.css</code>.
-    </p>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-
+    <div class="grid2">
       <!-- Donut chart -->
-      <div class="chart-container" style="padding:32px;">
-        <div class="chart-title" style="margin-bottom:24px;">Market Share — Donut</div>
-        <div style="display:flex; align-items:center; gap:40px; justify-content:center;">
-          <div class="donut-wrap">
-            <div class="donut-chart" style="
-              width: 180px; height: 180px;
-              background: conic-gradient(
-                var(--color-purple)       0deg   130deg,
-                var(--color-green)      130deg   215deg,
-                var(--color-yellow)     215deg   270deg,
-                var(--color-purple-light) 270deg 360deg
-              );">
-            </div>
-            <div class="donut-center">
-              <div class="donut-center-value">100%</div>
-              <div class="donut-center-label">Total</div>
+      <div class="card">
+        <div class="label">Donut Chart — .donut-chart / .donut-wrap / .donut-center / .pie-legend</div>
+        <div style="display:flex;align-items:center;gap:32px;padding:8px 0">
+          <div class="donut-ex-wrap">
+            <div class="donut-ex-chart"></div>
+            <div class="donut-ex-center">
+              <div class="donut-ex-val" style="color:#fff">62%</div>
+              <div class="donut-ex-lbl">Core</div>
             </div>
           </div>
-          <div class="pie-legend">
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-purple)"></div>
-              <span class="pie-legend-label">Enterprise</span>
-              <span class="pie-legend-value">36%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-green)"></div>
-              <span class="pie-legend-label">Mid-Market</span>
-              <span class="pie-legend-value">24%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-yellow)"></div>
-              <span class="pie-legend-label">SMB</span>
-              <span class="pie-legend-value">15%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-purple-light)"></div>
-              <span class="pie-legend-label">Other</span>
-              <span class="pie-legend-value">25%</span>
-            </div>
+          <div class="donut-ex-legend">
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#6164ff"></div><span class="donut-ex-name">Core Platform</span><span class="donut-ex-pct">62%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ffcb00"></div><span class="donut-ex-name">Integrations</span><span class="donut-ex-pct">24%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#00c875"></div><span class="donut-ex-name">Analytics</span><span class="donut-ex-pct">14%</span></div>
           </div>
+        </div>
+        <div class="callout" style="margin-top:12px">
+          Set <code>background: conic-gradient(#6164ff 0% 62%, #ffcb00 62% 86%, #00c875 86% 100%)</code> on <code>.donut-chart</code>. The mask punches a hole at 54% radius.
         </div>
       </div>
 
       <!-- Pie chart -->
-      <div class="chart-container" style="padding:32px;">
-        <div class="chart-title" style="margin-bottom:24px;">Revenue Split — Pie</div>
-        <div style="display:flex; align-items:center; gap:40px; justify-content:center;">
-          <div class="donut-wrap">
-            <div class="pie-chart" style="
-              width: 180px; height: 180px;
-              background: conic-gradient(
-                var(--color-purple)  0deg   162deg,
-                var(--color-green)  162deg  270deg,
-                var(--color-red)    270deg  324deg,
-                var(--color-yellow) 324deg  360deg
-              );">
-            </div>
-          </div>
-          <div class="pie-legend">
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-purple)"></div>
-              <span class="pie-legend-label">SaaS</span>
-              <span class="pie-legend-value">45%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-green)"></div>
-              <span class="pie-legend-label">Services</span>
-              <span class="pie-legend-value">30%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-red)"></div>
-              <span class="pie-legend-label">Marketplace</span>
-              <span class="pie-legend-value">15%</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:var(--color-yellow)"></div>
-              <span class="pie-legend-label">Partners</span>
-              <span class="pie-legend-value">10%</span>
-            </div>
+      <div class="card">
+        <div class="label">Pie Chart — .pie-chart / .pie-wrap / .pie-legend</div>
+        <div style="display:flex;align-items:center;gap:32px;padding:8px 0">
+          <div class="pie-ex-chart"></div>
+          <div class="donut-ex-legend">
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#6164ff"></div><span class="donut-ex-name">Enterprise</span><span class="donut-ex-pct">45%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#00c875"></div><span class="donut-ex-name">Mid-market</span><span class="donut-ex-pct">33%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ffcb00"></div><span class="donut-ex-name">SMB</span><span class="donut-ex-pct">14%</span></div>
+            <div class="donut-ex-leg"><div class="donut-ex-dot" style="background:#ff3d57"></div><span class="donut-ex-name">Other</span><span class="donut-ex-pct">8%</span></div>
           </div>
         </div>
-      </div>
-
-    </div>
-
-    <!-- Segment degree reference -->
-    <div class="ds-subsection-title" style="font-size:13px; font-weight:600; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.06em; margin:32px 0 12px;">How to set segments</div>
-    <div style="background:var(--color-surface); border-radius:12px; padding:20px 24px; font-family:monospace; font-size:13px; color:var(--color-text-secondary); line-height:1.8;">
-      <span style="color:var(--color-text-muted)">/* percent → degrees: value × 3.6 */</span><br>
-      background: conic-gradient(<br>
-      &nbsp;&nbsp;<span style="color:var(--color-purple)">var(--color-purple)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0deg &nbsp;&nbsp;<span style="color:var(--color-text)">130deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 36% */</span><br>
-      &nbsp;&nbsp;<span style="color:var(--color-green)">var(--color-green)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--color-text)">130deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">216deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 24% */</span><br>
-      &nbsp;&nbsp;<span style="color:var(--color-yellow)">var(--color-yellow)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--color-text)">216deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">270deg</span>,&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 15% */</span><br>
-      &nbsp;&nbsp;<span style="color:var(--color-purple-light)">var(--color-purple-light)</span>&nbsp;<span style="color:var(--color-text)">270deg</span>&nbsp;&nbsp;<span style="color:var(--color-text)">360deg</span>&nbsp;&nbsp;<span style="color:var(--color-text-muted)">/* 25% */</span><br>
-      );
-    </div>
-  </section>
-
-  <!-- ============================================================ DESIGN RULES -->
-  <section class="ds-section" id="rules">
-    <div class="ds-section-title">Design Rules &amp; Anti-Patterns</div>
-    <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:24px;">
-      Mandatory rules enforced across all generated presentations. Every generated HTML file must pass these checks.
-    </p>
-
-    <!-- Rule 1: No uppercase -->
-    <div style="margin-bottom: 40px;">
-      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 1 — No <code style="font-family:monospace; font-size:11px; background:var(--color-surface); padding:2px 6px; border-radius:4px;">text-transform: uppercase</code> anywhere</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
-          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:10px;">✓ Correct — letter-spacing for label emphasis</p>
-          <p style="font-size:1.4vmin; font-weight:600; letter-spacing:0.06em; color:var(--color-purple); margin:0;">Feature 01</p>
-          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">letter-spacing: 0.06em · Title Case</p>
-        </div>
-        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
-          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:10px;">✗ Banned — never use uppercase transform</p>
-          <p style="font-size:1.4vmin; font-weight:600; letter-spacing:0.12em; color:var(--color-purple); margin:0; text-transform:uppercase; text-decoration:line-through; opacity:0.5;">Feature 01</p>
-          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">text-transform: uppercase ← banned</p>
+        <div class="callout" style="margin-top:12px">
+          Same conic-gradient as donut, without the mask. Use <code>.pie-chart</code> for filled segments, <code>.donut-chart</code> for ring variant.
         </div>
       </div>
     </div>
 
-    <!-- Rule 2: No divider lines -->
-    <div style="margin-bottom: 40px;">
-      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 2 — No divider &lt;div&gt; elements or border-right/border-left separators</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
-          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct — use gap for spacing</p>
-          <div style="display:flex; flex-direction:column; gap:16px;">
-            <div style="padding:12px; background:var(--color-surface-alt); border-radius:8px;">
-              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-purple);">70%</span>
-              <span style="font-size:1.8vmin; color:var(--color-text-secondary); margin-left:12px;">Automated</span>
-            </div>
-            <div style="padding:12px; background:var(--color-surface-alt); border-radius:8px;">
-              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-yellow);">20%</span>
-              <span style="font-size:1.8vmin; color:var(--color-text-secondary); margin-left:12px;">Guided</span>
-            </div>
-          </div>
-        </div>
-        <div style="background:var(--color-surface); border-radius:12px; padding:20px;">
-          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — height:1px divider divs</p>
-          <div style="display:flex; flex-direction:column; opacity:0.5;">
-            <div style="padding:12px;">
-              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-purple); text-decoration:line-through;">70%</span>
-            </div>
-            <div style="height:1px; background:rgba(255,255,255,0.15); text-decoration:line-through;"></div>
-            <div style="padding:12px;">
-              <span style="font-size:2.5vmin; font-weight:600; color:var(--color-yellow); text-decoration:line-through;">20%</span>
-            </div>
-          </div>
-          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">height:1px div ← banned</p>
+  </div>
+</section>
+
+<!-- =========================================== TEMPLATES -->
+<section class="section" id="templates">
+  <div class="section-head">
+    <h2 class="section-title">Slide Templates</h2>
+    <span class="section-note">All 8 defined in design-system.css · class="slide-container tmpl-xxx slide-N"</span>
+  </div>
+  <div class="tmpl-grid">
+
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-cover</span> Cover</div>
+        <div class="tmpl-desc">flex · column · center + center</div>
+        <div class="tmpl-use">Cover slide, closing / thank you slide</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-cover">
+          <div class="pb pb-logo"></div>
+          <div class="pb pb-hero"></div>
+          <div class="pb pb-sub"></div>
         </div>
       </div>
     </div>
 
-    <!-- Rule 3: Alignment consistency -->
-    <div style="margin-bottom: 40px;">
-      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 3 — Text alignment must be consistent per slide</p>
-      <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:16px;">
-        If any content block on a slide is left-aligned (table, bullet list, chart), all headlines and subheadings on that slide must also be left-aligned.
-        Only pure display slides (cover, stats-only, quote) use centered headings.
-      </p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div style="background:var(--color-surface); border-radius:12px; padding:24px;">
-          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:16px;">✓ Consistent — headline matches content alignment</p>
-          <h3 style="font-size:3vmin; font-weight:500; line-height:1.1; margin:0 0 8px; text-align:left;">Security Distribution</h3>
-          <p style="font-size:1.8vmin; color:var(--color-text-muted); margin:0 0 16px; text-align:left;">How vulnerabilities are resolved</p>
-          <div style="font-size:1.8vmin; display:flex; flex-direction:column; gap:8px;">
-            <div style="background:var(--color-surface-alt); border-radius:6px; padding:8px 12px; display:flex; gap:12px;">
-              <span style="color:var(--color-purple); font-weight:600; min-width:40px;">70%</span><span style="color:var(--color-text-secondary);">Automated</span>
-            </div>
-            <div style="padding:8px 12px; display:flex; gap:12px;">
-              <span style="color:var(--color-yellow); font-weight:600; min-width:40px;">20%</span><span style="color:var(--color-text-secondary);">Guided</span>
-            </div>
-          </div>
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-center</span> Center</div>
+        <div class="tmpl-desc">flex · column · center + center + gap-6</div>
+        <div class="tmpl-use">Pull quote, section divider, single stat hero</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-center">
+          <div class="pb pb-title" style="width:70%"></div>
+          <div class="pb pb-sub" style="width:55%"></div>
+          <div class="pb pb-line" style="width:45%"></div>
         </div>
-        <div style="background:var(--color-surface); border-radius:12px; padding:24px; opacity:0.5;">
-          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:16px;">✗ Mismatched — centered headline over left content</p>
-          <h3 style="font-size:3vmin; font-weight:500; line-height:1.1; margin:0 0 8px; text-align:center; text-decoration:line-through;">Security Distribution</h3>
-          <p style="font-size:1.8vmin; color:var(--color-text-muted); margin:0 0 16px; text-align:center; text-decoration:line-through;">How vulnerabilities are resolved</p>
-          <div style="font-size:1.8vmin; display:flex; flex-direction:column; gap:8px;">
-            <div style="background:var(--color-surface-alt); border-radius:6px; padding:8px 12px; display:flex; gap:12px;">
-              <span style="color:var(--color-purple); font-weight:600; min-width:40px;">70%</span><span style="color:var(--color-text-secondary);">Automated</span>
-            </div>
+      </div>
+    </div>
+
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-twocol</span> Two Column</div>
+        <div class="tmpl-desc">grid · 1fr 1fr · gap-9 · align center</div>
+        <div class="tmpl-use">Title + context left, bullets / content right</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-twocol">
+          <div class="pb-col">
+            <div class="pb pb-title"></div>
+            <div class="pb pb-line"></div>
+          </div>
+          <div class="pb-col">
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Rule 4: Table rounded corners -->
-    <div style="margin-bottom: 40px;">
-      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 4 — Table data rows always have rounded corners</p>
-      <p class="text-body-sm" style="color:var(--color-text-muted); margin-bottom:16px;">
-        The <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.data-row</code> class has <code style="font-family:monospace; background:var(--color-surface); padding:2px 6px; border-radius:4px;">border-radius: var(--radius-sm)</code> built in. Never override to 0.
-      </p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div>
-          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct — rounded rows (.data-row)</p>
-          <div class="table-container">
-            <div class="table-row header-row" style="grid-template-columns:1fr 2fr 2fr;">
-              <div class="cell">Rate</div>
-              <div class="cell">Category</div>
-              <div class="cell">Status</div>
-            </div>
-            <div class="data-rows-wrapper">
-              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
-                <div class="cell" style="color:var(--color-purple); font-weight:600;">70%</div>
-                <div class="cell">Automated</div>
-                <div class="cell" style="color:var(--color-text-muted);">No action needed</div>
-              </div>
-              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
-                <div class="cell" style="color:var(--color-yellow); font-weight:600;">20%</div>
-                <div class="cell">Guided</div>
-                <div class="cell" style="color:var(--color-text-muted);">One-click patch</div>
-              </div>
-              <div class="table-row data-row" style="grid-template-columns:1fr 2fr 2fr;">
-                <div class="cell" style="color:var(--color-red); font-weight:600;">10%</div>
-                <div class="cell">Manual</div>
-                <div class="cell" style="color:var(--color-text-muted);">Senior review</div>
-              </div>
-            </div>
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-compare</span> Compare</div>
+        <div class="tmpl-desc">grid · 1fr 1fr · gap-5 · align stretch</div>
+        <div class="tmpl-use">Before / after, option A vs B, two-panel layout</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-compare">
+          <div class="pb pb-panel pb-panelinner">
+            <div class="pb pb-title" style="height:12%"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
           </div>
-        </div>
-        <div style="opacity:0.5;">
-          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — sharp corners + height:1px dividers</p>
-          <div style="display:flex; flex-direction:column;">
-            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; color:var(--color-text-muted); text-decoration:line-through;">
-              <span>Rate</span><span>Category</span><span>Status</span>
-            </div>
-            <div style="height:1px; background:rgba(255,255,255,0.15);"></div>
-            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; background:var(--color-surface); border-radius:0; text-decoration:line-through;">
-              <span style="color:var(--color-purple);">70%</span><span>Automated</span><span style="color:var(--color-text-muted);">No action</span>
-            </div>
-            <div style="height:1px; background:rgba(255,255,255,0.15);"></div>
-            <div style="padding:12px 16px; display:grid; grid-template-columns:1fr 2fr 2fr; font-size:1.4vmin; text-decoration:line-through;">
-              <span style="color:var(--color-yellow);">20%</span><span>Guided</span><span style="color:var(--color-text-muted);">Patch</span>
-            </div>
+          <div class="pb pb-panel pb-panelhi pb-panelinner">
+            <div class="pb pb-title" style="height:12%"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Rule 5: Highlight -->
-    <div style="margin-bottom: 40px;">
-      <p style="font-size:13px; font-weight:600; letter-spacing:0.05em; color:var(--color-text); margin-bottom:12px;">Rule 5 — <code style="font-family:monospace; font-size:11px; background:var(--color-surface); padding:2px 6px; border-radius:4px;">.highlight</code> = color only, never color + weight together</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div style="background:var(--color-surface); border-radius:12px; padding:24px;">
-          <p style="font-size:10px; color:var(--color-green); font-family:monospace; margin-bottom:12px;">✓ Correct</p>
-          <p style="font-size:4vmin; font-weight:300; line-height:1.1; letter-spacing:-0.02em; margin:0;">
-            Your <span class="highlight">Stack.</span>
-          </p>
-          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">&lt;span class="highlight"&gt; — color var(--color-yellow), inherits parent weight</p>
-        </div>
-        <div style="background:var(--color-surface); border-radius:12px; padding:24px; opacity:0.5;">
-          <p style="font-size:10px; color:var(--color-red); font-family:monospace; margin-bottom:12px;">✗ Banned — both color AND semibold</p>
-          <p style="font-size:4vmin; font-weight:300; line-height:1.1; letter-spacing:-0.02em; margin:0; text-decoration:line-through;">
-            Your <span style="color:var(--color-yellow); font-weight:600;">Stack.</span>
-          </p>
-          <p style="font-size:10px; font-family:monospace; color:var(--color-text-muted); margin-top:8px;">color + font-weight:600 ← banned together</p>
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-features</span> Features</div>
+        <div class="tmpl-desc">grid · 0.6fr 1.4fr · gap-9 · align center</div>
+        <div class="tmpl-use">Narrow title left, 2×2 feature card grid right</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-feat">
+          <div class="pb-col">
+            <div class="pb pb-title"></div>
+            <div class="pb pb-line"></div>
+          </div>
+          <div class="pb-grid22">
+            <div class="pb pb-cell"></div>
+            <div class="pb pb-cell"></div>
+            <div class="pb pb-cell"></div>
+            <div class="pb pb-cell"></div>
+          </div>
         </div>
       </div>
     </div>
 
-  </section>
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name"><span class="tmpl-badge">tmpl-content-img</span> Content + Image</div>
+        <div class="tmpl-desc">grid · 1fr 1fr · gap-9 · align center</div>
+        <div class="tmpl-use">Text + bullets left, screenshot / visual right</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-img">
+          <div class="pb-col">
+            <div class="pb pb-title"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
+            <div class="pb pb-line"></div>
+          </div>
+          <div class="pb pb-imgbox" style="height:100%">
+            <div class="pb pb-imgicon"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-</div><!-- /showcase -->
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name">
+          <span class="tmpl-badge new-badge">new</span>
+          <span class="tmpl-badge">tmpl-stats</span> Stats
+        </div>
+        <div class="tmpl-desc">flex · column · center + gap-7</div>
+        <div class="tmpl-use">Full-slide KPI overview, metric scorecard</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-stats">
+          <div class="pb pb-title" style="width:40%"></div>
+          <div class="pb-statrow">
+            <div class="pb pb-stat pb-stathi"></div>
+            <div class="pb pb-stat"></div>
+            <div class="pb pb-stat"></div>
+            <div class="pb pb-stat"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tmpl-card">
+      <div class="tmpl-info">
+        <div class="tmpl-name">
+          <span class="tmpl-badge new-badge">new</span>
+          <span class="tmpl-badge">tmpl-steps</span> Steps
+        </div>
+        <div class="tmpl-desc">flex · column · center + gap-6</div>
+        <div class="tmpl-use">Process flow, numbered workflow, how-it-works</div>
+      </div>
+      <div class="slide-stage">
+        <div class="sp sp-steps">
+          <div class="pb pb-title" style="width:40%"></div>
+          <div class="pb-steprow">
+            <div class="pb pb-step"></div>
+            <div class="pb pb-step"></div>
+            <div class="pb pb-step"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================== DESIGN RULES -->
+<section class="section" id="rules">
+  <div class="section-head">
+    <h2 class="section-title">Design Rules</h2>
+    <span class="section-note">CSS lockdown blocks in design-system.css enforce these at runtime</span>
+  </div>
+  <div class="rules-grid">
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#6164ff22">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6164ff" stroke-width="2">
+            <path d="M4 7h16M4 12h10M4 17h7"/>
+          </svg>
+        </div>
+        <div class="rule-title">Two Font Weights Only</div>
+      </div>
+      <div class="rule-body">
+        Import only <code>wght@400;600</code>. The system uses <span class="do">Regular (400)</span> for body and most headings, <span class="do">SemiBold (600)</span> for h1 and emphasis.<br><br>
+        <span class="dont">Never use</span> 300, 500, or 700+. Those tokens are aliased to 400/600 in design-system.css.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#ffcb0022">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffcb00" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          </svg>
+        </div>
+        <div class="rule-title">Zero Letter Spacing</div>
+      </div>
+      <div class="rule-body">
+        All <code>--tracking-*</code> tokens resolve to <code>0</code>. Poppins already ships at the right optical tracking.<br><br>
+        <span class="dont">Never</span> set a custom <code>letter-spacing</code> on any slide element. The lockdown block enforces <code>letter-spacing: normal !important</code> on all <code>.slide-container *</code>.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#ff3d5722">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ff3d57" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </div>
+        <div class="rule-title">No Italics</div>
+      </div>
+      <div class="rule-body">
+        Italic is not part of the system. <code>em</code>, <code>i</code>, <code>.italic</code>, and any element with an inline <code>font-style:italic</code> are all forced upright via <code>font-style: normal !important</code>.<br><br>
+        Use <code>.highlight</code> or <code>.highlight--bold</code> for emphasis instead.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#00c87522">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00c875" stroke-width="2">
+            <path d="M5 12l5 5L20 7"/>
+          </svg>
+        </div>
+        <div class="rule-title">One Highlight Per Headline</div>
+      </div>
+      <div class="rule-body">
+        <span class="do">.highlight</span> — color only (yellow / purple). Weight stays as-is.<br>
+        <span class="do">.highlight--bold</span> — weight only (600). Color stays as-is.<br><br>
+        <span class="dont">Never combine</span> both on the same word. Choose one axis — color or weight, never both.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#6164ff22">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6164ff" stroke-width="2">
+            <path d="M4 6h16M4 10h16M4 14h10"/>
+          </svg>
+        </div>
+        <div class="rule-title">No Dividers, No Uppercase</div>
+      </div>
+      <div class="rule-body">
+        <span class="dont">Never</span> add horizontal rules or decorative separator lines between slide sections — whitespace and typographic hierarchy carry the structure.<br><br>
+        <span class="dont">Never</span> use <code>text-transform: uppercase</code> on headings. Poppins is designed for sentence or title case only.
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-hd">
+        <div class="rule-icon" style="background:#00c87522">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00c875" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M9 3v18M3 9h6"/>
+          </svg>
+        </div>
+        <div class="rule-title">Poppins Everywhere</div>
+      </div>
+      <div class="rule-body">
+        The type lockdown block forces <code>font-family: 'Poppins', sans-serif !important</code> on every element. No serif fallbacks, no system fonts.<br><br>
+        Only <code>code</code>, <code>pre</code>, and <code>.mono</code> elements use SF Mono / Fira Code.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="page-footer">
+  <svg style="height:14px;width:auto;vertical-align:middle;margin-right:6px;" viewBox="0 0 48 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/>
+    <path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/>
+    <path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/>
+  </svg>
+  Design System v2 &nbsp;·&nbsp; Poppins wght@400;600 &nbsp;·&nbsp; 8 slide templates &nbsp;·&nbsp; 6 design rules
+</footer>
 
 <script>
-  /* ---- Theme toggle ---- */
-  function toggleTheme() {
-    const html = document.documentElement;
-    const btn = document.getElementById('themeBtn');
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    btn.innerHTML = isDark
-      ? '<span class="icon-moon">☽</span> Switch to Dark'
-      : '<span class="icon-sun">☀</span> Switch to Light';
-    updateSwatchValues();
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('btn-dark').classList.toggle('active', t === 'dark');
+    document.getElementById('btn-light').classList.toggle('active', t === 'light');
   }
-
-  /* ---- Show computed CSS var values on color swatches ---- */
-  function updateSwatchValues() {
-    const style = getComputedStyle(document.documentElement);
-    const vars = {
-      'val-bg':            '--color-bg',
-      'val-surface':       '--color-surface',
-      'val-surface-alt':   '--color-surface-alt',
-      'val-text':          '--color-text',
-      'val-text-secondary':'--color-text-secondary',
-      'val-text-muted':    '--color-text-muted',
-      'val-border':        '--color-border',
-      'val-border-strong': '--color-border-strong',
-    };
-    for (const [id, varName] of Object.entries(vars)) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = style.getPropertyValue(varName).trim();
-    }
-  }
-
-  updateSwatchValues();
 </script>
+
 </body>
 </html>

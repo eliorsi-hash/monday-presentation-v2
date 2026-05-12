@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide Templates — monday.com Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ── THEME TOKENS ── */
+:root {
+  /* slide preview colors */
+  --pt-bg:            #000;
+  --pt-surface:       #232427;
+  --pt-surface-alt:   #2D3035;
+  --pt-text:          #fff;
+  --pt-text-sec:      #c3ced8;
+  --pt-text-muted:    #a0a0a0;
+  --pt-border:        rgba(255,255,255,0.10);
+  --pt-border-stage:  rgba(255,255,255,0.12);
+  --pt-panel-ok:      #1a2a1a;
+  /* page chrome */
+  --pt-page-bg:       #000;
+  --pt-page-text:     #fff;
+  --pt-page-text-dim: #a0a0a0;
+  --pt-page-border:   rgba(255,255,255,0.10);
+  --pt-code-bg:       #232427;
+}
+[data-theme="light"] {
+  --pt-bg:            #fff;
+  --pt-surface:       #F0F2F5;
+  --pt-surface-alt:   #E3E6EE;
+  --pt-text:          #1F2D3D;
+  --pt-text-sec:      #455A73;
+  --pt-text-muted:    #8FA0B3;
+  --pt-border:        rgba(0,0,0,0.10);
+  --pt-border-stage:  rgba(0,0,0,0.12);
+  --pt-panel-ok:      #e0f0e6;
+  --pt-page-bg:       #f4f5f7;
+  --pt-page-text:     #1F2D3D;
+  --pt-page-text-dim: #8FA0B3;
+  --pt-page-border:   rgba(0,0,0,0.10);
+  --pt-code-bg:       #E3E6EE;
+}
+
+/* ── PAGE CHROME ── */
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--pt-page-bg);color:var(--pt-page-text);font-family:'Poppins',sans-serif;}
+body{padding:4vw 5vw 8vw;}
+
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:center;gap:2.5vw;margin-bottom:5vw;padding-bottom:2vw;border-bottom:1px solid var(--pt-page-border);}
+.page-header-right{margin-left:auto;flex-shrink:0;}
+.page-header-text h1{font-size:1.8vw;font-weight:600;margin:0 0 0.3em;}
+.page-header-text p{font-size:0.65vw;color:var(--pt-page-text-dim);margin:0;line-height:1.5;max-width:50vw;}
+.page-logo{height:2.2vw;width:auto;flex-shrink:0;}
+.theme-toggle{display:flex;background:var(--pt-surface);border:1px solid var(--pt-border-stage);border-radius:999px;padding:0.2vw;}
+.theme-btn{font-family:'Poppins',sans-serif;font-size:0.55vw;font-weight:600;padding:0.25vw 0.9vw;border-radius:999px;border:none;background:transparent;color:var(--pt-text-muted);cursor:pointer;transition:all 0.15s;}
+.theme-btn.active{background:#6164ff;color:#fff;}
+
+/* ── SECTION ── */
+.section{margin-bottom:5vw;}
+.section-eyebrow{font-size:0.55vw;font-weight:600;color:#6164ff;letter-spacing:0.06em;margin:0 0 0.8vw;}
+.section-intro{font-size:0.7vw;color:var(--pt-page-text-dim);margin:0 0 2.5vw;max-width:60vw;line-height:1.6;}
+
+/* ── TEMPLATE GRID ── */
+.template-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5vw;}
+.template-grid.grid-1col{grid-template-columns:1fr;}
+
+/* ── TEMPLATE CARD ── */
+.tmpl-card{display:flex;flex-direction:column;gap:1vw;}
+.tmpl-meta{display:flex;flex-direction:column;gap:0.25vw;}
+.tmpl-badge{display:inline-flex;align-items:center;gap:0.4vw;margin-bottom:0.2vw;}
+.tmpl-class{font-size:0.55vw;font-family:'SF Mono','Fira Code',monospace;background:var(--pt-code-bg);color:#6164ff;padding:0.2vw 0.55vw;border-radius:0.25vw;}
+.tmpl-title{font-size:0.85vw;font-weight:600;margin:0;color:var(--pt-page-text);}
+.tmpl-desc{font-size:0.58vw;color:var(--pt-page-text-dim);margin:0;line-height:1.5;}
+.tmpl-uses{display:flex;flex-wrap:wrap;gap:0.3vw;margin-top:0.4vw;}
+.tmpl-use{font-size:0.48vw;color:var(--pt-text-sec);background:var(--pt-code-bg);padding:0.15vw 0.5vw;border-radius:99px;}
+.tmpl-new{font-size:0.45vw;font-weight:600;background:#6164ff;color:#fff;padding:0.15vw 0.45vw;border-radius:99px;vertical-align:middle;}
+
+/* ── SLIDE STAGE ── */
+.slide-stage{width:100%;aspect-ratio:16/9;background:var(--pt-bg);border-radius:0.7vw;overflow:hidden;border:1px solid var(--pt-border-stage);position:relative;}
+
+/* ── SLIDE PREVIEW BASE ── */
+/* Units are proportionally scaled to ~44vw preview width (0.44× of full-screen vmin). */
+/* Real slide: --text-h1:8vmin≈4.5vw. Preview: 4.5*0.44≈2vw. */
+.slide{position:absolute;inset:0;padding:3.5vw 4vw;display:flex;font-size:0;color:var(--pt-text);}
+
+/* Typography — preview scale */
+.p-display{font-size:4.6vw;font-weight:400;line-height:1.1;margin:0;letter-spacing:0;color:var(--pt-text);}
+.p-h1{font-size:3.5vw;font-weight:600;line-height:1.1;margin:0;letter-spacing:0;color:var(--pt-text);}
+.p-h2{font-size:2.6vw;font-weight:400;line-height:1.2;margin:0;letter-spacing:0;color:var(--pt-text);}
+.p-h3{font-size:1.8vw;font-weight:400;line-height:1.3;margin:0;letter-spacing:0;color:var(--pt-text);}
+.p-h4{font-size:1.3vw;font-weight:400;line-height:1.4;margin:0;letter-spacing:0;color:var(--pt-text);}
+.p-body{font-size:0.95vw;font-weight:400;line-height:1.5;margin:0;color:var(--pt-text-sec);}
+.p-body-sm{font-size:0.8vw;font-weight:400;line-height:1.5;margin:0;color:var(--pt-text-sec);}
+.p-caption{font-size:0.6vw;font-weight:600;color:#6164ff;margin:0;}
+.p-muted{color:var(--pt-text-muted)!important;}
+.p-secondary{color:var(--pt-text-sec)!important;}
+
+/* Color accents — brand colors unchanged across themes */
+.p-yellow{color:#ffcb00;}
+.p-purple{color:#6164ff;}
+.p-green{color:#00c875;}
+
+/* Layout helpers */
+.p-col{display:flex;flex-direction:column;justify-content:center;}
+.p-col-start{display:flex;flex-direction:column;justify-content:flex-start;}
+.p-center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.p-row{display:flex;flex-direction:row;}
+.p-gap-xs{gap:0.3vw;}
+.p-gap-sm{gap:0.5vw;}
+.p-gap{gap:0.8vw;}
+.p-gap-md{gap:1.2vw;}
+.p-gap-lg{gap:1.8vw;}
+.p-gap-xl{gap:2.5vw;}
+.p-flex-1{flex:1;}
+.p-full-w{width:100%;}
+
+/* Surfaces */
+.p-surface{background:var(--pt-surface);border-radius:0.5vw;}
+.p-surface-alt{background:var(--pt-surface-alt);border-radius:0.5vw;}
+.p-pad-sm{padding:0.8vw;}
+.p-pad{padding:1.2vw;}
+.p-pad-lg{padding:1.6vw;}
+
+/* Bullet list */
+.p-bullets{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5vw;}
+.p-bullets li{font-size:0.8vw;color:var(--pt-text-sec);padding-left:1.1vw;position:relative;line-height:1.4;}
+.p-bullets li::before{content:'•';position:absolute;left:0;color:#6164ff;font-weight:600;font-size:0.9vw;line-height:1.05;}
+
+/* Stat block */
+.p-stat{display:flex;flex-direction:column;gap:0.25vw;}
+.p-stat-val{font-size:2.8vw;font-weight:600;line-height:1;color:var(--pt-text);margin:0;}
+.p-stat-lbl{font-size:0.6vw;color:var(--pt-text-sec);line-height:1.4;}
+.p-stat-line{width:1.5vw;height:0.15vw;border-radius:1px;}
+
+/* Step card */
+.p-step{background:var(--pt-surface);border-radius:0.5vw;padding:1vw;display:flex;flex-direction:column;gap:0.5vw;}
+.p-step-num{font-size:2vw;font-weight:600;line-height:1;color:var(--pt-text);}
+.p-step-text{font-size:0.55vw;color:var(--pt-text-sec);line-height:1.4;}
+
+/* Feature card */
+.p-feat{background:var(--pt-surface);border-radius:0.45vw;padding:0.9vw;display:flex;flex-direction:column;gap:0.4vw;}
+.p-feat-icon{width:1.6vw;height:1.6vw;background:var(--pt-surface-alt);border-radius:0.35vw;}
+.p-feat-title{font-size:0.7vw;font-weight:600;color:var(--pt-text);}
+.p-feat-body{font-size:0.5vw;color:var(--pt-text-muted);}
+
+/* Feature grid */
+.p-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6vw;height:100%;}
+
+/* Image placeholder */
+.p-img-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6vw;background:var(--pt-surface);border-radius:0.6vw;height:100%;}
+.p-img-ph svg{opacity:0.3;}
+.p-img-ph-lbl{font-size:0.5vw;color:var(--pt-text-muted);}
+
+/* Comparison panel */
+.p-panel{background:var(--pt-surface);border-radius:0.5vw;padding:1.2vw;display:flex;flex-direction:column;gap:0.7vw;}
+.p-panel-ok{background:var(--pt-panel-ok);}
+.p-panel-label{font-size:0.55vw;font-weight:600;color:var(--pt-text-muted);border-bottom:1px solid var(--pt-border);padding-bottom:0.5vw;}
+
+/* Stat tile (for tmpl-stats) */
+.p-stat-tile{flex:1;background:var(--pt-surface);border-radius:0.5vw;padding:1.2vw;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.4vw;}
+.p-stat-tile-val{font-size:2.6vw;font-weight:600;line-height:1;}
+.p-stat-tile-lbl{font-size:0.55vw;color:var(--pt-text-sec);line-height:1.4;}
+
+/* Logo — full wordmark */
+.p-logo{height:1.2vw;width:auto;flex-shrink:0;}
+.p-logo-abs{position:absolute;bottom:3.5vw;left:50%;transform:translateX(-50%);}
+/* light-theme wordmark: invert white paths to dark */
+[data-theme="light"] .p-logo path[fill="white"],
+[data-theme="light"] .p-logo-abs path[fill="white"] { fill: #1F2D3D; }
+/* Dots-only mark */
+.p-logo-dots{height:1.8vw;width:auto;}
+
+/* Dot accents */
+.p-dot-purple{color:#6164ff;}
+.p-dot-yellow{color:#ffcb00;}
+.p-dot-green{color:#00c875;}
+
+/* Usage reference code block */
+.usage-code{background:var(--pt-code-bg);border-radius:0.7vw;padding:1.5vw 2vw;font-family:'SF Mono','Fira Code',monospace;font-size:0.65vw;color:var(--pt-text-sec);line-height:1.8;}
+
+/* ── TEMPLATE LAYOUTS ── */
+.slide-cover{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:1.2vw;}
+.slide-center{flex-direction:column;justify-content:center;align-items:center;gap:1.2vw;}
+.slide-twocol{display:grid!important;grid-template-columns:1fr 1fr;gap:3vw;align-items:center;}
+.slide-compare{display:grid!important;grid-template-columns:1fr 1fr;gap:1.2vw;align-items:stretch;}
+.slide-features{display:grid!important;grid-template-columns:0.65fr 1.35fr;gap:2.5vw;align-items:center;}
+.slide-content-img{display:grid!important;grid-template-columns:1fr 1fr;gap:2.5vw;align-items:center;}
+.slide-stats{flex-direction:column;justify-content:center;gap:1.5vw;}
+.p-stats-row{display:flex;gap:1vw;width:100%;}
+.slide-steps{flex-direction:column;justify-content:center;gap:1.5vw;}
+.p-steps-row{display:flex;gap:0.7vw;width:100%;}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     PAGE HEADER
+════════════════════════════════════════ -->
+<header class="page-header">
+  <svg class="page-logo" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/><path d="M214.619 45.1879L219.096 34.827L209.273 11.9539H217.531L223.138 26.749L228.875 11.9539H236.786L222.617 45.1879H214.619Z" fill="white"/><path d="M191.966 11.6026C195.617 11.6026 198.181 13.2709 199.485 15.4221V11.9538H206.918V36.4513H199.485V32.983C198.138 35.1342 195.574 36.8025 191.966 36.8025C186.011 36.8025 181.317 31.8855 181.317 24.1587C181.317 16.4318 186.011 11.6026 191.966 11.6026ZM188.88 24.1587C188.88 28.066 191.357 30.2611 194.183 30.2611C197.008 30.2611 199.485 28.1099 199.485 24.2026C199.485 20.2952 197.008 18.144 194.183 18.144C191.357 18.144 188.88 20.2513 188.88 24.1587Z" fill="white"/><path d="M163.184 11.6027C166.4 11.6027 169.138 13.0954 170.616 15.3344V3.96375H178.092V36.4515H170.616V32.9393C169.312 35.1783 166.748 36.8027 163.14 36.8027C157.186 36.8027 152.491 31.8856 152.491 24.1588C152.491 16.432 157.186 11.6027 163.184 11.6027ZM160.054 24.1588C160.054 28.0661 162.532 30.2612 165.357 30.2612C168.182 30.2612 170.66 28.11 170.66 24.2027C170.66 20.2954 168.182 18.1442 165.357 18.1442C162.532 18.1442 160.054 20.2515 160.054 24.1588Z" fill="white"/><path d="M142.006 23.1489C142.006 19.8123 140.137 17.9684 137.356 17.9684C134.487 17.9684 132.661 19.8123 132.661 23.1489V36.4513H125.229V11.9538H132.661V15.2465C134.139 13.1392 136.747 11.6904 140.007 11.6904C145.657 11.6904 149.395 15.5538 149.395 22.1392V36.4513H142.006V23.1489Z" fill="white"/><path d="M109.31 37.022C102.182 37.022 96.8359 32.1927 96.8359 24.2025C96.8359 16.2123 102.312 11.383 109.441 11.383C116.569 11.383 122.045 16.2123 122.045 24.2025C122.045 32.1927 116.482 37.022 109.31 37.022ZM104.355 24.2025C104.355 28.3293 106.659 30.3049 109.31 30.3049C111.962 30.3049 114.483 28.3293 114.483 24.2025C114.483 20.0318 112.005 18.1001 109.397 18.1001C106.746 18.1001 104.355 20.0318 104.355 24.2025Z" fill="white"/><path d="M52.8496 11.9538H60.2821V15.0709C61.7164 13.0514 64.2374 11.6904 67.3668 11.6904C71.0613 11.6904 74.0169 13.3148 75.6686 16.2563C77.2768 13.666 80.2759 11.6904 83.84 11.6904C89.8381 11.6904 93.7065 15.5538 93.7065 22.1392V36.4513H86.3175V23.1489C86.3175 19.944 84.4485 18.188 81.6667 18.188C78.7981 18.188 77.016 19.944 77.016 23.1489V36.4513H69.627V23.1489C69.627 19.944 67.758 18.188 64.9763 18.188C62.1076 18.188 60.2821 19.944 60.2821 23.1489V36.4513H52.8496V11.9538Z" fill="white"/></svg>
+  <div class="page-header-text">
+    <h1>Slide Templates</h1>
+    <p>Eight reusable CSS template classes. All presentations are built from these — no separate HTML template files required. Each class defines the grid or flex layout for one <code>.slide-container</code>. Components (stat blocks, step cards, charts, tables) drop in as children.</p>
+  </div>
+  <div class="page-header-right">
+    <div class="theme-toggle">
+      <button class="theme-btn active" id="btn-dark"  onclick="setTheme('dark')">Dark</button>
+      <button class="theme-btn"        id="btn-light" onclick="setTheme('light')">Light</button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════
+     CORE TEMPLATES
+════════════════════════════════════════ -->
+<section class="section">
+  <p class="section-eyebrow">Core Template Classes</p>
+  <div class="template-grid">
+
+    <!-- 1. tmpl-cover ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover</span></div>
+        <p class="tmpl-title">Cover / Closing</p>
+        <p class="tmpl-desc">Flex column, centered. Always the first and last slide of every deck.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Cover slide</span>
+          <span class="tmpl-use">Closing / Thank you</span>
+          <span class="tmpl-use">Section break</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-cover">
+          <!-- full wordmark at top — dots + "monday" text -->
+          <svg class="p-logo" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/><path d="M214.619 45.1879L219.096 34.827L209.273 11.9539H217.531L223.138 26.749L228.875 11.9539H236.786L222.617 45.1879H214.619Z" fill="white"/><path d="M191.966 11.6026C195.617 11.6026 198.181 13.2709 199.485 15.4221V11.9538H206.918V36.4513H199.485V32.983C198.138 35.1342 195.574 36.8025 191.966 36.8025C186.011 36.8025 181.317 31.8855 181.317 24.1587C181.317 16.4318 186.011 11.6026 191.966 11.6026ZM188.88 24.1587C188.88 28.066 191.357 30.2611 194.183 30.2611C197.008 30.2611 199.485 28.1099 199.485 24.2026C199.485 20.2952 197.008 18.144 194.183 18.144C191.357 18.144 188.88 20.2513 188.88 24.1587Z" fill="white"/><path d="M163.184 11.6027C166.4 11.6027 169.138 13.0954 170.616 15.3344V3.96375H178.092V36.4515H170.616V32.9393C169.312 35.1783 166.748 36.8027 163.14 36.8027C157.186 36.8027 152.491 31.8856 152.491 24.1588C152.491 16.432 157.186 11.6027 163.184 11.6027ZM160.054 24.1588C160.054 28.0661 162.532 30.2612 165.357 30.2612C168.182 30.2612 170.66 28.11 170.66 24.2027C170.66 20.2954 168.182 18.1442 165.357 18.1442C162.532 18.1442 160.054 20.2515 160.054 24.1588Z" fill="white"/><path d="M142.006 23.1489C142.006 19.8123 140.137 17.9684 137.356 17.9684C134.487 17.9684 132.661 19.8123 132.661 23.1489V36.4513H125.229V11.9538H132.661V15.2465C134.139 13.1392 136.747 11.6904 140.007 11.6904C145.657 11.6904 149.395 15.5538 149.395 22.1392V36.4513H142.006V23.1489Z" fill="white"/><path d="M109.31 37.022C102.182 37.022 96.8359 32.1927 96.8359 24.2025C96.8359 16.2123 102.312 11.383 109.441 11.383C116.569 11.383 122.045 16.2123 122.045 24.2025C122.045 32.1927 116.482 37.022 109.31 37.022ZM104.355 24.2025C104.355 28.3293 106.659 30.3049 109.31 30.3049C111.962 30.3049 114.483 28.3293 114.483 24.2025C114.483 20.0318 112.005 18.1001 109.397 18.1001C106.746 18.1001 104.355 20.0318 104.355 24.2025Z" fill="white"/><path d="M52.8496 11.9538H60.2821V15.0709C61.7164 13.0514 64.2374 11.6904 67.3668 11.6904C71.0613 11.6904 74.0169 13.3148 75.6686 16.2563C77.2768 13.666 80.2759 11.6904 83.84 11.6904C89.8381 11.6904 93.7065 15.5538 93.7065 22.1392V36.4513H86.3175V23.1489C86.3175 19.944 84.4485 18.188 81.6667 18.188C78.7981 18.188 77.016 19.944 77.016 23.1489V36.4513H69.627V23.1489C69.627 19.944 67.758 18.188 64.9763 18.188C62.1076 18.188 60.2821 19.944 60.2821 23.1489V36.4513H52.8496V11.9538Z" fill="white"/></svg>
+          <h1 class="p-display">Next<span class="p-yellow">Gen</span><br>DevSuite</h1>
+          <p class="p-body">Strategic Roadmap for<br>AI-Native Engineering</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. tmpl-center ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-center</span></div>
+        <p class="tmpl-title">Centered Focus</p>
+        <p class="tmpl-desc">Flex column, centered with gap. One dominant element — stat, quote, code, or single message.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Hero metric</span>
+          <span class="tmpl-use">Pull quote</span>
+          <span class="tmpl-use">Code block</span>
+          <span class="tmpl-use">Section intro</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-center" style="gap:0.6vw;">
+          <p class="p-caption p-muted">Adoption rate</p>
+          <p class="p-stat-val" style="font-size:6vw;"><span class="p-yellow">87%</span></p>
+          <p class="p-body p-secondary" style="text-align:center;max-width:18vw;">Of teams that adopted the platform<br>reported faster time-to-delivery</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. tmpl-twocol ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-twocol</span></div>
+        <p class="tmpl-title">Two Column</p>
+        <p class="tmpl-desc">Grid 1fr 1fr. Title and context on the left, detail content on the right.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Problem / solution</span>
+          <span class="tmpl-use">Context + detail</span>
+          <span class="tmpl-use">Topic + bullets</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-twocol">
+          <div class="p-col p-gap">
+            <p class="p-caption">Context</p>
+            <h2 class="p-h2">The Evolving<br>Engineering<br>Landscape</h2>
+          </div>
+          <div class="p-col p-gap-sm">
+            <div class="p-surface p-pad" style="height:100%;justify-content:center;display:flex;flex-direction:column;gap:0.5vw;">
+              <p class="p-body-sm p-secondary" style="font-size:0.65vw;margin-bottom:0.4vw;">Development cycles are accelerating. Teams that adapt now will define the next generation of enterprise tooling.</p>
+              <ul class="p-bullets">
+                <li>AI-native toolchains reduce manual overhead</li>
+                <li>Real-time collaboration closes design gaps</li>
+                <li>Platform convergence simplifies vendor sprawl</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. tmpl-compare ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-compare</span></div>
+        <p class="tmpl-title">Comparison</p>
+        <p class="tmpl-desc">Grid 1fr 1fr, stretch. Side-by-side surface panels — before/after, option A vs B, or two distinct approaches.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Before / after</span>
+          <span class="tmpl-use">Option A vs B</span>
+          <span class="tmpl-use">Pros / cons</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-compare">
+          <div class="p-panel" style="justify-content:flex-start;">
+            <p class="p-panel-label">Status Quo</p>
+            <div class="p-col p-gap-sm">
+              <ul class="p-bullets">
+                <li>Manual review cycles take 3–5 days</li>
+                <li>Toolchain fragmentation across 8+ products</li>
+                <li>No unified visibility into deployment state</li>
+              </ul>
+            </div>
+          </div>
+          <div class="p-panel p-panel-ok" style="justify-content:flex-start;">
+            <p class="p-panel-label p-green">With monday DevSuite</p>
+            <div class="p-col p-gap-sm">
+              <ul class="p-bullets">
+                <li style="color:#c3ced8;">Review cycles collapse to same-day</li>
+                <li style="color:#c3ced8;">Single platform replaces all fragmentation</li>
+                <li style="color:#c3ced8;">Live dashboard for every deployment stage</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. tmpl-features ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-features</span></div>
+        <p class="tmpl-title">Features Grid</p>
+        <p class="tmpl-desc">Grid 0.6fr 1.4fr. Narrow title column left, wide 2×2 icon-feature grid right.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Product capabilities</span>
+          <span class="tmpl-use">Feature overview</span>
+          <span class="tmpl-use">Benefits grid</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-features">
+          <div class="p-col p-gap">
+            <p class="p-caption">Platform</p>
+            <h2 class="p-h2">Core<br>Capabilities</h2>
+            <p class="p-body-sm p-muted" style="font-size:0.6vw;">Four pillars of the next-generation development suite.</p>
+          </div>
+          <div class="p-feat-grid">
+            <div class="p-feat">
+              <div class="p-feat-icon"></div>
+              <p class="p-feat-title">AI Code Review</p>
+              <p class="p-feat-body">Automated analysis with contextual feedback</p>
+            </div>
+            <div class="p-feat">
+              <div class="p-feat-icon"></div>
+              <p class="p-feat-title">Live Pipeline</p>
+              <p class="p-feat-body">End-to-end CI/CD visibility in one view</p>
+            </div>
+            <div class="p-feat">
+              <div class="p-feat-icon"></div>
+              <p class="p-feat-title">Smart Alerts</p>
+              <p class="p-feat-body">Context-aware incident detection and routing</p>
+            </div>
+            <div class="p-feat">
+              <div class="p-feat-icon"></div>
+              <p class="p-feat-title">Team Analytics</p>
+              <p class="p-feat-body">Velocity, cycle time, and quality metrics</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. tmpl-content-img ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-content-img</span></div>
+        <p class="tmpl-title">Content + Image</p>
+        <p class="tmpl-desc">Grid 1fr 1fr. Text and bullets left, visual placeholder or image right.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Feature highlight</span>
+          <span class="tmpl-use">Product screenshot</span>
+          <span class="tmpl-use">Case study</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-content-img">
+          <div class="p-col p-gap">
+            <p class="p-caption">Cumulative Impact</p>
+            <h2 class="p-h2" style="font-size:2vw;">Operational<br>Efficiency Gains</h2>
+            <ul class="p-bullets">
+              <li>Shorter feedback loops between design and deployment</li>
+              <li>Reduced cognitive load for senior engineers</li>
+              <li>Higher consistency across distributed teams</li>
+            </ul>
+          </div>
+          <div class="p-img-ph">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <p class="p-img-ph-lbl">[Product Screenshot]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. tmpl-stats ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-stats</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Stats / KPI Overview</p>
+        <p class="tmpl-desc">Flex column. Slide header above a full-width row of stat tiles. For pure metrics and KPI dashboards.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Metrics overview</span>
+          <span class="tmpl-use">KPI dashboard</span>
+          <span class="tmpl-use">Business case</span>
+          <span class="tmpl-use">Impact summary</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-stats">
+          <div class="p-col p-gap-xs">
+            <p class="p-caption">Results</p>
+            <h2 class="p-h2" style="font-size:1.8vw;">By the Numbers</h2>
+          </div>
+          <div class="p-stats-row">
+            <div class="p-stat-tile">
+              <div class="p-stat-line" style="background:#6164ff;"></div>
+              <p class="p-stat-tile-val p-purple">40%</p>
+              <p class="p-stat-tile-lbl">Faster deployment cycles</p>
+            </div>
+            <div class="p-stat-tile">
+              <div class="p-stat-line" style="background:#00c875;"></div>
+              <p class="p-stat-tile-val p-green">3×</p>
+              <p class="p-stat-tile-lbl">Increase in review throughput</p>
+            </div>
+            <div class="p-stat-tile">
+              <div class="p-stat-line" style="background:#ffcb00;"></div>
+              <p class="p-stat-tile-val p-yellow">87%</p>
+              <p class="p-stat-tile-lbl">Team satisfaction score</p>
+            </div>
+            <div class="p-stat-tile">
+              <div class="p-stat-line" style="background:#ff3d57;"></div>
+              <p class="p-stat-tile-val" style="color:#ff3d57;">$2.1M</p>
+              <p class="p-stat-tile-lbl">Annual tooling cost saved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. tmpl-steps ────────────────── -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-steps</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Steps / Process</p>
+        <p class="tmpl-desc">Flex column. Slide header above a horizontal row of numbered step cards. For workflows, roadmaps, and sequential processes.</p>
+        <div class="tmpl-uses">
+          <span class="tmpl-use">Roadmap phases</span>
+          <span class="tmpl-use">Onboarding flow</span>
+          <span class="tmpl-use">How it works</span>
+          <span class="tmpl-use">Implementation plan</span>
+        </div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-steps">
+          <div class="p-col p-gap-xs">
+            <p class="p-caption">Deployment Plan</p>
+            <h2 class="p-h2" style="font-size:1.8vw;">Three-Phase Rollout</h2>
+          </div>
+          <div class="p-steps-row">
+            <div class="p-step p-flex-1">
+              <p class="p-step-num">1<span class="p-dot-purple">.</span></p>
+              <p class="p-feat-title">Foundation</p>
+              <p class="p-step-text">Core platform setup, team onboarding, initial integrations</p>
+            </div>
+            <div class="p-step p-flex-1">
+              <p class="p-step-num">2<span class="p-dot-yellow">.</span></p>
+              <p class="p-feat-title">Expansion</p>
+              <p class="p-step-text">Roll out to all engineering squads, activate AI review</p>
+            </div>
+            <div class="p-step p-flex-1">
+              <p class="p-step-num">3<span class="p-dot-green">.</span></p>
+              <p class="p-feat-title">Optimization</p>
+              <p class="p-step-text">Analytics review, iteration cycle, cross-team standardization</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     LIGHT THEME VARIANTS
+════════════════════════════════════════ -->
+<section class="section">
+  <p class="section-eyebrow">Light Theme</p>
+  <p class="section-intro">Add <code>data-theme="light"</code> to <code>&lt;html&gt;</code>. All CSS variables cascade automatically — no HTML changes needed. Brand accent colors (purple, yellow, green, red) are unchanged.</p>
+  <div class="template-grid">
+
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover</span></div>
+        <p class="tmpl-title">Cover — Light Theme</p>
+        <p class="tmpl-desc">Same markup. Add <code>data-theme="light"</code> to the slide container — all tokens flip automatically. <code>.highlight</code> renders purple on light backgrounds.</p>
+      </div>
+      <div class="slide-stage" data-theme="light">
+        <div class="slide slide-cover">
+          <svg class="p-logo" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/><path d="M214.619 45.1879L219.096 34.827L209.273 11.9539H217.531L223.138 26.749L228.875 11.9539H236.786L222.617 45.1879H214.619Z" fill="white"/><path d="M191.966 11.6026C195.617 11.6026 198.181 13.2709 199.485 15.4221V11.9538H206.918V36.4513H199.485V32.983C198.138 35.1342 195.574 36.8025 191.966 36.8025C186.011 36.8025 181.317 31.8855 181.317 24.1587C181.317 16.4318 186.011 11.6026 191.966 11.6026ZM188.88 24.1587C188.88 28.066 191.357 30.2611 194.183 30.2611C197.008 30.2611 199.485 28.1099 199.485 24.2026C199.485 20.2952 197.008 18.144 194.183 18.144C191.357 18.144 188.88 20.2513 188.88 24.1587Z" fill="white"/><path d="M163.184 11.6027C166.4 11.6027 169.138 13.0954 170.616 15.3344V3.96375H178.092V36.4515H170.616V32.9393C169.312 35.1783 166.748 36.8027 163.14 36.8027C157.186 36.8027 152.491 31.8856 152.491 24.1588C152.491 16.432 157.186 11.6027 163.184 11.6027ZM160.054 24.1588C160.054 28.0661 162.532 30.2612 165.357 30.2612C168.182 30.2612 170.66 28.11 170.66 24.2027C170.66 20.2954 168.182 18.1442 165.357 18.1442C162.532 18.1442 160.054 20.2515 160.054 24.1588Z" fill="white"/><path d="M142.006 23.1489C142.006 19.8123 140.137 17.9684 137.356 17.9684C134.487 17.9684 132.661 19.8123 132.661 23.1489V36.4513H125.229V11.9538H132.661V15.2465C134.139 13.1392 136.747 11.6904 140.007 11.6904C145.657 11.6904 149.395 15.5538 149.395 22.1392V36.4513H142.006V23.1489Z" fill="white"/><path d="M109.31 37.022C102.182 37.022 96.8359 32.1927 96.8359 24.2025C96.8359 16.2123 102.312 11.383 109.441 11.383C116.569 11.383 122.045 16.2123 122.045 24.2025C122.045 32.1927 116.482 37.022 109.31 37.022ZM104.355 24.2025C104.355 28.3293 106.659 30.3049 109.31 30.3049C111.962 30.3049 114.483 28.3293 114.483 24.2025C114.483 20.0318 112.005 18.1001 109.397 18.1001C106.746 18.1001 104.355 20.0318 104.355 24.2025Z" fill="white"/><path d="M52.8496 11.9538H60.2821V15.0709C61.7164 13.0514 64.2374 11.6904 67.3668 11.6904C71.0613 11.6904 74.0169 13.3148 75.6686 16.2563C77.2768 13.666 80.2759 11.6904 83.84 11.6904C89.8381 11.6904 93.7065 15.5538 93.7065 22.1392V36.4513H86.3175V23.1489C86.3175 19.944 84.4485 18.188 81.6667 18.188C78.7981 18.188 77.016 19.944 77.016 23.1489V36.4513H69.627V23.1489C69.627 19.944 67.758 18.188 64.9763 18.188C62.1076 18.188 60.2821 19.944 60.2821 23.1489V36.4513H52.8496V11.9538Z" fill="white"/></svg>
+          <h1 class="p-display">Product<br><span class="p-purple">Launch</span><br>2025</h1>
+          <p class="p-body">Introducing the next chapter<br>in engineering excellence</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-twocol</span></div>
+        <p class="tmpl-title">Two Column — Light Theme</p>
+        <p class="tmpl-desc">Surface colors flip to light grays. Text flips to dark navy. Borders become dark-alpha. No markup changes.</p>
+      </div>
+      <div class="slide-stage" data-theme="light">
+        <div class="slide slide-twocol">
+          <div class="p-col p-gap">
+            <p class="p-caption">Overview</p>
+            <h2 class="p-h2">Why Teams<br>Choose Us</h2>
+          </div>
+          <div class="p-surface p-pad" style="height:100%;display:flex;flex-direction:column;justify-content:center;gap:0.5vw;">
+            <ul class="p-bullets">
+              <li>Built for engineering-first organizations</li>
+              <li>Deep integrations with existing CI/CD</li>
+              <li>Enterprise security and compliance ready</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     USAGE REFERENCE
+════════════════════════════════════════ -->
+<section class="section">
+  <p class="section-eyebrow">Usage</p>
+  <p class="section-intro">Each slide uses exactly one template class. All 8 classes are defined in <code>design-system.css</code> — just inline the CSS file and apply the class.</p>
+  <div class="usage-code">
+    <span style="color:#a0a0a0;">/* Inline design-system.css, then: */</span><br>
+    &lt;div class="<span style="color:#6164ff;">slide-container tmpl-cover slide-1</span>" data-slide-index="0"&gt;<br>
+    &nbsp;&nbsp;&lt;!-- centered content --&gt;<br>
+    &lt;/div&gt;<br><br>
+    &lt;div class="<span style="color:#6164ff;">slide-container tmpl-twocol slide-2</span>" data-slide-index="1"&gt;<br>
+    &nbsp;&nbsp;&lt;div class="left-col"&gt;...&lt;/div&gt;<br>
+    &nbsp;&nbsp;&lt;div class="right-col"&gt;...&lt;/div&gt;<br>
+    &lt;/div&gt;<br><br>
+    &lt;div class="<span style="color:#6164ff;">slide-container tmpl-stats slide-3</span>" data-slide-index="2"&gt;<br>
+    &nbsp;&nbsp;&lt;div class="slide-header"&gt;...&lt;/div&gt;<br>
+    &nbsp;&nbsp;&lt;div class="stats-row"&gt;&lt;!-- stat-block × 4 --&gt;&lt;/div&gt;<br>
+    &lt;/div&gt;<br><br>
+    <span style="color:#a0a0a0;">/* Slide hide/show (already in design-system.css): */</span><br>
+    <span style="color:#6164ff;">.slide-container:not(.slide-active)</span> { display: none <span style="color:#ff3d57;">!important</span>; }
+  </div>
+</section>
+
+<script>
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('btn-dark').classList.toggle('active', t === 'dark');
+  document.getElementById('btn-light').classList.toggle('active', t === 'light');
+}
+</script>
+</body>
+</html>
