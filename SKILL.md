@@ -44,10 +44,10 @@ AskUserQuestion({
       header: "Recipe",
       multiSelect: false,
       options: [
-        { label: "Quick Update", description: "Brief status update or announcement (5-8 slides)" },
-        { label: "Product Launch", description: "Introduce a new product or major feature (10-15 slides)" },
-        { label: "Team Review", description: "Update team on progress and plans (8-12 slides)" },
-        { label: "Training", description: "Teach a topic or skill (15-20 slides)" }
+        { label: "Quick Update", description: "Brief status update or announcement" },
+        { label: "Product Launch", description: "Introduce a new product or major feature" },
+        { label: "Team Review", description: "Update team on progress and plans" },
+        { label: "Training", description: "Teach a topic or skill" }
       ]
     },
     {
@@ -66,8 +66,7 @@ AskUserQuestion({
       options: [
         { label: "Short (5–8)", description: "Quick update, status brief, or announcement" },
         { label: "Standard (10–15)", description: "Typical length for most presentations and pitches" },
-        { label: "Extended (20+)", description: "Training session, workshop, or detailed deep-dive" },
-        { label: "Match the recipe", description: "Use the default count from the recipe I chose" }
+        { label: "Extended (20+)", description: "Training session, workshop, or detailed deep-dive" }
       ]
     }
   ]
@@ -102,6 +101,7 @@ AskUserQuestion({
     multiSelect: false,
     options: [
       { label: "Ready to go", description: "I have full content to paste or upload" },
+      { label: "Share a file", description: "Give me a path or link to a doc, PDF, MD, TXT, PPTX, or other local file" },
       { label: "Rough outline", description: "I have bullet points or notes" },
       { label: "Just a topic", description: "Generate content for me from a topic" }
     ]
@@ -109,7 +109,9 @@ AskUserQuestion({
 })
 ```
 
-If user has content, ask them to paste or upload it.
+If user selects **Ready to go** or **Rough outline**, ask them to paste or upload the content.
+
+If user selects **Share a file**, ask them to provide the file path or link. Then read it with the `Read` tool (for MD, TXT, PDF, HTML) or note the path for the user to reference. Supported formats: `.md`, `.txt`, `.pdf`, `.doc`, `.docx`, `.pptx`, `.html`, or any plain-text file.
 
 **If `content.md` exists in cwd**, skip questions and read it directly.
 
