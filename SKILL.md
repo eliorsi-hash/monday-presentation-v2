@@ -798,6 +798,7 @@ Supported types (map to template classes in `design-system.css`):
 | [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) | **Phase 1 + Phase 3** — Visual CSS recipes: title typography, data viz construction, image placeholder decisions, card hierarchy, animations |
 | [ICON_MATCHING.md](ICON_MATCHING.md) | **Phase 3.1** — Semantic icon recommendations by slide purpose and content type |
 | [design-system.css](design-system.css) | CSS tokens, typography, spacing, and **all reusable components** (bar charts, pie/donut charts, stat blocks, numbered steps, tables, image placeholders, animations). Supports dark (default) and light theme via `data-theme` on `<html>`. Inline entire file into generated HTML. |
+| [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) | Agent reference for design-system.css — every token value, component HTML pattern, and design rule. Read this when building slides to know exactly what classes exist and how to use them. |
 | [ICON_GUIDE.md](ICON_GUIDE.md) | 267 icon names and categories |
 
 > **Note:** Brand SVG logo and navigation JS are inlined directly in this SKILL.md — no need to read BRAND_ASSETS.md or NAVIGATION.md separately.
