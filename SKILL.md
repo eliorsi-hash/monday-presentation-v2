@@ -511,7 +511,7 @@ Slide 7 (Track 1 - Training):
   </div>
 
   <script>
-    /* INLINE NAVIGATION JS FROM NAVIGATION.md */
+    /* Paste the Navigation JS Controller from the "Inlined Asset: Navigation JS Controller" section of this SKILL.md */
   </script>
 </body>
 </html>
@@ -521,7 +521,7 @@ Slide 7 (Track 1 - Training):
 - Inline the **entire** [design-system.css](design-system.css) into the `<style>` block first
 - Use only CSS variables for sizing (no hardcoded px)
 - Font: Poppins from Google Fonts — **`wght@400;600` only** (not 300/500). The design system imports only Regular (400) and SemiBold (600); `--weight-light` and `--weight-medium` tokens both resolve to these two values. Never load or reference other weights.
-- Logo: Inline SVG from [BRAND_ASSETS.md](BRAND_ASSETS.md)
+- Logo: Read and inline `Logos/monday_White.svg` (dark theme) or `Logos/monday_Black.svg` (light theme) — fallback SVG is in the "Inlined Asset: monday.com Logo SVG" section below
 - **Highlight rule — EITHER color OR weight, never both.** Two classes available:
   - `.highlight` — color only. Yellow on dark, purple on light. `font-weight: inherit` so it never adds boldness.
   - `.highlight--bold` — semibold weight only. `color: inherit` so it never changes color.
@@ -764,13 +764,13 @@ subtitle/body/bullets/stats: [Content]
 accent: [purple|green|yellow|red]
 ```
 
-See [SLIDE_TEMPLATES.md](SLIDE_TEMPLATES.md) for all supported slide types.
+Supported slide types are listed in the "Supported Slide Types" section below.
 
 ---
 
 ## Supported Slide Types
 
-See [SLIDE_TEMPLATES.md](SLIDE_TEMPLATES.md) for full documentation:
+Supported types (map to template classes in `design-system.css`):
 
 - `title` — Cover slide with logo, headline, subtitle
 - `text-body` — Text + optional image/content
