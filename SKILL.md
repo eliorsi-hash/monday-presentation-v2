@@ -431,8 +431,8 @@ All 14 template classes are defined in `design-system.css` — they are automati
 2. **Identify icon slots** — Where are icons used in the slide template?
 3. **Read [ICON_MATCHING.md](ICON_MATCHING.md)** — Find recommended icons by category for slide purpose
 4. **Select best match** — Choose icon from category that fits semantic meaning
-5. **Verify path exists** — Confirm icon file exists: `Icons/Property 1=IconName.svg`
-6. **Replace in HTML** — Update icon path: `src="Icons/Property 1=SelectediconName.svg"`
+5. **Verify path exists** — Confirm icon file exists: `Icons/IconName.svg`
+6. **Replace in HTML** — Update icon path: `src="Icons/SelectediconName.svg"`
 7. **Validate rendering** — Ensure icon displays correctly with `ds-icon` class and sizing
 
 **Icon Selection Rules:**
@@ -446,7 +446,7 @@ All 14 template classes are defined in `design-system.css` — they are automati
 - **Bullet markers** — use regular dot bullets (`•`) or the default `list-style`. Never use ✓/✗ or other unicode symbols as bullet markers
 
 **Icon Embedding — ALWAYS inline SVGs for portability:**
-1. Find the icon file: `Icons/Property 1=IconName.svg`
+1. Find the icon file: `Icons/IconName.svg`
 2. **Read the SVG file** and embed its contents directly in the HTML
 3. Add the `ds-icon` classes to the inline `<svg>` element
 4. This ensures the HTML works anywhere — no dependency on the Icons/ folder
@@ -457,7 +457,7 @@ Slide 7 (Track 1 - Training):
 - Purpose: Training, education, learning
 - Recommended: Academy, Book open, Graduation cap
 - Selected: Academy (best fit for training concept)
-- Read: Icons/Property 1=Academy.svg
+- Read: Icons/Academy.svg
 - HTML: <svg class="ds-icon ds-icon-md" ...>[SVG content from file]</svg>
 ```
 
@@ -515,7 +515,7 @@ Slide 7 (Track 1 - Training):
 1. `.slide-container` with `data-slide-index="N"`, a template class (e.g., `tmpl-twocol`), AND a unique class like `.slide-1`, `.slide-2`, etc.
 2. Color accents: use CSS vars like `var(--color-purple)`, `var(--color-yellow)`, etc.
 3. Spacing: `var(--space-4)` through `var(--space-10)` only
-4. If using icons: **read the SVG file** from `Icons/Property 1=Name.svg` and **embed inline** — never use `<img src=...>` for icons. Inline SVGs can be recolored with `style="fill: var(--color-xxx)"`
+4. If using icons: **read the SVG file** from `Icons/Name.svg` and **embed inline** — never use `<img src=...>` for icons. Inline SVGs can be recolored with `style="fill: var(--color-xxx)"`
 5. **Monday logo on title + closing slides**: Read the appropriate file and inline its SVG — dark theme → `Logos/monday_White.svg`, light theme → `Logos/monday_Black.svg`. Add `class="monday-logo"` to the `<svg>` element. NEVER use `<img src>` for the logo.
 6. **Part labels** (optional): Add `<span class="part-label">PART N — SECTION NAME</span>` for training/workshop decks where the speaker needs section tracking.
 

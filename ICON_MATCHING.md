@@ -11,7 +11,7 @@ For each slide that supports icons (feature cards, timeline steps, bullet lists,
 1. **Identify the slide purpose** — What is the content about?
 2. **Find matching icon set** below
 3. **Select icon** by theme or semantic meaning
-4. **Replace placeholder** in HTML with actual icon path: `Icons/Property 1=IconName.svg`
+4. **Replace placeholder** in HTML with actual icon path: `Icons/IconName.svg`
 
 ---
 
@@ -157,7 +157,7 @@ Sack, Sacred, Sacrifice, Sacrilege, Sad, Saddle, Sadness, Safe, Safety, Safflowe
 1. **Receives slide data** — content, purpose, slide type
 2. **Looks up in ICON_MATCHING.md** — finds recommended icons by category
 3. **Selects best match** — picks icon that fits the semantic meaning
-4. **Reads icon file** — `Icons/Property 1=IconName.svg`
+4. **Reads icon file** — `Icons/IconName.svg`
 5. **Inlines SVG** — embeds the `<svg>` element directly with `class="ds-icon ds-icon-sm ds-icon-white"`
 6. **Returns updated slide** — with icon fully embedded (no external file dependency)
 
@@ -168,7 +168,7 @@ Sack, Sacred, Sacrifice, Sacrilege, Sad, Saddle, Sadness, Safe, Safety, Safflowe
 Always **inline the SVG** — never use `<img src>`. Read the icon file and embed its content directly:
 
 ```html
-<!-- Read Icons/Property 1=IconName.svg and inline: -->
+<!-- Read Icons/IconName.svg and inline: -->
 <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="0 0 60 60" fill="none">
   <!-- SVG paths from the file -->
 </svg>

@@ -240,9 +240,9 @@ Multi-card templates (`tmpl-3col`, `tmpl-4col`, `tmpl-compare`, `tmpl-steps`) su
 
 ## Icons
 
-268 monday.com SVG icons in `Icons/Property 1=IconName.svg`. Always inline the SVG — never use `<img src>`.
+268 monday.com SVG icons in `Icons/IconName.svg`. Always inline the SVG — never use `<img src>`.
 
-**Special icon:** `Icons/Property 1=Quote.svg` — double quotation mark for testimonial slides. Uses `fill="currentColor"` so it inherits color from CSS (set via `.quote-mark { color: var(--color-purple) }`). Only use this icon for `.quote-box` components — it is visually distinct from the standard monday icon set.
+**Special icon:** `Icons/Quote.svg` — double quotation mark for testimonial slides. Uses `fill="currentColor"` so it inherits color from CSS (set via `.quote-mark { color: var(--color-purple) }`). Only use this icon for `.quote-box` components — it is visually distinct from the standard monday icon set.
 
 Size classes:
 
@@ -259,7 +259,7 @@ Color modifiers:
 - `.ds-icon-dark` — `filter: brightness(0)` → forces black.
 
 ```html
-<!-- Read Icons/Property 1=Stats.svg and inline it: -->
+<!-- Read Icons/Stats.svg and inline it: -->
 <svg class="ds-icon ds-icon-md ds-icon-white" viewBox="...">...</svg>
 ```
 
@@ -445,7 +445,7 @@ Dot colors: `.dot-purple`, `.dot-yellow`, `.dot-green`, `.dot-red` (`.dot-blue` 
 <!-- Use with tmpl-quote template. Inline Quote.svg from Icons/ -->
 <div class="quote-box">
   <svg class="quote-mark" viewBox="0 0 160 120" fill="none">
-    <!-- Inline Icons/Property 1=Quote.svg content here -->
+    <!-- Inline Icons/Quote.svg content here -->
     <path d="M70.3034 28.085C..." fill="currentColor"/>
     <path d="M158.695 28.084C..." fill="currentColor"/>
   </svg>

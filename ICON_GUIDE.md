@@ -6,11 +6,11 @@ Reference of all available icons for use in presentations.
 
 All icons are SVG files located in the `Icons/` folder. Always read the file and **inline the SVG** — never use `<img src>`.
 
-**File naming pattern:** `Icons/Property 1=IconName.svg`
+**File naming pattern:** `Icons/IconName.svg`
 
 **Example usage (inline SVG):**
 ```html
-<!-- Read Icons/Property 1=Graph arrow up.svg and embed: -->
+<!-- Read Icons/Graph arrow up.svg and embed: -->
 <svg class="ds-icon ds-icon-lg ds-icon-white" viewBox="..."><!-- SVG content --></svg>
 ```
 
@@ -194,7 +194,7 @@ All icons are SVG files located in the `Icons/` folder. Always read the file and
 ### Basic Icon Display
 
 ```html
-<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg --></svg>
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Graph arrow up.svg --></svg>
 ```
 
 ### Icon Size Classes
@@ -211,7 +211,7 @@ All icons are SVG files located in the `Icons/` folder. Always read the file and
 
 ```html
 <div style="display: flex; align-items: center; gap: var(--space-3);">
-  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg --></svg>
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Checkmark.svg --></svg>
   <p class="text-body">Success message</p>
 </div>
 ```
@@ -220,20 +220,20 @@ All icons are SVG files located in the `Icons/` folder. Always read the file and
 
 **Change stroke color:**
 ```html
-<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Graph arrow up.svg"
      class="ds-icon ds-icon-lg"
      style="stroke: #ffffff; filter: none;">
 ```
 
 **Make white (for dark backgrounds):**
 ```html
-<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Checkmark.svg"
      class="ds-icon ds-icon-lg ds-icon-white">
 ```
 
 **Make dark (for light backgrounds):**
 ```html
-<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Checkmark.svg"
      class="ds-icon ds-icon-lg ds-icon-dark">
 ```
 
@@ -319,7 +319,7 @@ Use these icons to represent common concepts:
 Small icons (sm) next to each bullet:
 ```html
 <li style="display: flex; align-items: flex-start; gap: var(--space-3);">
-  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Arrow up.svg" class="ds-icon ds-icon-sm" style="flex-shrink: 0;">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Arrow up.svg" class="ds-icon ds-icon-sm" style="flex-shrink: 0;">
   <p>Growth metric description</p>
 </li>
 ```
@@ -328,7 +328,7 @@ Small icons (sm) next to each bullet:
 Medium icons (md) at top of cards:
 ```html
 <div style="text-align: center; margin-bottom: var(--space-4);">
-  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Stats.svg --></svg>
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Stats.svg --></svg>
 </div>
 <h4 class="text-h4">Card Title</h4>
 ```
@@ -337,7 +337,7 @@ Medium icons (md) at top of cards:
 Large icons (lg) above numbers:
 ```html
 <div style="text-align: center;">
-  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg" class="ds-icon ds-icon-lg" style="margin-bottom: var(--space-3);">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Graph arrow up.svg" class="ds-icon ds-icon-lg" style="margin-bottom: var(--space-3);">
   <div class="text-h1" style="color: var(--color-green);">2.3x</div>
   <p class="text-body">Growth metric</p>
 </div>
@@ -348,7 +348,7 @@ Emoji or icon inside circular border:
 ```html
 <div style="width: 5vmin; height: 5vmin; border-radius: 50%; border: 1px solid var(--color-text);
             display: flex; justify-content: center; align-items: center;">
-  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Rocket.svg --></svg>
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Rocket.svg --></svg>
 </div>
 ```
 
@@ -357,7 +357,7 @@ Emoji or icon inside circular border:
 ## Icon File Reference
 
 All icons are located at:
-`Icons/Property 1=IconName.svg`
+`Icons/IconName.svg`
 
 Where `IconName` is one of:
 
@@ -371,7 +371,7 @@ Academy, Alarm, Alarm check, Apps, Archive, Arrow Path, Arrow up, Arrows, Badge 
 
 ```html
 <svg class="quote-mark" viewBox="0 0 160 120" fill="none">
-  <!-- Inline Icons/Property 1=Quote.svg content -->
+  <!-- Inline Icons/Quote.svg content -->
 </svg>
 ```
 
