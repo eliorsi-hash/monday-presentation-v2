@@ -21,7 +21,7 @@ Generate professional, single-file monday.com branded HTML presentations with ze
 ## Core Principles
 
 1. **Design-System First** — All output uses official monday.com design tokens (Poppins, purple #6164ff). Supports dark (default) and light themes via `data-theme` on `<html>`.
-2. **Existing + Generated** — Reuse proven Deck_Dark_Page templates; generate novel slide types from design system
+2. **Template-Driven** — All slides use CSS template classes from design-system.css; see slide-templates.html for live previews
 3. **Zero Dependencies** — Single, self-contained HTML file with inline CSS/JS. No external scripts.
 4. **Responsive 16:9** — Every slide fits exactly within viewport (no scrolling, ever)
 5. **Keyboard Navigation** — Arrow keys, Space, or click to advance. Slide counter included.
@@ -251,60 +251,32 @@ If the user has more context, ask them to paste it before moving to Phase 1.
 
 ## Phase 1: Layout Mapping
 
-### Step 1.0: Consult Slide Inventory (MANDATORY)
+### Step 1.0: Consult Slide Templates (MANDATORY)
 
-**Read [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) FIRST** — Complete metadata catalog of every available `Deck_Dark_Page_*.html` template with:
-- Exact HTML structure (never invent or modify)
-- Content capacity limits per slide
-- Editable vs. fixed elements
-- Layout specifications (grid cols, flex direction, gaps, sizing)
-- Design variables used
-- Quick-reference matching table by purpose
+**Read [slide-templates.html](slide-templates.html)** — the single source of truth for all slide layouts. It contains live previews of every template class and component combination available in the design system.
 
-**Read [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md)** for visual design recipes. SLIDE_INVENTORY tells you WHAT to build (structure, content slots). VISUAL_PATTERNS tells you HOW to make it look polished (CSS techniques, weight-mixing, animations). Use VISUAL_PATTERNS when:
-- Creating opening/closing slides that need display typography or orbital graphics
-- Deciding whether to add image placeholders to text-heavy slides
-- Reproducing specific visual effects (timelines, concentric rings, radial diagrams)
-- Referencing animation stagger patterns for complex entrance sequences
+**Read [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)** for exact HTML patterns and CSS class references for each component (charts, tables, stat blocks, step cards, timelines, quotes, agenda cards).
 
-> **Note:** Bar charts, pie/donut charts, stat blocks, numbered step cards, and tables are now **reusable CSS classes in design-system.css** — use those directly instead of hand-rolling CSS from VISUAL_PATTERNS. VISUAL_PATTERNS remains the reference for timeline, orbital, and decorative patterns not yet in the component library.
-
-**CRITICAL RULE:** Use ONLY templates listed in SLIDE_INVENTORY.md. Never mix elements from different slides. Never create new layouts—work only with existing templates.
-
-> **Opener exception:** The cover slide (Slide 1) may use any of six opener templates — see Step 1.0b for the selection decision tree. Closing slide always uses Page_001.
+**CRITICAL RULE:** Use ONLY template classes defined in design-system.css. All 16 `tmpl-*` classes are documented in slide-templates.html with live previews. Never inline ad-hoc layout styles — always use a named template class.
 
 ### Step 1.0b: Opener Template Selection (MANDATORY for Slide 1)
 
-The cover/opening slide is **not always Page_001**. Six opener templates are available — read each one and pick the best match for the content and presentation context.
+Four cover template classes are available. Pick the best match for the content and tone.
 
-**Available opener templates (all in `Selected/`):**
+| Template Class | Layout | Best used when… |
+|----------------|--------|-----------------|
+| `tmpl-cover` | Centered h1 + subtitle + logo | Formal, abstract, brand-driven, or topic-only. Default choice. |
+| `tmpl-cover-split` | Bordered top section (logo + h1) + colored bottom bar (subtitle) | Bold, casual, editorial tone — strong single statement, informal pitch |
+| `tmpl-cover-product` | Left: logo + h1 + subtitle. Right: large dashed image placeholder | Product launch or feature reveal — works best when a product screenshot/hero visual is available |
+| `tmpl-cover-workshop` | 2x2 grid: bordered title card left + 2 photo slots + purple info card right | Workshop, conference, event — has context images, department name, or specific date |
 
-| Template | Layout | Best used when… |
-|----------|--------|-----------------|
-| `Deck_Dark_Page_001` | Centered h1 + subtitle + bottom logo | Abstract, formal, minimalist — no speaker, no images, brand-driven |
-| `Deck_Dark_Page_007` | Display h1 in bordered top card + purple subtitle strip | Bold editorial tone — strong single statement, casual/creative feel, internal pitch |
-| `Deck_Dark_Page_009` | Left: logo + h1 + subtitle; Right: large image placeholder | Product launch or feature reveal — works best when a product screenshot/hero visual is available |
-| `Deck_Dark_Page_010` | Grid: bordered display h1 left (full height) + 2 photo slots + purple info card (dept/date) | Workshop, conference, event — has context images, department name, or specific date |
-| `Deck_Dark_Page_011` | Bordered top card (h1) + single circular portrait + purple name/role card | Single-speaker presentation — speaker's name and title are part of the content |
-| `Deck_Dark_Page_012` | Bordered top card (h1) + two portrait+name pairs | Two-speaker or panel presentation — two presenters listed in the content |
+**Selection logic — apply the first matching rule:**
+1. **Workshop, event, conference with department/date metadata** → `tmpl-cover-workshop`
+2. **Product launch or feature reveal with a screenshot/hero image** → `tmpl-cover-product`
+3. **Bold, casual, or editorial tone — informal internal pitch** → `tmpl-cover-split`
+4. **Everything else: formal, abstract, brand-driven, or topic-only** → `tmpl-cover`
 
-**Selection logic — read the user's content and apply the first matching rule:**
-
-1. **Two speakers or a panel named in the content** → `Page_012`
-2. **One speaker named (name + title)** → `Page_011`
-3. **Workshop, event, conference with department/date metadata** → `Page_010`
-4. **Product launch or feature reveal with a screenshot/hero image** → `Page_009`
-5. **Bold, casual, or editorial tone — informal internal pitch** → `Page_007`
-6. **Everything else: formal, abstract, brand-driven, or topic-only** → `Page_001`
-
-**How to use the selected template:**
-- Read the matching `Deck_Dark_Page_XXX.html` from `Selected/`
-- Extract its CSS and HTML structure exactly
-- Replace placeholder text with actual content (title, subtitle, speaker names, etc.)
-- Replace `<img src="monday_logo.svg">` with the inlined SVG from `Logos/monday_White.svg`
-- For image placeholder slots (`data-image-placeholder`): if user provided assets use them; otherwise keep the placeholder div/styling
-
-**Closing slide always uses `Deck_Dark_Page_001`** — read and extract it exactly the same way.
+**Closing slide always uses `tmpl-cover`** with a "Thank You" headline.
 
 ---
 
@@ -316,8 +288,8 @@ The cover/opening slide is **not always Page_001**. Six opener templates are ava
 
 **Visual enrichment options by slide type:**
 - **Stats or KPIs available** → dedicate a full slide to `.stat-block` or `.stat-value-hero` instead of burying numbers in bullet lists
-- **Feature or capability list** → prefer `Deck_Dark_Page_044` (2×2 icon grid) over a plain bullet list slide
-- **User has images or screenshots** → use `tmpl-content-img` (`Deck_Dark_Page_038`) to pair text with visual; reserve full-text templates for slides where no visual fits
+- **Feature or capability list** → prefer `tmpl-features` (2×2 icon grid) over a plain bullet list slide
+- **User has images or screenshots** → use `tmpl-content-img` to pair text with visual; reserve full-text templates for slides where no visual fits
 - **Step-by-step flow** → use `.step-card` numbered cards rather than a flat ordered list
 - **Comparative info** → use `tmpl-compare` side-by-side panels, not a two-column text list
 - **Data provided** → always surface it as a chart or stat block, never as inline text numbers
@@ -343,32 +315,24 @@ Using the recipe structure from Step 0.1:
 3. Verify content fits the template specified in the recipe
 
 For example, if using **Recipe 1 (Product Launch)**:
-- Slide 1: Use Deck_Dark_Page_001 (cover) — map headline + subtitle
-- Slide 2: Use Deck_Dark_Page_010 (problem) — map problem statement + bullets
-- Slide 3: Use Deck_Dark_Page_030 (solution) — map solution + key points
+- Slide 1: `tmpl-cover` — map headline + subtitle
+- Slide 2: `tmpl-twocol` — map problem statement + bullets
+- Slide 3: `tmpl-compare` — map challenge vs. solution
 - ...and so on per recipe
 
-### Step 1.2: Consult SLIDE_INVENTORY for Template Details
+### Step 1.2: Create Layout Plan with Template Classes
 
-For each recipe slide, **read [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md)** to understand:
-- Exact HTML structure (never invent)
-- Content capacity limits
-- Editable vs. fixed elements
-- Layout specifications
-
-### Step 1.3: Create Layout Plan with Template Sources
-
-Build a slide-by-slide plan following the recipe:
+Build a slide-by-slide plan following the recipe. Each slide maps to one `tmpl-*` class:
 
 ```
-Slide 1 (Title)        → Deck_Dark_Page_001 (centered, h1 + p + logo)
-Slide 2 (Two-Column)   → Deck_Dark_Page_030 (grid 1fr|1fr, title + bullets)
-Slide 3 (Features)     → Deck_Dark_Page_044 (grid 0.6fr|1.4fr, title + 2x2 feature grid)
-Slide 4 (Metrics)      → Deck_Dark_Page_031 (grid auto-fit, 4 stat blocks)
-Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
+Slide 1 (Title)        → tmpl-cover (centered, h1 + subtitle + logo)
+Slide 2 (Two-Column)   → tmpl-twocol (grid 1fr|1fr, title + bullets)
+Slide 3 (Features)     → tmpl-features (grid 0.6fr|1.4fr, title + 2×2 feature grid)
+Slide 4 (Metrics)      → tmpl-stats (flex column, header + stat tiles)
+Slide 5 (Closing)      → tmpl-cover (centered, "Thank You" + logo)
 ```
 
-**Every slide MUST map to an existing template. No exceptions.**
+**Every slide MUST map to a `tmpl-*` class. No exceptions.**
 
 ---
 
@@ -378,18 +342,18 @@ Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
 
 > **Proposed Layout (Following [Recipe Name])**
 >
-> Slide 1: Cover — Deck_Dark_Page_001 (headline + subtitle)
-> Slide 2: [Purpose] — Deck_Dark_Page_XXX (content type)
-> Slide 3: [Purpose] — Deck_Dark_Page_XXX (content type)
+> Slide 1: Cover — tmpl-cover (headline + subtitle)
+> Slide 2: [Purpose] — tmpl-xxx (content type)
+> Slide 3: [Purpose] — tmpl-xxx (content type)
 > ...
-> Slide N: Thank You — Deck_Dark_Page_001 (closing)
+> Slide N: Thank You — tmpl-cover (closing)
 >
 > All slides follow the [Recipe Name] recipe structure. Does this look right? Any changes?
 
 **Important:** Always verify that:
-- Slide 1 is Deck_Dark_Page_001 (cover/title)
-- Final slide is Deck_Dark_Page_001 (thank you/closing)
-- All intermediate slides match recipe templates
+- Slide 1 uses `tmpl-cover` or `tmpl-cover-split` (cover/title)
+- Final slide uses `tmpl-cover` (thank you/closing)
+- All intermediate slides use valid `tmpl-*` classes
 
 **Wait for user feedback.** If changes needed, adjust the plan but maintain the recipe structure.
 
@@ -398,41 +362,51 @@ Slide 5 (Closing)      → Deck_Dark_Page_099 (centered, h1 + contact + logo)
 ## Phase 3: Generate Presentation
 
 When generating, **read this file:**
-1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 8 template classes)
+1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 16 template classes)
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
 ### Step 3.0: Generation Strategy
 
-**Always use Strategy B — Template Class Architecture.** The `Selected/` folder of individual HTML template files is deprecated. Never read from it.
+All 14 template classes are defined in `design-system.css` — they are automatically available when you inline it. No additional file reads needed for layout structure.
 
-All 8 template classes are now defined in `design-system.css` itself — they are automatically available when you inline it. No additional file reads needed for layout structure.
-
-**The 8 template classes:**
+**The 14 template classes:**
 
 | Template Class | Display | Purpose |
 |---------------|---------|---------|
 | `tmpl-cover` | `flex` (column, centered) | Cover slide, closing slide, minimal single-focus |
+| `tmpl-cover-split` | `flex` (column) | Alternative cover: bordered top section + colored bottom bar |
+| `tmpl-cover-product` | `flex` (row, relative) | Product cover: left text + right oversized image placeholder |
+| `tmpl-cover-workshop` | `grid` (0.9fr 1.1fr, 2 rows) | Workshop/event: bordered title left + photos + info card right |
 | `tmpl-center` | `flex` (column, centered + gap) | Pull quotes, code blocks, stat hero, section break |
 | `tmpl-twocol` | `grid` (1fr 1fr) | Title left + content/bullets right |
-| `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side comparison panels (before/after, A vs B) |
+| `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side panels (challenge/solution, A vs B) |
 | `tmpl-features` | `grid` (0.6fr 1.4fr) | Narrow title left + wide 2×2 feature icon grid right |
 | `tmpl-content-img` | `grid` (1fr 1fr) | Title + bullets left, image placeholder right |
+| `tmpl-quote` | `flex` (center, stretch) | Full-width testimonial box with quote icon + attribution |
 | `tmpl-stats` | `flex` (column, centered) | Full-slide metrics — header above row of stat blocks |
 | `tmpl-steps` | `flex` (column, centered) | Process/workflow — header above horizontal step cards |
+| `tmpl-timeline` | `flex` (column, centered) | Horizontal timeline with point markers and labels |
+| `tmpl-3col` | `flex` (column) | Title + 3 equal-width cards (with optional icons) |
+| `tmpl-4col` | `flex` (column) | Title + 4 equal-width cards or colored tiles |
+| `tmpl-image-cards` | `flex` (column) | Title + 3 cards with image headers |
 
 **How it works:**
-1. Inline **design-system.css** into `<style>` — all 8 template classes come with it
+1. Inline **design-system.css** into `<style>` — all 16 template classes come with it
 2. Each slide gets: `class="slide-container tmpl-xxx slide-N"` and `data-slide-index="N"`
 3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }` (already in design-system.css)
 4. Navigation JS only toggles `slide-active` class — never touches `style.display`
+
+**Card styling modes** — for multi-card templates (`tmpl-3col`, `tmpl-4col`, `tmpl-compare`, `tmpl-steps`):
+1. **Grey surface** (default) — all cards use `background: var(--color-surface)`
+2. **Brand colors** — each card gets a different full brand color. Use full colors, never transparency.
+3. **Highlight one** — most cards stay grey, one important card uses a brand color to draw focus
 
 **CSS structure in the `<head>`:**
 ```css
 /* 1. Design system CSS inlined verbatim (includes tokens, components, template classes) */
 /* 2. Slide centering: position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) */
-/* 3. Per-slide overrides only (e.g. .slide-6.tmpl-center.slide-active { align-items: flex-start }) */
-/* 4. Shared local components not in design-system.css (.left-col, .bullet-list, etc.) */
+/* 3. Per-slide overrides only if needed */
 ```
 
 **Slide centering (add to inline `<style>`, not in design-system.css):**
@@ -445,9 +419,9 @@ All 8 template classes are now defined in `design-system.css` itself — they ar
 }
 ```
 
-**When to extend:** If content genuinely doesn't fit any of the 8 classes, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide — always define a named class.
+**When to extend:** If content genuinely doesn't fit any of the 14 classes, create a new `.tmpl-xxx` class following the same pattern. Never inline layout styles per slide — always define a named class.
 
-**Reference:** See [slide-templates.html](slide-templates.html) for live previews of all 8 template types.
+**Reference:** See [slide-templates.html](slide-templates.html) for live previews of all template types and component combinations.
 
 ### Step 3.1: Icon Selection
 
