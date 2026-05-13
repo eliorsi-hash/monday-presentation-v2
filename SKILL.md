@@ -257,11 +257,11 @@ If the user has more context, ask them to paste it before moving to Phase 1.
 
 **Read [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)** for exact HTML patterns and CSS class references for each component (charts, tables, stat blocks, step cards, timelines, quotes, agenda cards).
 
-**CRITICAL RULE:** Use ONLY template classes defined in design-system.css. All 16 `tmpl-*` classes are documented in slide-templates.html with live previews. Never inline ad-hoc layout styles — always use a named template class.
+**CRITICAL RULE:** Use ONLY template classes defined in design-system.css. All 19 `tmpl-*` classes are documented in slide-templates.html with live previews. Never inline ad-hoc layout styles — always use a named template class.
 
 ### Step 1.0b: Opener Template Selection (MANDATORY for Slide 1)
 
-Four cover template classes are available. Pick the best match for the content and tone.
+Seven cover template classes are available. Pick the best match for the content and tone.
 
 | Template Class | Layout | Best used when… |
 |----------------|--------|-----------------|
@@ -269,12 +269,18 @@ Four cover template classes are available. Pick the best match for the content a
 | `tmpl-cover-split` | Bordered top section (logo + h1) + colored bottom bar (subtitle) | Bold, casual, editorial tone — strong single statement, informal pitch |
 | `tmpl-cover-image` | Left: logo + h1 + subtitle. Right: large dashed image placeholder | Any opening where a hero image, screenshot, or visual adds impact |
 | `tmpl-cover-gallery` | 2x2 grid: bordered title card left + 2 photo slots + purple info card right | Any opening with context images, team photos, or supplementary visuals + meta info |
+| `tmpl-cover-speaker` | Bordered top card (logo + h1) + portrait circle + purple info card | Single presenter named in the content (name + title) |
+| `tmpl-cover-speakers` | Bordered top card (logo + h1) + 2-column speaker groups (portrait + info each) | Two presenters or panel named in the content |
 
 **Selection logic — apply the first matching rule:**
-1. **Content includes 2 images, photos, or context visuals** → `tmpl-cover-gallery`
-2. **A hero image, screenshot, or visual would strengthen the opening** → `tmpl-cover-image`
-3. **Bold, casual, or editorial tone — informal internal pitch** → `tmpl-cover-split`
-4. **Everything else: formal, abstract, brand-driven, or topic-only** → `tmpl-cover`
+1. **Two speakers or a panel named in the content** → `tmpl-cover-speakers`
+2. **One speaker named (name + title)** → `tmpl-cover-speaker`
+3. **Content includes 2 images, photos, or context visuals** → `tmpl-cover-gallery`
+4. **A hero image, screenshot, or visual would strengthen the opening** → `tmpl-cover-image`
+5. **Bold, casual, or editorial tone — informal internal pitch** → `tmpl-cover-split`
+6. **Everything else: formal, abstract, brand-driven, or topic-only** → `tmpl-cover`
+
+**Speaker detail slide:** Use `tmpl-speaker` inside the deck (not as cover) when the presenter needs a dedicated introduction slide with large name + portrait + bio.
 
 **Closing slide always uses `tmpl-cover`** with a "Thank You" headline.
 
@@ -362,7 +368,7 @@ Slide 5 (Closing)      → tmpl-cover (centered, "Thank You" + logo)
 ## Phase 3: Generate Presentation
 
 When generating, **read this file:**
-1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 16 template classes)
+1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 19 template classes)
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
@@ -378,6 +384,9 @@ All 14 template classes are defined in `design-system.css` — they are automati
 | `tmpl-cover-split` | `flex` (column) | Alternative cover: bordered top section + colored bottom bar |
 | `tmpl-cover-image` | `flex` (row, relative) | Cover with hero image: left text + right oversized image placeholder |
 | `tmpl-cover-gallery` | `grid` (0.9fr 1.1fr, 2 rows) | Cover with gallery: bordered title left + 2 photo slots + info card right |
+| `tmpl-cover-speaker` | `flex` (column) | Cover with single presenter: bordered top card + portrait + info card |
+| `tmpl-cover-speakers` | `flex` (column) | Cover with two presenters: bordered top card + 2 portrait groups |
+| `tmpl-speaker` | `grid` (1.1fr 0.9fr) | Speaker detail: intro + hero name + bio left, large portrait right |
 | `tmpl-center` | `flex` (column, centered + gap) | Pull quotes, code blocks, stat hero, section break |
 | `tmpl-twocol` | `grid` (1fr 1fr) | Title left + content/bullets right |
 | `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side panels (challenge/solution, A vs B) |
@@ -392,7 +401,7 @@ All 14 template classes are defined in `design-system.css` — they are automati
 | `tmpl-image-cards` | `flex` (column) | Title + 3 cards with image headers |
 
 **How it works:**
-1. Inline **design-system.css** into `<style>` — all 16 template classes come with it
+1. Inline **design-system.css** into `<style>` — all 19 template classes come with it
 2. Each slide gets: `class="slide-container tmpl-xxx slide-N"` and `data-slide-index="N"`
 3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }` (already in design-system.css)
 4. Navigation JS only toggles `slide-active` class — never touches `style.display`

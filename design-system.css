@@ -811,7 +811,135 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================
-   COVER — PRODUCT (Page 009 pattern)
+   SPEAKER COMPONENTS
+   Circular portrait placeholders + purple info cards
+   for presenter slides. Used by tmpl-cover-speaker,
+   tmpl-cover-speakers, and tmpl-speaker.
+   ============================================ */
+
+.speaker-top-card {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  flex: 1.6;
+  padding: var(--space-9) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.speaker-bottom {
+  display: flex;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.speaker-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.speaker-group {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.profile-circle {
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-circle svg {
+  width: 40%;
+  height: 40%;
+  opacity: 0.3;
+}
+
+.profile-circle-lg {
+  width: 28vmin;
+  height: 28vmin;
+}
+
+.profile-circle-md {
+  width: 22vmin;
+  height: 22vmin;
+}
+
+.profile-circle-xl {
+  width: 72vmin;
+  height: 72vmin;
+  border: 1px solid var(--color-border-strong);
+}
+
+.speaker-info-card {
+  background-color: var(--color-purple);
+  border-radius: var(--radius-xl);
+  flex: 1;
+  padding: var(--space-8) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.speaker-name {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.speaker-role {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-regular);
+  margin: 0;
+  opacity: 0.9;
+}
+
+.speaker-detail-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  z-index: 2;
+}
+
+.speaker-intro {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-regular);
+  margin: 0;
+}
+
+.speaker-name-hero {
+  font-size: 15vmin;
+  font-weight: var(--weight-semibold);
+  margin: 0;
+  line-height: 0.95;
+}
+
+.speaker-bio {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-regular);
+  margin-top: var(--space-6);
+  max-width: 85%;
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+}
+
+.speaker-portrait {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ============================================
+   COVER — IMAGE (Page 009 pattern)
    Left text column + right oversized image placeholder.
    The image is absolute-positioned to bleed off the right edge.
    ============================================ */
@@ -1180,6 +1308,27 @@ h1, h2, h3, h4, h5, h6 {
   grid-template-columns: 0.9fr 1.1fr;
   grid-template-rows: 1fr 1fr;
   gap: var(--space-4);
+}
+
+/* Cover with single speaker: bordered top card + portrait + info card */
+.tmpl-cover-speaker.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Cover with two speakers: bordered top card + 2-column speaker groups */
+.tmpl-cover-speakers.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Speaker detail: left text (intro + large name + bio) + right large portrait */
+.tmpl-speaker.slide-active {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
 }
 
 /* Full-width quote/testimonial box */

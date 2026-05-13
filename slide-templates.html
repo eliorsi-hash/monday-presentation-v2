@@ -277,6 +277,25 @@ body{padding:4vw 5vw 8vw;}
 .slide-4col{flex-direction:column;gap:1vw;}
 .slide-image-cards{flex-direction:column;gap:1vw;}
 .slide-agenda{display:grid!important;grid-template-columns:0.8fr 1.2fr;gap:2vw;align-items:center;}
+.slide-cover-speaker{flex-direction:column;gap:0.4vw;}
+.slide-cover-speakers{flex-direction:column;gap:0.4vw;}
+.slide-speaker{display:grid!important;grid-template-columns:1.1fr 0.9fr;align-items:center;}
+.p-speaker-top{border:1px solid var(--pt-border-strong);border-radius:0.7vw;flex:1.6;padding:1.2vw 1.5vw;display:flex;flex-direction:column;justify-content:flex-start;}
+.p-speaker-bottom{display:flex;gap:0.3vw;flex:1;}
+.p-speaker-bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4vw;flex:1;}
+.p-speaker-group{display:flex;gap:0.2vw;align-items:center;}
+.p-profile-lg{width:7vw;height:7vw;border-radius:50%;background:var(--pt-surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p-profile-md{width:5.5vw;height:5.5vw;border-radius:50%;background:var(--pt-surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p-profile-xl{width:16vw;height:16vw;border-radius:50%;border:1px solid var(--pt-border-strong);background:var(--pt-surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p-profile-lg svg,.p-profile-md svg,.p-profile-xl svg{opacity:0.2;width:35%;height:35%;}
+.p-speaker-info{background:#6164ff;border-radius:0.6vw;flex:1;padding:0.8vw 1vw;display:flex;flex-direction:column;justify-content:center;gap:0.1vw;}
+.p-speaker-name{font-size:0.7vw;font-weight:600;color:#fff;}
+.p-speaker-role{font-size:0.55vw;font-weight:400;color:rgba(255,255,255,0.85);}
+.p-speaker-detail{display:flex;flex-direction:column;gap:0.3vw;justify-content:center;z-index:2;}
+.p-speaker-intro{font-size:1.4vw;font-weight:400;color:var(--pt-text-sec);}
+.p-speaker-name-hero{font-size:4vw;font-weight:600;line-height:0.95;color:var(--pt-text);}
+.p-speaker-bio{font-size:0.6vw;font-weight:400;color:var(--pt-text-sec);margin-top:0.6vw;max-width:85%;line-height:1.5;}
+.p-speaker-portrait{display:flex;justify-content:flex-end;align-items:center;}
 .slide-cover-image{align-items:center;position:relative;}
 .p-cover-image-text{display:flex;flex-direction:column;gap:1.2vw;z-index:2;}
 .p-cover-image-img{position:absolute;right:-1.5vw;top:50%;transform:translateY(-50%);width:16vw;height:16vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5vw;color:rgba(255,255,255,0.25);border:1px dashed rgba(255,255,255,0.15);border-radius:0.6vw;}
@@ -397,6 +416,75 @@ body{padding:4vw 5vw 8vw;}
           <div class="p-workshop-info">
             <p class="p-body" style="color:rgba(255,255,255,0.85);">Department Name</p>
             <p class="p-body" style="color:rgba(255,255,255,0.85);">Date</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. tmpl-cover-speaker -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-speaker</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Single Speaker Cover</p>
+        <p class="tmpl-desc">Bordered top card (logo + headline) + bottom row with circular portrait placeholder and purple info card (name + role).</p>
+        <div class="tmpl-uses"><span class="tmpl-use">Single presenter</span><span class="tmpl-use">Keynote opening</span><span class="tmpl-use">Webinar intro</span></div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-cover-speaker">
+          <div class="p-speaker-top">
+            <svg class="p-logo" style="height:0.8vw;margin-bottom:0.8vw;" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/></svg>
+            <h1 class="p-display" style="font-size:3.5vw;"><span style="font-weight:400;">The</span> <span style="font-weight:600;">speaker</span><br><span style="font-weight:600;">opening</span> <span style="font-weight:400;">slide.</span></h1>
+          </div>
+          <div class="p-speaker-bottom">
+            <div class="p-profile-lg"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            <div class="p-speaker-info">
+              <span class="p-speaker-name">Jane Smith</span>
+              <span class="p-speaker-role">Product Manager</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. tmpl-cover-speakers -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-speakers</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Two Speakers Cover</p>
+        <p class="tmpl-desc">Bordered top card (logo + headline) + bottom 2-column grid with two speaker groups (portrait + info card each).</p>
+        <div class="tmpl-uses"><span class="tmpl-use">Panel / duo</span><span class="tmpl-use">Co-presenters</span><span class="tmpl-use">Interview</span></div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-cover-speakers">
+          <div class="p-speaker-top">
+            <svg class="p-logo" style="height:0.8vw;margin-bottom:0.8vw;" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/></svg>
+            <h1 class="p-display" style="font-size:3.5vw;"><span style="font-weight:400;">The</span> <span style="font-weight:600;">speakers</span><br><span style="font-weight:600;">opening</span> <span style="font-weight:400;">slide.</span></h1>
+          </div>
+          <div class="p-speaker-bottom-grid">
+            <div class="p-speaker-group"><div class="p-profile-md"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div class="p-speaker-info"><span class="p-speaker-name">Jane Smith</span><span class="p-speaker-role">Product Manager</span></div></div>
+            <div class="p-speaker-group"><div class="p-profile-md"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div class="p-speaker-info"><span class="p-speaker-name">John Smith</span><span class="p-speaker-role">Engineering Lead</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. tmpl-speaker -->
+    <div class="tmpl-card">
+      <div class="tmpl-meta">
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-speaker</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Speaker Detail</p>
+        <p class="tmpl-desc">Left: intro text + large hero name + bio. Right: oversized circular portrait. For presenter introductions inside any deck.</p>
+        <div class="tmpl-uses"><span class="tmpl-use">Presenter intro</span><span class="tmpl-use">About me</span><span class="tmpl-use">Team member spotlight</span></div>
+      </div>
+      <div class="slide-stage">
+        <div class="slide slide-speaker">
+          <div class="p-speaker-detail">
+            <p class="p-speaker-intro">Hi, I'm</p>
+            <h1 class="p-speaker-name-hero">Jane<br>Smith</h1>
+            <p class="p-speaker-bio">Here you can write something about your role, work experience, or skills</p>
+          </div>
+          <div class="p-speaker-portrait">
+            <div class="p-profile-xl"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
           </div>
         </div>
       </div>
@@ -938,8 +1026,9 @@ body{padding:4vw 5vw 8vw;}
     &nbsp;&nbsp;&lt;div class="stats-row"&gt;&lt;!-- stat-block x 4 --&gt;&lt;/div&gt;<br>
     &lt;/div&gt;<br><br>
     <span style="color:#a0a0a0;">/* Available template classes: */</span><br>
-    tmpl-cover &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-split &nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-image<br>
-    tmpl-cover-gallery &nbsp;tmpl-center &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-twocol<br>
+    tmpl-cover &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-split &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-image<br>
+    tmpl-cover-gallery &nbsp;&nbsp;&nbsp;tmpl-cover-speaker &nbsp;&nbsp;&nbsp;tmpl-cover-speakers<br>
+    tmpl-speaker &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-center &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-twocol<br>
     tmpl-compare &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-features &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-content-img<br>
     tmpl-quote &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-stats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-steps<br>
     tmpl-timeline &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-3col &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-4col<br>

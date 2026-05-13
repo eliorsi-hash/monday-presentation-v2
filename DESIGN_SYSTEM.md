@@ -197,7 +197,7 @@ Add `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)` 
 
 ## Slide Template Classes
 
-16 layout classes. Apply one to each `.slide-container` with the `slide-active` class pattern. See `slide-templates.html` for live previews of every template.
+19 layout classes. Apply one to each `.slide-container` with the `slide-active` class pattern. See `slide-templates.html` for live previews of every template.
 
 ```html
 <div class="slide-container tmpl-cover slide-1" data-slide-index="0">...</div>
@@ -215,6 +215,9 @@ Always include in `<style>`:
 | `.tmpl-cover-split` | `flex` column | `gap: var(--space-4)` | Alternative cover: bordered top + colored bottom bar |
 | `.tmpl-cover-image` | `flex` row | `align-items: center; position: relative` | Cover with hero image: left text + right oversized image placeholder |
 | `.tmpl-cover-gallery` | `grid` | `0.9fr 1.1fr; rows: 1fr 1fr; gap: --space-4` | Cover with gallery: bordered title left + 2 photo slots + info card right |
+| `.tmpl-cover-speaker` | `flex` column | `gap: var(--space-3)` | Cover with single presenter: bordered top card + portrait + info card |
+| `.tmpl-cover-speakers` | `flex` column | `gap: var(--space-3)` | Cover with two presenters: bordered top card + 2 portrait groups |
+| `.tmpl-speaker` | `grid` | `1.1fr 0.9fr; align: center` | Speaker detail: intro text + hero name + bio left, large portrait right |
 | `.tmpl-center` | `flex` column center | + `gap: var(--space-6)` | Pull quote, stat hero, section break |
 | `.tmpl-twocol` | `grid` | `1fr 1fr; gap: --space-9; align: center` | Title + bullets, problem + solution |
 | `.tmpl-compare` | `grid` | `1fr 1fr; gap: --space-5; align: stretch` | Before/after, challenge/solution, pros/cons |
@@ -436,6 +439,58 @@ Dot colors: `.dot-purple`, `.dot-yellow`, `.dot-green`, `.dot-red` (`.dot-blue` 
 ```
 
 `.number-circle` = 7vmin purple circle with centered number. `.chapter-text span` renders in secondary color for subtitles.
+
+---
+
+### Speaker / Presenter
+
+```html
+<!-- Single speaker cover (tmpl-cover-speaker) -->
+<div class="speaker-top-card">
+  <svg class="monday-logo"><!-- inline logo --></svg>
+  <h1 class="text-display">The <span class="highlight--bold">speaker</span> opening slide.</h1>
+</div>
+<div class="speaker-bottom">
+  <div class="profile-circle profile-circle-lg">
+    <!-- inline portrait placeholder SVG or <img> -->
+  </div>
+  <div class="speaker-info-card">
+    <span class="speaker-name">Jane Smith</span>
+    <span class="speaker-role">Product Manager</span>
+  </div>
+</div>
+
+<!-- Two speakers cover (tmpl-cover-speakers) -->
+<div class="speaker-top-card"><!-- same as above --></div>
+<div class="speaker-bottom-grid">
+  <div class="speaker-group">
+    <div class="profile-circle profile-circle-md"><!-- portrait --></div>
+    <div class="speaker-info-card">
+      <span class="speaker-name">Jane Smith</span>
+      <span class="speaker-role">Product Manager</span>
+    </div>
+  </div>
+  <div class="speaker-group">
+    <div class="profile-circle profile-circle-md"><!-- portrait --></div>
+    <div class="speaker-info-card">
+      <span class="speaker-name">John Smith</span>
+      <span class="speaker-role">Engineering Lead</span>
+    </div>
+  </div>
+</div>
+
+<!-- Speaker detail slide (tmpl-speaker) -->
+<div class="speaker-detail-text">
+  <p class="speaker-intro">Hi, I'm</p>
+  <h1 class="speaker-name-hero">Jane Smith</h1>
+  <p class="speaker-bio">Role description, experience, or fun fact</p>
+</div>
+<div class="speaker-portrait">
+  <div class="profile-circle profile-circle-xl"><!-- large portrait --></div>
+</div>
+```
+
+Profile circle sizes: `.profile-circle-md` (22vmin), `.profile-circle-lg` (28vmin), `.profile-circle-xl` (72vmin). `.speaker-info-card` uses `--color-purple` background. `.speaker-name-hero` = 15vmin for dramatic name display.
 
 ---
 

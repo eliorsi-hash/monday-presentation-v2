@@ -78,7 +78,7 @@ Then in any Claude Code session:
 
 ## Available templates
 
-16 slide layout classes, all defined in `design-system.css`:
+19 slide layout classes, all defined in `design-system.css`:
 
 | Template | Layout | Best for |
 |----------|--------|----------|
@@ -86,6 +86,9 @@ Then in any Claude Code session:
 | `tmpl-cover-split` | Bordered top + colored bottom bar | Casual/editorial cover |
 | `tmpl-cover-image` | Left text + right image placeholder | Cover with hero visual |
 | `tmpl-cover-gallery` | 2x2 grid: title + photos + info card | Cover with multiple images |
+| `tmpl-cover-speaker` | Bordered card + portrait + info card | Single presenter cover |
+| `tmpl-cover-speakers` | Bordered card + 2 portrait groups | Two presenters cover |
+| `tmpl-speaker` | 1.1fr 0.9fr grid: name + portrait | Speaker detail / about me |
 | `tmpl-center` | Centered single focus | Hero stat, pull quote, code block |
 | `tmpl-twocol` | 1fr 1fr grid | Title + bullets, problem + solution |
 | `tmpl-compare` | 1fr 1fr stretch | Before/after, challenge/solution |
