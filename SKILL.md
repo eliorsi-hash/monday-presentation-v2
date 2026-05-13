@@ -87,7 +87,7 @@ Once chosen, explain the recipe structure:
 > - ...
 > - Slide N: Thank You (Closing Slide)
 >
-> All presentations follow this proven structure: **always start with a cover slide (Deck_Dark_Page_001) and end with a thank you slide (Deck_Dark_Page_001).**
+> All presentations follow this proven structure: **always start with a cover slide and end with a closing slide.**
 
 ### Step 0.2: Content Intake
 
@@ -194,7 +194,7 @@ AskUserQuestion({
 
 **If the user has assets:**
 - Ask them to list what they have (filenames, URLs, or descriptions)
-- In Phase 1, actively choose layouts that include image slots (e.g., `tmpl-content-img`, `Deck_Dark_Page_038`) for slides where visuals were provided
+- In Phase 1, actively choose layouts that include image slots (e.g., `tmpl-content-img`) for slides where visuals were provided
 - In the generated HTML, reference images with `<img src="path/to/asset.png" ...>` inside `.image-placeholder` containers, and note them clearly in the code so the user can update paths
 
 **If no assets:**
@@ -776,15 +776,14 @@ Supported types (map to template classes in `design-system.css`):
 
 | File | Purpose |
 |------|---------|
-| [RECIPES.md](RECIPES.md) | **Phase 0** — 5 pre-designed presentation recipes with slide sequences and best practices |
-| [SLIDE_INVENTORY.md](SLIDE_INVENTORY.md) | **Phase 1** — MANDATORY metadata of every Deck_Dark_Page_*.html template with exact structure and content limits |
-| [VISUAL_PATTERNS.md](VISUAL_PATTERNS.md) | **Phase 1 + Phase 3** — Visual CSS recipes: title typography, data viz construction, image placeholder decisions, card hierarchy, animations |
+| [RECIPES.md](RECIPES.md) | **Phase 0** — 5 presentation recipes with slide sequences and best practices |
+| [design-system.css](design-system.css) | CSS tokens, 19 template classes, and all reusable components. Inline entire file into generated HTML. |
+| [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) | Agent reference — every token value, component HTML pattern, template class, and design rule |
+| [slide-templates.html](slide-templates.html) | Live previews of all 19 template classes and component combinations (open in browser) |
 | [ICON_MATCHING.md](ICON_MATCHING.md) | **Phase 3.1** — Semantic icon recommendations by slide purpose and content type |
-| [design-system.css](design-system.css) | CSS tokens, typography, spacing, and **all reusable components** (bar charts, pie/donut charts, stat blocks, numbered steps, tables, image placeholders, animations). Supports dark (default) and light theme via `data-theme` on `<html>`. Inline entire file into generated HTML. |
-| [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) | Agent reference for design-system.css — every token value, component HTML pattern, and design rule. Read this when building slides to know exactly what classes exist and how to use them. |
-| [ICON_GUIDE.md](ICON_GUIDE.md) | 267 icon names and categories |
+| [ICON_GUIDE.md](ICON_GUIDE.md) | 268 icon names and categories |
 
-> **Note:** Brand SVG logo and navigation JS are inlined directly in this SKILL.md — no need to read BRAND_ASSETS.md or NAVIGATION.md separately.
+> **Note:** Brand SVG logo and navigation JS are inlined directly in this SKILL.md — no need to read BRAND_ASSETS.md separately.
 
 ---
 

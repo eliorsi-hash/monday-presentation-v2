@@ -9,8 +9,8 @@ Use the skill: `/monday-presentation-v2`
 ## Architecture
 
 - **SKILL.md** — The skill definition (invoked via `/monday-presentation-v2`). Contains the phased workflow, inlined brand SVG, and navigation JS.
-- **design-system.css** — CSS tokens, components, and 16 template classes. Inlined verbatim into every generated HTML. Supports dark (default) and light themes via `data-theme` attribute on `<html>`.
-- **slide-templates.html** — Live previews of all 16 template classes and component combinations. The single source of truth for slide layouts.
+- **design-system.css** — CSS tokens, components, and 19 template classes. Inlined verbatim into every generated HTML. Supports dark (default) and light themes via `data-theme` attribute on `<html>`.
+- **slide-templates.html** — Live previews of all 19 template classes and component combinations. The single source of truth for slide layouts.
 - **design-system-showcase.html** — Design token and component reference page.
 - **DESIGN_SYSTEM.md** — Agent reference for design-system.css: every token value, component HTML pattern, and template class.
 - **Icons/** — 268 monday.com SVG icons (including Quote.svg for testimonials). Read and inlined into generated HTML for portability.
