@@ -680,6 +680,45 @@ h1, h2, h3, h4, h5, h6 {
 .dot-blue   { color: var(--color-purple); } /* alias — blue = purple in monday palette */
 
 /* ============================================
+   CHAPTER / AGENDA CARDS
+   Numbered circle + text label for agenda slides.
+   Use inside tmpl-features or tmpl-twocol with
+   a vertical stack of cards on the right column.
+   ============================================ */
+
+.chapter-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.number-circle {
+  width: 7vmin;
+  height: 7vmin;
+  background-color: var(--color-purple);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--text-h4);
+  font-weight: var(--weight-regular);
+  flex-shrink: 0;
+}
+
+.chapter-text {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-regular);
+}
+
+.chapter-text span {
+  font-weight: var(--weight-light);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
    PIE & DONUT CHARTS
    Segment colors and degree stops are set via
    inline conic-gradient() per chart.
@@ -769,6 +808,241 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: var(--weight-semibold);
   color: var(--color-text);
   padding-left: var(--space-3);
+}
+
+/* ============================================
+   COVER — PRODUCT (Page 009 pattern)
+   Left text column + right oversized image placeholder.
+   The image is absolute-positioned to bleed off the right edge.
+   ============================================ */
+
+.cover-product-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  z-index: 2;
+}
+
+.cover-product-image {
+  position: absolute;
+  right: calc(var(--slide-padding-x) * -0.6);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 62vmin;
+  height: 62vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: rgba(255, 255, 255, 0.25);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+[data-theme="light"] .cover-product-image {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.cover-product-image svg {
+  width: 8vmin;
+  height: 8vmin;
+  opacity: 0.4;
+}
+
+.cover-product-image .placeholder-label {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+
+/* ============================================
+   COVER — WORKSHOP (Page 010 pattern)
+   2×2 grid: bordered title card left (spans both rows),
+   2 image slots top-right, purple info card bottom-right.
+   ============================================ */
+
+.cover-title-card {
+  grid-row: span 2;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-9);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cover-photos-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.cover-photo-slot {
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-photo-slot svg {
+  width: 5vmin;
+  height: 5vmin;
+  opacity: 0.3;
+}
+
+.cover-info-card {
+  background-color: var(--color-purple);
+  border-radius: var(--radius-lg);
+  padding: var(--space-9);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--space-2);
+}
+
+.cover-info-text {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-regular);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ============================================
+   QUOTE / TESTIMONIAL
+   Full-width surface box with large quote mark,
+   quote text, and attribution block.
+   Use with tmpl-quote template class.
+   ============================================ */
+
+.quote-box {
+  position: relative;
+  background-color: var(--color-surface);
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quote-mark {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-10);
+  width: 7vmin;
+  height: auto;
+  color: var(--color-purple);
+  user-select: none;
+  pointer-events: none;
+}
+
+.quote-text {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  padding-top: var(--space-5);
+  margin: 0;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.attribution .person-name {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+}
+
+.attribution .person-title {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-secondary);
+}
+
+.attribution .company {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.attribution .company-name {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+}
+
+/* ============================================
+   TIMELINE
+   Horizontal line with positioned point circles
+   and labels. Use with tmpl-timeline template.
+   ============================================ */
+
+.timeline-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0.3vmin;
+  background-color: var(--color-border-strong);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.timeline-point {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.point-circle {
+  width: 2vmin;
+  height: 2vmin;
+  background-color: var(--color-bg);
+  border: 0.3vmin solid var(--color-border-strong);
+  border-radius: 50%;
+}
+
+.point-active .point-circle {
+  width: 3vmin;
+  height: 3vmin;
+}
+
+.point-active::before {
+  content: '';
+  position: absolute;
+  top: -2.5vmin;
+  width: 8vmin;
+  height: 8vmin;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+[data-theme="light"] .point-active::before {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.point-label {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  position: absolute;
+  top: 6vmin;
+  white-space: nowrap;
 }
 
 /* ============================================
@@ -884,6 +1158,64 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   justify-content: center;
   gap: var(--space-6);
+}
+
+/* Cover with bordered top section + colored bottom bar */
+.tmpl-cover-split.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Product cover: left text + right large image placeholder (absolute positioned) */
+.tmpl-cover-product.slide-active {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Workshop/event cover: 2×2 grid with title card spanning left */
+.tmpl-cover-workshop.slide-active {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* Full-width quote/testimonial box */
+.tmpl-quote.slide-active {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Horizontal timeline with labeled points */
+.tmpl-timeline.slide-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-10);
+}
+
+/* 3-column card grid (title + 3 equal cards) */
+.tmpl-3col.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* 4-column card grid (title + 4 equal cards) */
+.tmpl-4col.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Image-top card grid (title + 3 cards with image headers) */
+.tmpl-image-cards.slide-active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
 /* ============================================

@@ -197,7 +197,7 @@ Add `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)` 
 
 ## Slide Template Classes
 
-Eight layout archetypes. Apply one to each `.slide-container` with the `slide-active` class pattern:
+16 layout classes. Apply one to each `.slide-container` with the `slide-active` class pattern. See `slide-templates.html` for live previews of every template.
 
 ```html
 <div class="slide-container tmpl-cover slide-1" data-slide-index="0">...</div>
@@ -212,19 +212,37 @@ Always include in `<style>`:
 | Class | Display when active | Grid/flex spec | Best for |
 |-------|--------------------|--------------------|---------|
 | `.tmpl-cover` | `flex` column center | `justify-content: center; align-items: center` | Cover slide, closing / thank you |
+| `.tmpl-cover-split` | `flex` column | `gap: var(--space-4)` | Alternative cover: bordered top + colored bottom bar |
+| `.tmpl-cover-product` | `flex` row | `align-items: center; position: relative` | Product launch: left text + right oversized image placeholder |
+| `.tmpl-cover-workshop` | `grid` | `0.9fr 1.1fr; rows: 1fr 1fr; gap: --space-4` | Workshop/event: bordered title left + 2 photos + info card right |
 | `.tmpl-center` | `flex` column center | + `gap: var(--space-6)` | Pull quote, stat hero, section break |
 | `.tmpl-twocol` | `grid` | `1fr 1fr; gap: --space-9; align: center` | Title + bullets, problem + solution |
-| `.tmpl-compare` | `grid` | `1fr 1fr; gap: --space-5; align: stretch` | Before/after, A vs B, pros/cons |
+| `.tmpl-compare` | `grid` | `1fr 1fr; gap: --space-5; align: stretch` | Before/after, challenge/solution, pros/cons |
 | `.tmpl-features` | `grid` | `0.6fr 1.4fr; gap: --space-9; align: center` | Narrow title left + 2×2 feature grid right |
 | `.tmpl-content-img` | `grid` | `1fr 1fr; gap: --space-9; align: center` | Text + bullets left, image/visual right |
+| `.tmpl-quote` | `flex` | `justify-content: center; align-items: stretch` | Full-width testimonial / quote box |
 | `.tmpl-stats` | `flex` column | `justify-content: center; gap: --space-7` | Full-slide KPIs, metrics overview |
 | `.tmpl-steps` | `flex` column | `justify-content: center; gap: --space-6` | Process flow, numbered workflow |
+| `.tmpl-timeline` | `flex` column | `justify-content: center; gap: --space-10` | Horizontal timeline with point markers |
+| `.tmpl-3col` | `flex` column | `gap: var(--space-5)` | Title + 3 equal-width cards (with optional icons) |
+| `.tmpl-4col` | `flex` column | `gap: var(--space-5)` | Title + 4 equal-width cards or colored tiles |
+| `.tmpl-image-cards` | `flex` column | `gap: var(--space-5)` | Title + 3 cards with image headers |
+
+### Card styling modes
+
+Multi-card templates (`tmpl-3col`, `tmpl-4col`, `tmpl-compare`, `tmpl-steps`) support three visual approaches:
+
+1. **Grey surface** (default) — all cards use `background: var(--color-surface)`
+2. **Brand colors** — each card gets a different full brand color (`--color-purple`, `--color-green`, `--color-yellow`, etc.). Use full colors, never transparency.
+3. **Highlight one** — most cards stay grey, one important card uses a brand color to draw focus (e.g. the "solution" panel in a challenge/solution comparison)
 
 ---
 
 ## Icons
 
-267 monday.com SVG icons in `Icons/Property 1=IconName.svg`. Always inline the SVG — never use `<img src>`.
+268 monday.com SVG icons in `Icons/Property 1=IconName.svg`. Always inline the SVG — never use `<img src>`.
+
+**Special icon:** `Icons/Property 1=Quote.svg` — double quotation mark for testimonial slides. Uses `fill="currentColor"` so it inherits color from CSS (set via `.quote-mark { color: var(--color-purple) }`). Only use this icon for `.quote-box` components — it is visually distinct from the standard monday icon set.
 
 Size classes:
 
@@ -400,6 +418,75 @@ Donut hole = 54% transparent center via CSS `mask: radial-gradient(closest-side,
 ```
 
 Dot colors: `.dot-purple`, `.dot-yellow`, `.dot-green`, `.dot-red` (`.dot-blue` is an alias for purple).
+
+---
+
+### Chapter / Agenda Cards
+
+```html
+<!-- Use inside tmpl-features or tmpl-twocol for agenda slides -->
+<div class="chapter-card">
+  <div class="number-circle">1</div>
+  <div class="chapter-text">Introduction <span>— Opening remarks</span></div>
+</div>
+<div class="chapter-card">
+  <div class="number-circle">2</div>
+  <div class="chapter-text">Product Demo <span>— Live walkthrough</span></div>
+</div>
+```
+
+`.number-circle` = 7vmin purple circle with centered number. `.chapter-text span` renders in secondary color for subtitles.
+
+---
+
+### Quote / Testimonial
+
+```html
+<!-- Use with tmpl-quote template. Inline Quote.svg from Icons/ -->
+<div class="quote-box">
+  <svg class="quote-mark" viewBox="0 0 160 120" fill="none">
+    <!-- Inline Icons/Property 1=Quote.svg content here -->
+    <path d="M70.3034 28.085C..." fill="currentColor"/>
+    <path d="M158.695 28.084C..." fill="currentColor"/>
+  </svg>
+  <p class="quote-text">
+    With monday.com, we're 30% more efficient at delivering
+    hundreds of campaigns seen by millions of customers.
+  </p>
+  <div class="attribution">
+    <span class="person-name">Tye Rapley-Hawkins</span>
+    <span class="person-title">Head of Delivery</span>
+    <div class="company">
+      <span class="company-name">Telefonica</span>
+    </div>
+  </div>
+</div>
+```
+
+`.quote-mark` is positioned absolute, colored `--color-purple` via `currentColor`. `.quote-text` uses `--text-h2` at semibold weight.
+
+---
+
+### Timeline
+
+```html
+<!-- Use with tmpl-timeline template -->
+<h1>Product Roadmap</h1>
+<div class="timeline-container">
+  <div class="timeline-line"></div>
+  <div class="timeline-point point-active">
+    <div class="point-circle"></div>
+    <div class="point-label">Q1 2025</div>
+  </div>
+  <div class="timeline-point">
+    <div class="point-circle"></div>
+    <div class="point-label">Q2 2025</div>
+  </div>
+  <!-- repeat for each milestone -->
+</div>
+```
+
+`.timeline-line` = horizontal bar across full width. `.point-circle` = small circle on the line (border matches line width at 0.3vmin). `.point-active` adds a subtle glow behind the active point. `.point-label` is absolutely positioned below each dot.
 
 ---
 
