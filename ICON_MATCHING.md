@@ -20,71 +20,71 @@ For each slide that supports icons (feature cards, timeline steps, bullet lists,
 ### Process & Workflow
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Step 1, First, Start | `Check`, `Flag`, `Rocket` | Timeline, numbered steps, beginning |
-| Step 2, Middle, Continue | `Arrow right`, `Arrow path`, `Forward` | Sequential process, progression |
-| Step 3, Final, Complete | `Checkmark`, `Clipboard check`, `Trophy` | Completion, achievement, goal |
-| Training, Learning, Upskill | `Academy`, `Book open`, `Graduation cap` | Education, workshops, courses |
-| Implementation, Build, Create | `Tools`, `Wrench`, `Hammer` | Development, construction, setup |
+| Step 1, First, Start | `Checkmark`, `Flag`, `Launch` | Timeline, numbered steps, beginning |
+| Step 2, Middle, Continue | `Arrow up`, `Arrow Path`, `Arrows` | Sequential process, progression |
+| Step 3, Final, Complete | `Checkmark`, `Trophy`, `Win` | Completion, achievement, goal |
+| Training, Learning, Upskill | `Academy`, `Book open`, `Lightbulb` | Education, workshops, courses |
+| Implementation, Build, Create | `Tools`, `Tool`, `Settings gear` | Development, construction, setup |
 
 ### Problem & Solution
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Problem, Issue, Alert | `Alarm`, `Alert triangle`, `Exclamation` | Highlighting problems, risks |
-| Solution, Fix, Resolve | `Repair`, `Wrench`, `Check` | Presenting solutions, fixes |
-| Bottleneck, Slow, Delay | `Hourglass`, `Clock`, `Pause` | Describing constraints, slowness |
-| Scale, Growth, Increase | `Arrow up`, `Chart up`, `Trending up` | Growth metrics, scaling up |
-| Reduce, Decrease, Lower | `Arrow down`, `Minus`, `Reduce` | Decreasing effort, cutting costs |
+| Problem, Issue, Alert | `Alarm`, `Warning`, `Exclamation` | Highlighting problems, risks |
+| Solution, Fix, Resolve | `Tool`, `Checkmark`, `Shield check` | Presenting solutions, fixes |
+| Bottleneck, Slow, Delay | `Hourglass`, `Clock`, `Warning` | Describing constraints, slowness |
+| Scale, Growth, Increase | `Arrow up`, `Chart up`, `Graph arrow up` | Growth metrics, scaling up |
+| Reduce, Decrease, Lower | `Graph arrow down`, `Minus`, `Chart down` | Decreasing effort, cutting costs |
 
 ### Data & Metrics
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Statistics, Numbers, Data | `Bar chart`, `Chart up`, `Graph` | Metrics, KPIs, analytics |
-| Comparison, versus, A/B | `Arrows`, `Compare`, `Scale` | Side-by-side analysis |
-| Target, Goal, Objective | `Target`, `Focus`, `Bullseye` | Goals, targets, objectives |
-| Performance, Speed, Efficiency | `Gauge`, `Speedometer`, `Rocket` | Speed, performance, efficiency |
+| Statistics, Numbers, Data | `Bar Chart`, `Chart up`, `Stats` | Metrics, KPIs, analytics |
+| Comparison, versus, A/B | `Arrows`, `Scale balance`, `Split` | Side-by-side analysis |
+| Target, Goal, Objective | `Target`, `Target eye`, `Arrow target` | Goals, targets, objectives |
+| Performance, Speed, Efficiency | `Flash`, `Spaceship`, `Graph up` | Speed, performance, efficiency |
 
 ### Organization & Structure
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Team, People, Collaboration | `People`, `Users`, `Group` | Team members, collaboration |
-| Ownership, Responsibility | `Badge`, `Shield`, `Crown` | Accountability, leadership |
-| Tools, Tooling, Automation | `Tools`, `Wrench`, `Gear` | Technology, automation |
+| Team, People, Collaboration | `Users`, `Users circle`, `Collaboration` | Team members, collaboration |
+| Ownership, Responsibility | `Badge`, `Shield check`, `Badge star` | Accountability, leadership |
+| Tools, Tooling, Automation | `Tools`, `Gear`, `Settings gear` | Technology, automation |
 | System, Integration, Flow | `Flow`, `Network`, `Link` | System architecture, integration |
 | Documentation, Guidelines | `Book`, `Clipboard`, `Document` | Standards, documentation |
 
 ### Communication & Action
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Communication, Message, Share | `Chat`, `Message`, `Send` | Communication, feedback |
-| Approval, Review, Check | `Checkmark`, `Check circle`, `Approve` | Approvals, review gates |
-| Feedback, Input, Voice | `Chat`, `Comment`, `Megaphone` | Feedback loops |
-| Decision, Choice, Option | `Choose`, `Select`, `Ballot` | Decision points, choices |
+| Communication, Message, Share | `Bubble talk`, `Speech bubble`, `Share` | Communication, feedback |
+| Approval, Review, Check | `Checkmark`, `Badge check`, `Checklist` | Approvals, review gates |
+| Feedback, Input, Voice | `Bubble talk`, `Megaphone`, `Speech bubble` | Feedback loops |
+| Decision, Choice, Option | `Arrow Path`, `Split`, `Compass` | Decision points, choices |
 
 ### Features & Capabilities
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
-| Feature, Capability, Benefit | `Star`, `Sparkle`, `Lightning` | Feature highlights |
-| Integration, Connect | `Link`, `Network`, `Plug` | Integrations, connections |
-| Security, Safe, Protected | `Shield`, `Lock`, `Safe` | Security, protection, safety |
-| Quality, Premium, Excellence | `Badge star`, `Star`, `Crown` | Quality, premium tier |
-| Customization, Control | `Sliders`, `Settings`, `Gear` | Customization, control |
+| Feature, Capability, Benefit | `Badge star`, `Flash`, `Diamond` | Feature highlights |
+| Integration, Connect | `Link`, `Network`, `Connection` | Integrations, connections |
+| Security, Safe, Protected | `Shield check`, `Lock`, `Lock network` | Security, protection, safety |
+| Quality, Premium, Excellence | `Badge star`, `Trophy`, `Rank star badge` | Quality, premium tier |
+| Customization, Control | `Settings gear`, `Toggle`, `Gear` | Customization, control |
 
 ### Timeline & Scheduling
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
 | Time, Duration, Schedule | `Clock`, `Hourglass`, `Calendar` | Timing, scheduling |
-| Soon, Upcoming, Future | `Calendar plus`, `Arrow right`, `Forward` | Upcoming events, future plans |
-| Deadline, Urgent | `Alarm`, `Exclamation`, `Alert` | Urgency, deadlines |
-| Parallel, Simultaneous | `Arrows`, `Parallel`, `Sync` | Parallel tracks, simultaneous work |
+| Soon, Upcoming, Future | `Calendar plus`, `Arrow up`, `Arrow Path` | Upcoming events, future plans |
+| Deadline, Urgent | `Alarm`, `Exclamation`, `Warning` | Urgency, deadlines |
+| Parallel, Simultaneous | `Arrows`, `Sync`, `Split` | Parallel tracks, simultaneous work |
 
 ### Business & Strategy
 | Purpose | Recommended Icons | Use When |
 |---------|-------------------|----------|
 | Strategy, Planning, Direction | `Compass`, `Map`, `Target` | Strategic direction |
 | Revenue, Money, Financial | `Cash`, `Dollar`, `Coins` | Financial metrics, revenue |
-| Growth, Expansion | `Arrow up`, `Plant`, `Rocket` | Growth, expansion |
-| Risk, Challenge | `Alert`, `Warning`, `Exclamation` | Risks, challenges |
-| Success, Win, Achievement | `Trophy`, `Checkmark`, `Star` | Success, victories |
+| Growth, Expansion | `Arrow up`, `Mountain`, `Spaceship` | Growth, expansion |
+| Risk, Challenge | `Warning`, `Exclamation`, `Shield check` | Risks, challenges |
+| Success, Win, Achievement | `Trophy`, `Checkmark`, `Win` | Success, victories |
 
 ---
 
@@ -137,17 +137,17 @@ Sack, Sacred, Sacrifice, Sacrilege, Sad, Saddle, Sadness, Safe, Safety, Safflowe
 | Slide | Content | Icon Recommendation |
 |-------|---------|----------------------|
 | 1 | Title | (No icon) |
-| 2 | Problem Statement | `Alert`, `Alarm`, `Exclamation` |
-| 3 | Workload Distribution | `People`, `Chart up`, `Bar chart` |
-| 4 | Root Causes Part 1 | `Alert`, `Wrench`, `Tools` |
-| 5 | Root Causes Part 2 | `Users`, `Building` |
+| 2 | Problem Statement | `Warning`, `Alarm`, `Exclamation` |
+| 3 | Workload Distribution | `Users`, `Chart up`, `Bar Chart` |
+| 4 | Root Causes Part 1 | `Warning`, `Tool`, `Tools` |
+| 5 | Root Causes Part 2 | `Users`, `Organization` |
 | 6 | Section Divider | (No icon) |
-| 7 | Track 1 - Training | `Academy`, `Book open`, `Graduation cap` |
-| 8 | Track 2 - Tool | `Tools`, `Wrench`, `Gear` |
-| 9 | Track 3 - Automation | `Automation`, `Flow`, `Network` |
-| 10 | Track 4 - Manual Craft | `Paint`, `Pencil`, `Brush` |
-| 11 | Metrics | `Chart up`, `Trophy`, `Star` |
-| 12 | Timeline | `Clock`, `Calendar`, `Forward` |
+| 7 | Track 1 - Training | `Academy`, `Book open`, `Lightbulb` |
+| 8 | Track 2 - Tool | `Tools`, `Tool`, `Gear` |
+| 9 | Track 3 - Automation | `Flow`, `Gears`, `Network` |
+| 10 | Track 4 - Manual Craft | `Pen write`, `Pencil`, `Edit` |
+| 11 | Metrics | `Chart up`, `Trophy`, `Badge star` |
+| 12 | Timeline | `Clock`, `Calendar`, `Arrow Path` |
 | 13 | Closing | (No icon) |
 
 ---
