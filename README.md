@@ -24,7 +24,7 @@ If you want charts or metrics in the deck, choose what kind (bar charts, pie/don
 Claude maps your content to the right slide templates from 16 available layout classes, picks icons from the 268-icon library, and shows you the plan:
 
 ```
-Slide 1: Cover        — tmpl-cover-product
+Slide 1: Cover        — tmpl-cover-image
 Slide 2: Vision       — tmpl-twocol
 Slide 3: Features     — tmpl-3col
 Slide 4: Deep Dive    — tmpl-content-img
@@ -84,8 +84,8 @@ Then in any Claude Code session:
 |----------|--------|----------|
 | `tmpl-cover` | Centered headline + logo | Cover, closing, section break |
 | `tmpl-cover-split` | Bordered top + colored bottom bar | Casual/editorial cover |
-| `tmpl-cover-product` | Left text + right image placeholder | Product launch cover |
-| `tmpl-cover-workshop` | 2x2 grid: title + photos + info card | Workshop/event cover |
+| `tmpl-cover-image` | Left text + right image placeholder | Cover with hero visual |
+| `tmpl-cover-gallery` | 2x2 grid: title + photos + info card | Cover with multiple images |
 | `tmpl-center` | Centered single focus | Hero stat, pull quote, code block |
 | `tmpl-twocol` | 1fr 1fr grid | Title + bullets, problem + solution |
 | `tmpl-compare` | 1fr 1fr stretch | Before/after, challenge/solution |

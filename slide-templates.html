@@ -277,12 +277,12 @@ body{padding:4vw 5vw 8vw;}
 .slide-4col{flex-direction:column;gap:1vw;}
 .slide-image-cards{flex-direction:column;gap:1vw;}
 .slide-agenda{display:grid!important;grid-template-columns:0.8fr 1.2fr;gap:2vw;align-items:center;}
-.slide-cover-product{align-items:center;position:relative;}
-.p-cover-product-text{display:flex;flex-direction:column;gap:1.2vw;z-index:2;}
-.p-cover-product-img{position:absolute;right:-1.5vw;top:50%;transform:translateY(-50%);width:16vw;height:16vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5vw;color:rgba(255,255,255,0.25);border:1px dashed rgba(255,255,255,0.15);border-radius:0.6vw;}
-.p-cover-product-img svg{opacity:0.3;width:2vw;height:2vw;}
-.p-cover-product-img span{font-size:0.45vw;color:var(--pt-text-muted);}
-.slide-cover-workshop{display:grid!important;grid-template-columns:0.9fr 1.1fr;grid-template-rows:1fr 1fr;gap:0.7vw;}
+.slide-cover-image{align-items:center;position:relative;}
+.p-cover-image-text{display:flex;flex-direction:column;gap:1.2vw;z-index:2;}
+.p-cover-image-img{position:absolute;right:-1.5vw;top:50%;transform:translateY(-50%);width:16vw;height:16vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5vw;color:rgba(255,255,255,0.25);border:1px dashed rgba(255,255,255,0.15);border-radius:0.6vw;}
+.p-cover-image-img svg{opacity:0.3;width:2vw;height:2vw;}
+.p-cover-image-img span{font-size:0.45vw;color:var(--pt-text-muted);}
+.slide-cover-gallery{display:grid!important;grid-template-columns:0.9fr 1.1fr;grid-template-rows:1fr 1fr;gap:0.7vw;}
 .p-workshop-title{grid-row:span 2;border:1px solid var(--pt-border-strong);border-radius:0.6vw;padding:1.5vw;display:flex;flex-direction:column;justify-content:flex-end;}
 .p-workshop-photos{display:grid;grid-template-columns:1fr 1fr;gap:0.7vw;}
 .p-workshop-photo{border-radius:0.5vw;background:var(--pt-surface);display:flex;align-items:center;justify-content:center;}
@@ -354,22 +354,22 @@ body{padding:4vw 5vw 8vw;}
       </div>
     </div>
 
-    <!-- 3. tmpl-cover-product -->
+    <!-- 3. tmpl-cover-image -->
     <div class="tmpl-card">
       <div class="tmpl-meta">
-        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-product</span> <span class="tmpl-new">new</span></div>
-        <p class="tmpl-title">Product Cover</p>
-        <p class="tmpl-desc">Left text (logo + headline + subtitle) with a large dashed image placeholder bleeding off the right edge. For product launches with a hero visual.</p>
-        <div class="tmpl-uses"><span class="tmpl-use">Product launch</span><span class="tmpl-use">Feature reveal</span><span class="tmpl-use">Demo opening</span></div>
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-image</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Image Cover</p>
+        <p class="tmpl-desc">Left text (logo + headline + subtitle) with a large dashed image placeholder bleeding off the right edge. Use when a hero image, screenshot, or visual strengthens the opening.</p>
+        <div class="tmpl-uses"><span class="tmpl-use">Hero visual opening</span><span class="tmpl-use">Product launch</span><span class="tmpl-use">Feature reveal</span></div>
       </div>
       <div class="slide-stage">
-        <div class="slide slide-cover-product">
-          <div class="p-cover-product-text">
+        <div class="slide slide-cover-image">
+          <div class="p-cover-image-text">
             <svg class="p-logo" style="height:0.9vw;" viewBox="0 0 282 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.68474 35.762C3.70108 35.7602 1.87466 34.7272 0.914601 33.0642C-0.0454546 31.4011 0.0120846 29.3698 1.06488 27.7591L10.8879 12.7341C11.8969 11.0981 13.7529 10.1154 15.7356 10.1675C17.7182 10.2196 19.5153 11.2982 20.4292 12.9847C21.3431 14.6713 21.2298 16.7001 20.1335 18.2836L10.3163 33.3086C9.31775 34.8373 7.56703 35.7647 5.68474 35.762Z" fill="#FB275D"/><path d="M22.4209 35.7618C20.4405 35.7601 18.6171 34.7296 17.6586 33.0704C16.7001 31.4113 16.7576 29.3849 17.8086 27.778L27.6127 12.7887C28.6058 11.1288 30.4684 10.1226 32.4659 10.1668C34.4635 10.211 36.2755 11.2985 37.1875 13.0005C38.0995 14.7025 37.9651 16.7459 36.8373 18.325L27.0332 33.3143C26.0386 34.836 24.296 35.7607 22.4209 35.7618Z" fill="#FFCC00"/><path d="M38.7383 35.7925C41.7384 35.7925 44.1705 33.3647 44.1705 30.3698C44.1705 27.3749 41.7384 24.947 38.7383 24.947C35.7382 24.947 33.3062 27.3749 33.3062 30.3698C33.3062 33.3647 35.7382 35.7925 38.7383 35.7925Z" fill="#00CA72"/></svg>
             <h1 class="p-display">The product<br>opening slide.</h1>
             <p class="p-body">A fresh cover with a large hero<br>image placeholder on the right.</p>
           </div>
-          <div class="p-cover-product-img">
+          <div class="p-cover-image-img">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span>[Product Screenshot]</span>
           </div>
@@ -377,16 +377,16 @@ body{padding:4vw 5vw 8vw;}
       </div>
     </div>
 
-    <!-- 4. tmpl-cover-workshop -->
+    <!-- 4. tmpl-cover-gallery -->
     <div class="tmpl-card">
       <div class="tmpl-meta">
-        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-workshop</span> <span class="tmpl-new">new</span></div>
-        <p class="tmpl-title">Workshop / Event Cover</p>
-        <p class="tmpl-desc">2x2 grid: bordered title card spanning left (display headline with mixed weights), 2 photo slots top-right, purple info card with department/date bottom-right.</p>
-        <div class="tmpl-uses"><span class="tmpl-use">Workshop</span><span class="tmpl-use">Conference</span><span class="tmpl-use">Event</span><span class="tmpl-use">Training</span></div>
+        <div class="tmpl-badge"><span class="tmpl-class">.tmpl-cover-gallery</span> <span class="tmpl-new">new</span></div>
+        <p class="tmpl-title">Gallery Cover</p>
+        <p class="tmpl-desc">2x2 grid: bordered title card spanning left (display headline with mixed weights), 2 photo slots top-right, purple info card with context info bottom-right.</p>
+        <div class="tmpl-uses"><span class="tmpl-use">Visual opening</span><span class="tmpl-use">Team photos</span><span class="tmpl-use">Event</span><span class="tmpl-use">Multi-image cover</span></div>
       </div>
       <div class="slide-stage">
-        <div class="slide slide-cover-workshop">
+        <div class="slide slide-cover-gallery">
           <div class="p-workshop-title">
             <h1 class="p-display" style="font-size:3.5vw;"><span style="font-weight:400;">The</span><br><span style="font-weight:600;">Workshop</span><br><span style="font-weight:600;">Opening</span><br><span style="font-weight:400;">slide</span></h1>
           </div>
@@ -938,8 +938,8 @@ body{padding:4vw 5vw 8vw;}
     &nbsp;&nbsp;&lt;div class="stats-row"&gt;&lt;!-- stat-block x 4 --&gt;&lt;/div&gt;<br>
     &lt;/div&gt;<br><br>
     <span style="color:#a0a0a0;">/* Available template classes: */</span><br>
-    tmpl-cover &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-split &nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-product<br>
-    tmpl-cover-workshop &nbsp;tmpl-center &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-twocol<br>
+    tmpl-cover &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-split &nbsp;&nbsp;&nbsp;&nbsp;tmpl-cover-image<br>
+    tmpl-cover-gallery &nbsp;tmpl-center &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-twocol<br>
     tmpl-compare &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-features &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-content-img<br>
     tmpl-quote &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-stats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-steps<br>
     tmpl-timeline &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-3col &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpl-4col<br>

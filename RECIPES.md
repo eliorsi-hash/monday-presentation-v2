@@ -36,7 +36,7 @@ Each recipe defines:
 ### Slide Sequence
 
 ```
-1. Cover Slide (tmpl-cover or tmpl-cover-product)
+1. Cover Slide (tmpl-cover or tmpl-cover-image)
    Purpose: Title, headline, logo
    Content: Product name, tagline, date
    Icons: None (use logo only)
@@ -289,7 +289,7 @@ Summary → Problem → Impact → Solution → Details → Timeline → Resourc
 ### Slide Sequence
 
 ```
-1. Cover Slide (tmpl-cover or tmpl-cover-workshop)
+1. Cover Slide (tmpl-cover or tmpl-cover-gallery)
    Purpose: Title, instructor, date
    Content: Course/topic name, instructor, date
    Icons: None

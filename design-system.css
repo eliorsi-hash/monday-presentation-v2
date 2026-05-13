@@ -816,14 +816,14 @@ h1, h2, h3, h4, h5, h6 {
    The image is absolute-positioned to bleed off the right edge.
    ============================================ */
 
-.cover-product-text {
+.cover-image-text {
   display: flex;
   flex-direction: column;
   gap: var(--space-7);
   z-index: 2;
 }
 
-.cover-product-image {
+.cover-image-image {
   position: absolute;
   right: calc(var(--slide-padding-x) * -0.6);
   top: 50%;
@@ -840,17 +840,17 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-lg);
 }
 
-[data-theme="light"] .cover-product-image {
+[data-theme="light"] .cover-image-image {
   color: rgba(0, 0, 0, 0.2);
 }
 
-.cover-product-image svg {
+.cover-image-image svg {
   width: 8vmin;
   height: 8vmin;
   opacity: 0.4;
 }
 
-.cover-product-image .placeholder-label {
+.cover-image-image .placeholder-label {
   font-size: var(--text-body);
   font-weight: var(--weight-medium);
 }
@@ -1168,14 +1168,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Product cover: left text + right large image placeholder (absolute positioned) */
-.tmpl-cover-product.slide-active {
+.tmpl-cover-image.slide-active {
   display: flex;
   align-items: center;
   position: relative;
 }
 
 /* Workshop/event cover: 2×2 grid with title card spanning left */
-.tmpl-cover-workshop.slide-active {
+.tmpl-cover-gallery.slide-active {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   grid-template-rows: 1fr 1fr;

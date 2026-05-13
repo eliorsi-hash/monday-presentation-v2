@@ -213,8 +213,8 @@ Always include in `<style>`:
 |-------|--------------------|--------------------|---------|
 | `.tmpl-cover` | `flex` column center | `justify-content: center; align-items: center` | Cover slide, closing / thank you |
 | `.tmpl-cover-split` | `flex` column | `gap: var(--space-4)` | Alternative cover: bordered top + colored bottom bar |
-| `.tmpl-cover-product` | `flex` row | `align-items: center; position: relative` | Product launch: left text + right oversized image placeholder |
-| `.tmpl-cover-workshop` | `grid` | `0.9fr 1.1fr; rows: 1fr 1fr; gap: --space-4` | Workshop/event: bordered title left + 2 photos + info card right |
+| `.tmpl-cover-image` | `flex` row | `align-items: center; position: relative` | Cover with hero image: left text + right oversized image placeholder |
+| `.tmpl-cover-gallery` | `grid` | `0.9fr 1.1fr; rows: 1fr 1fr; gap: --space-4` | Cover with gallery: bordered title left + 2 photo slots + info card right |
 | `.tmpl-center` | `flex` column center | + `gap: var(--space-6)` | Pull quote, stat hero, section break |
 | `.tmpl-twocol` | `grid` | `1fr 1fr; gap: --space-9; align: center` | Title + bullets, problem + solution |
 | `.tmpl-compare` | `grid` | `1fr 1fr; gap: --space-5; align: stretch` | Before/after, challenge/solution, pros/cons |

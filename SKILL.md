@@ -267,12 +267,12 @@ Four cover template classes are available. Pick the best match for the content a
 |----------------|--------|-----------------|
 | `tmpl-cover` | Centered h1 + subtitle + logo | Formal, abstract, brand-driven, or topic-only. Default choice. |
 | `tmpl-cover-split` | Bordered top section (logo + h1) + colored bottom bar (subtitle) | Bold, casual, editorial tone — strong single statement, informal pitch |
-| `tmpl-cover-product` | Left: logo + h1 + subtitle. Right: large dashed image placeholder | Product launch or feature reveal — works best when a product screenshot/hero visual is available |
-| `tmpl-cover-workshop` | 2x2 grid: bordered title card left + 2 photo slots + purple info card right | Workshop, conference, event — has context images, department name, or specific date |
+| `tmpl-cover-image` | Left: logo + h1 + subtitle. Right: large dashed image placeholder | Any opening where a hero image, screenshot, or visual adds impact |
+| `tmpl-cover-gallery` | 2x2 grid: bordered title card left + 2 photo slots + purple info card right | Any opening with context images, team photos, or supplementary visuals + meta info |
 
 **Selection logic — apply the first matching rule:**
-1. **Workshop, event, conference with department/date metadata** → `tmpl-cover-workshop`
-2. **Product launch or feature reveal with a screenshot/hero image** → `tmpl-cover-product`
+1. **Content includes 2 images, photos, or context visuals** → `tmpl-cover-gallery`
+2. **A hero image, screenshot, or visual would strengthen the opening** → `tmpl-cover-image`
 3. **Bold, casual, or editorial tone — informal internal pitch** → `tmpl-cover-split`
 4. **Everything else: formal, abstract, brand-driven, or topic-only** → `tmpl-cover`
 
@@ -376,8 +376,8 @@ All 14 template classes are defined in `design-system.css` — they are automati
 |---------------|---------|---------|
 | `tmpl-cover` | `flex` (column, centered) | Cover slide, closing slide, minimal single-focus |
 | `tmpl-cover-split` | `flex` (column) | Alternative cover: bordered top section + colored bottom bar |
-| `tmpl-cover-product` | `flex` (row, relative) | Product cover: left text + right oversized image placeholder |
-| `tmpl-cover-workshop` | `grid` (0.9fr 1.1fr, 2 rows) | Workshop/event: bordered title left + photos + info card right |
+| `tmpl-cover-image` | `flex` (row, relative) | Cover with hero image: left text + right oversized image placeholder |
+| `tmpl-cover-gallery` | `grid` (0.9fr 1.1fr, 2 rows) | Cover with gallery: bordered title left + 2 photo slots + info card right |
 | `tmpl-center` | `flex` (column, centered + gap) | Pull quotes, code blocks, stat hero, section break |
 | `tmpl-twocol` | `grid` (1fr 1fr) | Title left + content/bullets right |
 | `tmpl-compare` | `grid` (1fr 1fr, stretch) | Side-by-side panels (challenge/solution, A vs B) |
