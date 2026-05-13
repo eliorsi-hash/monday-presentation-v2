@@ -243,7 +243,7 @@ Multi-card templates (`tmpl-3col`, `tmpl-4col`, `tmpl-compare`, `tmpl-steps`) su
 
 ## Icons
 
-268 monday.com SVG icons in `Icons/IconName.svg`. Always inline the SVG — never use `<img src>`.
+270 monday.com SVG icons in `Icons/IconName.svg`. Always inline the SVG — never use `<img src>`.
 
 **Special icon:** `Icons/Quote.svg` — double quotation mark for testimonial slides. Uses `fill="currentColor"` so it inherits color from CSS (set via `.quote-mark { color: var(--color-purple) }`). Only use this icon for `.quote-box` components — it is visually distinct from the standard monday icon set.
 

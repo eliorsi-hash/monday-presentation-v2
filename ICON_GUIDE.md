@@ -1,4 +1,4 @@
-# Icon Guide — 268 Monday.com Icons
+# Icon Guide — 270 Monday.com Icons
 
 Reference of all available icons for use in presentations.
 

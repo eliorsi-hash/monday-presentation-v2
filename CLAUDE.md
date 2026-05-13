@@ -13,7 +13,7 @@ Use the skill: `/monday-presentation-v2`
 - **slide-templates.html** — Live previews of all 19 template classes and component combinations. The single source of truth for slide layouts.
 - **design-system-showcase.html** — Design token and component reference page.
 - **DESIGN_SYSTEM.md** — Agent reference for design-system.css: every token value, component HTML pattern, and template class.
-- **Icons/** — 268 monday.com SVG icons (including Quote.svg for testimonials). Read and inlined into generated HTML for portability.
+- **Icons/** — 270 monday.com SVG icons (including Quote.svg for testimonials). Read and inlined into generated HTML for portability.
 - **Logos/** — monday.com wordmark SVGs (white + black variants).
 - **RECIPES.md** — 5 presentation recipes (Product Launch, Team Review, Proposal, Training, Quick Update).
 - **ICON_MATCHING.md** — Semantic icon selection guide by content type.

@@ -21,7 +21,7 @@ Provide your content however you have it:
 If you want charts or metrics in the deck, choose what kind (bar charts, pie/donut, stat tiles) and provide the data — paste numbers, point to a CSV, or pull from a Monday.com board.
 
 ### 4. Layout planning
-Claude maps your content to the right slide templates from 16 available layout classes, picks icons from the 268-icon library, and shows you the plan:
+Claude maps your content to the right slide templates from 16 available layout classes, picks icons from the 270-icon library, and shows you the plan:
 
 ```
 Slide 1: Cover        — tmpl-cover-image
@@ -141,13 +141,13 @@ monday-presentation-v2/
 ├── RECIPES.md                — 5 presentation recipes with slide-by-slide structure
 ├── DESIGN_SYSTEM.md          — Complete token, component, and template reference
 ├── ICON_MATCHING.md          — Semantic icon selection guide by content type
-├── ICON_GUIDE.md             — 268 icon names and categories
+├── ICON_GUIDE.md             — 270 icon names and categories
 ├── BRAND_ASSETS.md           — monday.com SVG logos (dark + light)
 ├── design-system.css         — CSS tokens + components + 16 template classes
 ├── slide-templates.html      — Live previews of all templates and components
 ├── design-system-showcase.html — Design token and component reference page
 ├── install.sh                — One-command install for Claude Code
-├── Icons/                    — 268 monday.com SVG icons (including Quote.svg)
+├── Icons/                    — 270 monday.com SVG icons (including Quote.svg)
 ├── Logos/                    — monday.com wordmark (white + black)
 ├── Fonts/                    — (not used — system loads Poppins via Google Fonts)
 └── output/                   — Generated presentations (gitignored)
@@ -196,5 +196,5 @@ Generated decks are plain HTML — edit them directly:
 - [SKILL.md](SKILL.md) — Full workflow and generation rules
 - [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — Every token, component, and template class
 - [slide-templates.html](slide-templates.html) — Live template previews (open in browser)
-- [ICON_MATCHING.md](ICON_MATCHING.md) — 268 icons organized by semantic meaning
+- [ICON_MATCHING.md](ICON_MATCHING.md) — 270 icons organized by semantic meaning
 - [RECIPES.md](RECIPES.md) — Presentation recipe structures

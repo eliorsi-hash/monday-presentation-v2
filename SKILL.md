@@ -781,7 +781,7 @@ Supported types (map to template classes in `design-system.css`):
 | [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) | Agent reference — every token value, component HTML pattern, template class, and design rule |
 | [slide-templates.html](slide-templates.html) | Live previews of all 19 template classes and component combinations (open in browser) |
 | [ICON_MATCHING.md](ICON_MATCHING.md) | **Phase 3.1** — Semantic icon recommendations by slide purpose and content type |
-| [ICON_GUIDE.md](ICON_GUIDE.md) | 268 icon names and categories |
+| [ICON_GUIDE.md](ICON_GUIDE.md) | 270 icon names and categories |
 
 > **Note:** Brand SVG logo and navigation JS are inlined directly in this SKILL.md — no need to read BRAND_ASSETS.md separately.
 
