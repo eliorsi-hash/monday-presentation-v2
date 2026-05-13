@@ -157,28 +157,32 @@ Sack, Sacred, Sacrifice, Sacrilege, Sad, Saddle, Sadness, Safe, Safety, Safflowe
 1. **Receives slide data** — content, purpose, slide type
 2. **Looks up in ICON_MATCHING.md** — finds recommended icons by category
 3. **Selects best match** — picks icon that fits the semantic meaning
-4. **Replaces path in HTML** — updates `src="Icons/Property 1=IconName.svg"`
-5. **Validates path** — ensures icon file exists in `/Icons/` folder
-6. **Returns updated slide** — with correct icon integrated
+4. **Reads icon file** — `Icons/Property 1=IconName.svg`
+5. **Inlines SVG** — embeds the `<svg>` element directly with `class="ds-icon ds-icon-sm ds-icon-white"`
+6. **Returns updated slide** — with icon fully embedded (no external file dependency)
 
 ---
 
-## Icon Path Format
+## Icon Embedding
+
+Always **inline the SVG** — never use `<img src>`. Read the icon file and embed its content directly:
 
 ```html
-<!-- In feature cards, timeline steps, bullet lists: -->
-<img src="Icons/Property 1=IconName.svg" class="ds-icon ds-icon-md" alt="Icon description">
-
-<!-- Or inline SVG -->
-<svg class="ds-icon" viewBox="0 0 24 24"><!-- icon content --></svg>
+<!-- Read Icons/Property 1=IconName.svg and inline: -->
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="0 0 60 60" fill="none">
+  <!-- SVG paths from the file -->
+</svg>
 ```
+
+This ensures the HTML is fully self-contained with no external dependencies.
 
 ---
 
 ## Tips for Icon Selection
 
-- **Keep it consistent** — Use icons from same visual family
-- **Match context** — Choose semantically appropriate icons
-- **Avoid clutter** — Don't use icons where they add no meaning
-- **Size appropriately** — Use `ds-icon-sm`, `ds-icon-md`, `ds-icon-lg` classes
-- **Test on all slides** — Ensure icons render correctly across slides
+- **Always inline SVGs** — read the file and embed directly, never use `<img src>`
+- **Keep it consistent** — use icons from the same visual family within a slide
+- **Match context** — choose semantically appropriate icons
+- **Avoid clutter** — don't use icons where they add no meaning
+- **Size appropriately** — use `ds-icon-sm`, `ds-icon-md`, `ds-icon-lg` classes
+- **Use ds-icon-white** — makes icons render white on dark backgrounds (auto-inverts on light theme)

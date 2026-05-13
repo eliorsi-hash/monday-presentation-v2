@@ -2,9 +2,16 @@
 
 Inline SVG logos for use in presentations. Always use these — never external image URLs.
 
-## Monday.com Logo (Official Full)
+## Monday.com Logo
 
-Use for dark backgrounds (title slides, closing slides). This is the official monday.com logo.
+Two variants available in `Logos/`. Always read the file and inline the SVG — never use `<img src>`.
+
+| Theme | File | Text fill |
+|-------|------|-----------|
+| Dark (default) | `Logos/monday_White.svg` | White wordmark on black |
+| Light | `Logos/monday_Black.svg` | Dark wordmark on white |
+
+### Dark variant (white wordmark)
 
 **SVG Code:**
 ```html
@@ -52,9 +59,9 @@ Use for dark backgrounds (title slides, closing slides). This is the official mo
 - **Section/Feature Slides:** Optional, bottom center, height 3-4vmin
 
 **Never use:**
-- External image URLs or file references (e.g., `<img src="monday_logo.svg">`)
-- Different brand logos or variations
-- Modifications to the official logo SVG
+- `<img src>` — always inline the SVG directly
+- Modified or unofficial logo variants
+- The wrong color variant for the theme (white logo on light bg, or black logo on dark bg)
 
 ---
 

@@ -1,16 +1,17 @@
-# Icon Guide — 267 Monday.com Icons
+# Icon Guide — 268 Monday.com Icons
 
 Reference of all available icons for use in presentations.
 
 ## Icon Library
 
-All icons are SVG files located in the `Icons/` folder relative to the HTML presentation file.
+All icons are SVG files located in the `Icons/` folder. Always read the file and **inline the SVG** — never use `<img src>`.
 
 **File naming pattern:** `Icons/Property 1=IconName.svg`
 
-**Example usage:**
+**Example usage (inline SVG):**
 ```html
-<img src="Icons/Property 1=Graph arrow up.svg" class="ds-icon ds-icon-lg">
+<!-- Read Icons/Property 1=Graph arrow up.svg and embed: -->
+<svg class="ds-icon ds-icon-lg ds-icon-white" viewBox="..."><!-- SVG content --></svg>
 ```
 
 ---
@@ -193,7 +194,7 @@ All icons are SVG files located in the `Icons/` folder relative to the HTML pres
 ### Basic Icon Display
 
 ```html
-<img src="Icons/Property 1=Graph arrow up.svg" class="ds-icon ds-icon-lg">
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg --></svg>
 ```
 
 ### Icon Size Classes
@@ -210,7 +211,7 @@ All icons are SVG files located in the `Icons/` folder relative to the HTML pres
 
 ```html
 <div style="display: flex; align-items: center; gap: var(--space-3);">
-  <img src="Icons/Property 1=Checkmark.svg" class="ds-icon ds-icon-sm">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg --></svg>
   <p class="text-body">Success message</p>
 </div>
 ```
@@ -219,20 +220,20 @@ All icons are SVG files located in the `Icons/` folder relative to the HTML pres
 
 **Change stroke color:**
 ```html
-<img src="Icons/Property 1=Graph arrow up.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg"
      class="ds-icon ds-icon-lg"
      style="stroke: #ffffff; filter: none;">
 ```
 
 **Make white (for dark backgrounds):**
 ```html
-<img src="Icons/Property 1=Checkmark.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg"
      class="ds-icon ds-icon-lg ds-icon-white">
 ```
 
 **Make dark (for light backgrounds):**
 ```html
-<img src="Icons/Property 1=Checkmark.svg"
+<svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Checkmark.svg"
      class="ds-icon ds-icon-lg ds-icon-dark">
 ```
 
@@ -318,7 +319,7 @@ Use these icons to represent common concepts:
 Small icons (sm) next to each bullet:
 ```html
 <li style="display: flex; align-items: flex-start; gap: var(--space-3);">
-  <img src="Icons/Property 1=Arrow up.svg" class="ds-icon ds-icon-sm" style="flex-shrink: 0;">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Arrow up.svg" class="ds-icon ds-icon-sm" style="flex-shrink: 0;">
   <p>Growth metric description</p>
 </li>
 ```
@@ -327,7 +328,7 @@ Small icons (sm) next to each bullet:
 Medium icons (md) at top of cards:
 ```html
 <div style="text-align: center; margin-bottom: var(--space-4);">
-  <img src="Icons/Property 1=Stats.svg" class="ds-icon ds-icon-md">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Stats.svg --></svg>
 </div>
 <h4 class="text-h4">Card Title</h4>
 ```
@@ -336,7 +337,7 @@ Medium icons (md) at top of cards:
 Large icons (lg) above numbers:
 ```html
 <div style="text-align: center;">
-  <img src="Icons/Property 1=Graph arrow up.svg" class="ds-icon ds-icon-lg" style="margin-bottom: var(--space-3);">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Graph arrow up.svg" class="ds-icon ds-icon-lg" style="margin-bottom: var(--space-3);">
   <div class="text-h1" style="color: var(--color-green);">2.3x</div>
   <p class="text-body">Growth metric</p>
 </div>
@@ -347,7 +348,7 @@ Emoji or icon inside circular border:
 ```html
 <div style="width: 5vmin; height: 5vmin; border-radius: 50%; border: 1px solid var(--color-text);
             display: flex; justify-content: center; align-items: center;">
-  <img src="Icons/Property 1=Rocket.svg" class="ds-icon ds-icon-sm">
+  <svg class="ds-icon ds-icon-sm ds-icon-white" viewBox="..."><!-- Icons/Property 1=Rocket.svg --></svg>
 </div>
 ```
 
@@ -364,11 +365,20 @@ Academy, Alarm, Alarm check, Apps, Archive, Arrow Path, Arrow up, Arrows, Badge 
 
 ---
 
+## Special Icons
+
+**Quote.svg** — Double quotation mark for testimonial slides. Uses `fill="currentColor"` (not stroke) so it inherits color from CSS. Only use with `.quote-box` / `.quote-mark` components. Visually distinct from the standard monday icon set.
+
+```html
+<svg class="quote-mark" viewBox="0 0 160 120" fill="none">
+  <!-- Inline Icons/Property 1=Quote.svg content -->
+</svg>
+```
+
 ## Tips
 
-- Always use relative paths: `Icons/Property 1=Name.svg` (not absolute URLs)
+- **Always inline SVGs** — read the file and embed the `<svg>` element directly. Never use `<img src>`.
+- Add `class="ds-icon ds-icon-white"` to make icons render white on dark backgrounds (auto-inverts on light theme).
 - Icons are SVG — they scale perfectly at any size
-- Default stroke color matches your text color
-- Use size classes consistently for visual hierarchy
-- Test icon visibility in dark mode (use `ds-icon-white` if needed)
+- Use size classes consistently for visual hierarchy (`ds-icon-sm`, `ds-icon-md`, `ds-icon-lg`)
 

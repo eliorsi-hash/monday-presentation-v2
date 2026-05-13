@@ -36,57 +36,52 @@ Each recipe defines:
 ### Slide Sequence
 
 ```
-1. Cover Slide (Deck_Dark_Page_001)
+1. Cover Slide (tmpl-cover or tmpl-cover-product)
    Purpose: Title, headline, logo
    Content: Product name, tagline, date
    Icons: None (use logo only)
 
-2. Problem Statement (Deck_Dark_Page_010 or 011)
+2. Problem Statement (tmpl-twocol)
    Purpose: Set context
    Content: 3-4 bullet points on market problem
    Icons: Alert, Exclamation (highlight pain points)
 
-3. Solution Overview (Deck_Dark_Page_030)
+3. Solution Overview (tmpl-twocol)
    Purpose: Introduce solution
    Content: Title + subtitle + 3 bullet points
    Icons: None (clean intro)
 
-4. Features/Capabilities (Deck_Dark_Page_044)
+4. Features/Capabilities (tmpl-features or tmpl-3col)
    Purpose: Showcase key features
-   Content: 4 feature cards with descriptions
+   Content: 3-4 feature cards with descriptions
    Icons: Star, Lightning (highlight benefits)
 
-5. Demo/Visual (Deck_Dark_Page_009 or 007)
+5. Demo/Visual (tmpl-content-img)
    Purpose: Show product in action
    Content: Screenshot/visual with text overlay
    Icons: None (focus on product)
 
-6. Social Proof (Deck_Dark_Page_057/058)
+6. Social Proof (tmpl-quote)
    Purpose: Build credibility
-   Content: Customer testimonials or logos
-   Icons: None (faces/logos are the content)
+   Content: Customer testimonial with attribution
+   Icons: None (quote icon built into component)
 
-7. Metrics/Impact (Deck_Dark_Page_031)
+7. Metrics/Impact (tmpl-stats)
    Purpose: Show business value
-   Content: 3-4 key metrics
+   Content: 3-4 key metrics as stat tiles
    Icons: Chart up, Trending up (growth indicators)
 
-8. Roadmap/Next Steps (Deck_Dark_Page_038)
+8. Roadmap/Next Steps (tmpl-timeline)
    Purpose: Future vision
-   Content: 3-4 upcoming items with timeline
+   Content: 3-5 milestones on horizontal timeline
    Icons: Clock, Calendar, Forward (time progression)
 
-9. FAQ/Q&A (Deck_Dark_Page_010)
-   Purpose: Address concerns
-   Content: 3-4 common questions + answers
-   Icons: Help, Question (info guidance)
+9. Call-to-Action (tmpl-steps)
+   Purpose: Drive engagement
+   Content: 3 action cards (numbered steps)
+   Icons: Rocket, Arrow right (action, forward)
 
-10. Call-to-Action (Deck_Dark_Page_030)
-    Purpose: Drive engagement
-    Content: How to get started, links, contact
-    Icons: Rocket, Arrow right (action, forward)
-
-11. Thank You (Deck_Dark_Page_001)
+10. Thank You (tmpl-cover)
     Purpose: Closing slide
     Content: Thanks message, contact info, logo
     Icons: None (use logo only)
@@ -118,47 +113,47 @@ Problem → Solution → Features → Demo → Social Proof → Metrics → Road
 ### Slide Sequence
 
 ```
-1. Cover Slide (Deck_Dark_Page_001)
+1. Cover Slide (tmpl-cover)
    Purpose: Title, date, preparer
    Content: Review title, date, team name
    Icons: None
 
-2. Agenda (Deck_Dark_Page_017)
+2. Agenda (tmpl-features + .chapter-card)
    Purpose: Set expectations
-   Content: 4-5 chapter headings with arrows
+   Content: 3-5 numbered chapter cards
    Icons: None (chapter structure is visual)
 
-3. Context/Background (Deck_Dark_Page_030)
+3. Context/Background (tmpl-twocol)
    Purpose: Remind of situation
    Content: Title + intro + 3 bullets
    Icons: None (background info)
 
-4. What We Accomplished (Deck_Dark_Page_010)
+4. What We Accomplished (tmpl-twocol)
    Purpose: Celebrate wins
    Content: 3-5 achievements
    Icons: Checkmark, Trophy, Star (success)
 
-5. Metrics/Impact (Deck_Dark_Page_031)
+5. Metrics/Impact (tmpl-stats)
    Purpose: Show results
-   Content: 3-4 key metrics
+   Content: 3-4 key metrics as stat tiles
    Icons: Chart up, Bar chart (data)
 
-6. What's Next (Deck_Dark_Page_038)
+6. What's Next (tmpl-timeline or tmpl-steps)
    Purpose: Forward planning
    Content: 3-4 upcoming initiatives
    Icons: Forward, Calendar, Flag (next steps)
 
-7. Challenges/Blockers (Deck_Dark_Page_010)
-   Purpose: Address obstacles
+7. Challenges/Blockers (tmpl-compare)
+   Purpose: Address obstacles — challenge vs. mitigation
    Content: 2-3 key challenges + mitigations
    Icons: Alert, Warning (highlight issues)
 
-8. Request for Input (Deck_Dark_Page_030)
+8. Request for Input (tmpl-center)
    Purpose: Invite feedback
    Content: Question + how to contribute
    Icons: Chat, Comment (communication)
 
-9. Thank You (Deck_Dark_Page_001)
+9. Thank You (tmpl-cover)
    Purpose: Close with thanks
    Content: Thank you, contact info
    Icons: None
@@ -192,77 +187,72 @@ Agenda → Context → Accomplishments → Metrics → Next Steps → Blockers �
 ### Slide Sequence
 
 ```
-1. Cover Slide (Deck_Dark_Page_001)
+1. Cover Slide (tmpl-cover)
    Purpose: Title, proposal name
    Content: Initiative name, proposer, date
    Icons: None
 
-2. Executive Summary (Deck_Dark_Page_030)
+2. Executive Summary (tmpl-twocol)
    Purpose: Quick overview
    Content: Title + 3 key points
    Icons: None (brief summary)
 
-3. Problem Statement (Deck_Dark_Page_010)
+3. Problem Statement (tmpl-twocol)
    Purpose: Define the problem
    Content: 3-4 pain points
    Icons: Alert, Alarm, Exclamation (highlight issues)
 
-4. Business Impact (Deck_Dark_Page_031)
+4. Business Impact (tmpl-stats)
    Purpose: Show why it matters
    Content: 3-4 metrics showing impact of problem
    Icons: Chart down, Trending down (negative trend)
 
-5. Proposed Solution (Deck_Dark_Page_030)
+5. Proposed Solution (tmpl-twocol)
    Purpose: Introduce approach
    Content: Solution name + 3 bullet points
    Icons: Lightbulb, Rocket (innovation)
 
-6. Solution Details (Deck_Dark_Page_044)
+6. Solution Details (tmpl-features)
    Purpose: Describe components
-   Content: 4 key aspects of solution
+   Content: 4 key aspects of solution in 2x2 grid
    Icons: Gear, Tools, Wrench (implementation)
 
-7. Implementation Plan (Deck_Dark_Page_038)
+7. Implementation Plan (tmpl-timeline)
    Purpose: Show timeline
-   Content: 4-5 phases with timeline
+   Content: 4-5 phases on horizontal timeline
    Icons: Clock, Calendar, Forward (timeline)
 
-8. Resource Requirements (Deck_Dark_Page_010)
+8. Resource Requirements (tmpl-3col or tmpl-4col)
    Purpose: What's needed
-   Content: Team, budget, tools, timeline
+   Content: Team, budget, tools, timeline as cards
    Icons: Users, Money, Tools (resources)
 
-9. Expected Outcomes (Deck_Dark_Page_031)
+9. Expected Outcomes (tmpl-stats)
    Purpose: Benefits after implementation
-   Content: 3-4 key metrics showing improvement
+   Content: 3-4 key metrics as stat tiles
    Icons: Chart up, Trophy, Star (positive results)
 
-10. Risk Assessment (Deck_Dark_Page_010)
-    Purpose: Address risks
+10. Risk Assessment (tmpl-compare)
+    Purpose: Address risks — risk vs. mitigation
     Content: 2-3 risks + mitigations
     Icons: Alert, Shield (risk, mitigation)
 
-11. Comparison (Deck_Dark_Page_034/035)
+11. Comparison (tmpl-compare)
     Purpose: Compare options (if applicable)
     Content: Do nothing vs. proposed solution
     Icons: None (comparison structure is visual)
 
-12. Success Criteria (Deck_Dark_Page_010)
+12. Success Criteria (tmpl-steps)
     Purpose: How we'll measure success
-    Content: 3-4 success metrics
+    Content: 3-4 success criteria as step cards
     Icons: Checkmark, Target (objectives)
 
-13. Next Steps (Deck_Dark_Page_010)
+13. Next Steps (tmpl-steps)
     Purpose: Decision requested
     Content: What decision needed, timeline
     Icons: Forward, Flag (action)
 
-14. Q&A (Deck_Dark_Page_030 or 017)
-    Purpose: Address questions
-    Content: Key questions + brief answers
-    Icons: Help, Chat (questions)
-
-15. Thank You (Deck_Dark_Page_001)
+14. Thank You (tmpl-cover)
     Purpose: Closing
     Content: Thanks, contact info
     Icons: None
@@ -299,42 +289,43 @@ Summary → Problem → Impact → Solution → Details → Timeline → Resourc
 ### Slide Sequence
 
 ```
-1. Cover Slide (Deck_Dark_Page_001)
+1. Cover Slide (tmpl-cover or tmpl-cover-workshop)
    Purpose: Title, instructor, date
    Content: Course/topic name, instructor, date
    Icons: None
 
-2. Learning Objectives (Deck_Dark_Page_010)
+2. Learning Objectives (tmpl-twocol)
    Purpose: Set expectations
    Content: 3-4 learning goals
    Icons: Target, Objective (goals)
 
-3. Prerequisite Knowledge (Deck_Dark_Page_010)
+3. Prerequisite Knowledge (tmpl-twocol)
    Purpose: Establish baseline
    Content: What students should know first
    Icons: Book, Academy (knowledge)
 
-4-N. Lesson Content (Vary by topic)
+4-N. Lesson Content (vary template by content type)
    Purpose: Teach content
    Content: Mix of explanation, examples, visuals
+   Templates: tmpl-twocol, tmpl-content-img, tmpl-features, tmpl-compare
    Icons: Book, Lightbulb, Checkmark (learning)
 
-N+1. Practice / Exercise (Deck_Dark_Page_010)
+N+1. Practice / Exercise (tmpl-steps)
    Purpose: Apply knowledge
-   Content: Exercise description + instructions
+   Content: Exercise steps as numbered cards
    Icons: Checkmark, Target (practice)
 
-N+2. Q&A (Deck_Dark_Page_017)
+N+2. Q&A (tmpl-center)
    Purpose: Answer questions
    Content: Common questions + answers
    Icons: Help, Chat (questions)
 
-N+3. Resources (Deck_Dark_Page_010)
+N+3. Resources (tmpl-3col)
    Purpose: Further learning
-   Content: Books, links, documentation
+   Content: Resource cards (books, links, docs)
    Icons: Book, Link (resources)
 
-N+4. Thank You (Deck_Dark_Page_001)
+N+4. Thank You (tmpl-cover)
    Purpose: Closing
    Content: Thanks, feedback request, contact
    Icons: None
@@ -369,32 +360,32 @@ Objectives → Prerequisites → Lesson Content → Practice → Q&A → Resourc
 ### Slide Sequence
 
 ```
-1. Cover Slide (Deck_Dark_Page_001)
+1. Cover Slide (tmpl-cover)
    Purpose: Title
    Content: Topic, date, preparer
    Icons: None
 
-2. What's New (Deck_Dark_Page_010)
+2. What's New (tmpl-twocol)
    Purpose: Key updates
    Content: 2-3 bullet points
    Icons: News, Star (highlights)
 
-3. Metrics (Deck_Dark_Page_031 - optional)
+3. Metrics (tmpl-stats - optional)
    Purpose: Numbers if relevant
-   Content: 2-3 key metrics
+   Content: 2-3 key metrics as stat tiles
    Icons: Chart, Numbers (data)
 
-4. What's Next (Deck_Dark_Page_010)
+4. What's Next (tmpl-steps or tmpl-twocol)
    Purpose: What's coming
    Content: 2-3 upcoming items
    Icons: Forward, Calendar (next)
 
-5. Action Items (Deck_Dark_Page_010 - optional)
+5. Action Items (tmpl-steps - optional)
    Purpose: Who does what
-   Content: Action + owner + deadline
+   Content: Action cards with owner + deadline
    Icons: Flag, Checkmark (actions)
 
-6. Thank You (Deck_Dark_Page_001)
+6. Thank You (tmpl-cover)
    Purpose: Close
    Content: Thanks, contact
    Icons: None
@@ -430,9 +421,9 @@ Select recipe that matches your presentation purpose:
 ### Step 2: Map Content to Slides
 For each slide in recipe:
 1. Write content (headline, bullets, description)
-2. Note recommended template
+2. Note recommended `tmpl-*` class
 3. Note recommended icons
-4. Check content fits capacity (from SLIDE_INVENTORY.md)
+4. Verify content fits the template layout (see slide-templates.html for previews)
 
 ### Step 3: Generate Presentation
 When running the skill:
@@ -459,7 +450,7 @@ Create your own recipe using this structure:
 
 ### Slide Sequence
 
-1. [Slide Type] (Deck_Dark_Page_XXX)
+1. [Slide Type] (tmpl-xxx)
    Purpose: [Why this slide]
    Content: [What goes here]
    Icons: [Which icons, if any]
@@ -494,13 +485,13 @@ Create your own recipe using this structure:
 **Example flow:**
 ```
 User: "Create a product launch presentation"
-Skill: "I recommend Recipe 1: Product Launch (11 slides)"
+Skill: "I recommend Recipe 1: Product Launch (10 slides)"
 Skill: "Suggested structure:
-  1. Cover (Deck_Dark_Page_001)
-  2. Problem (Deck_Dark_Page_010)
-  3. Solution (Deck_Dark_Page_030)
+  1. Cover (tmpl-cover)
+  2. Problem (tmpl-twocol)
+  3. Solution (tmpl-twocol)
   ...
-  11. Thank You (Deck_Dark_Page_001)"
+  10. Thank You (tmpl-cover)"
 User: "Looks good, here's my content..."
 Skill: "Generating with product launch structure..."
 ```
@@ -512,6 +503,6 @@ Skill: "Generating with product launch structure..."
 1. **Best Practices Built In** — Structures follow presentation design principles
 2. **Consistency** — Every pitch/update/training follows proven pattern
 3. **Speed** — No need to design structure from scratch
-4. **Template Alignment** — Recipes use templates from SLIDE_INVENTORY
+4. **Template Alignment** — Recipes use `tmpl-*` classes from design-system.css
 5. **Icon Strategy** — Icons selected semantically per recipe
 6. **Professional Results** — Follows storytelling best practices
