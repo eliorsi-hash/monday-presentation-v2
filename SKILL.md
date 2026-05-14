@@ -368,7 +368,7 @@ Slide 5 (Closing)      → tmpl-cover (centered, "Thank You" + logo)
 ## Phase 3: Generate Presentation
 
 When generating, **read this file:**
-1. [design-system.css](design-system.css) — Inline this entire CSS file into `<style>` (tokens, typography, components, all 19 template classes)
+1. [design-system.css](design-system.css) — Read with the Read tool and inline its **complete, unmodified contents** into `<style>`. Never manually reconstruct or subset the CSS — paste the full file verbatim. This includes chart components (pie, donut, bar), table styles, stat blocks, and all animations.
 
 The **brand SVG logo** and **navigation JS** are inlined below — no additional file reads needed.
 
@@ -405,6 +405,20 @@ All 14 template classes are defined in `design-system.css` — they are automati
 2. Each slide gets: `class="slide-container tmpl-xxx slide-N"` and `data-slide-index="N"`
 3. CSS handles show/hide via `.slide-container:not(.slide-active) { display: none !important; }` (already in design-system.css)
 4. Navigation JS only toggles `slide-active` class — never touches `style.display`
+
+**CRITICAL — CSS inlining must be COMPLETE:**
+Read `design-system.css` with the Read tool and paste its **entire contents** into the `<style>` block. Do NOT manually recreate, summarize, or cherry-pick CSS rules. The file contains tokens, template classes, AND component styles (charts, tables, stat blocks, step cards, pie/donut charts, timelines, etc.). If you skip sections, components like `.donut-chart`, `.pie-chart`, `.chart-container`, or `.table-container` will silently fail to render. The full file is ~33KB — inline all of it.
+
+**CRITICAL — Color variable names:**
+The design system defines exactly these brand color variables. Never invent other names:
+- `--color-purple` (#6164ff) — primary brand
+- `--color-purple-light` (#8A99FF) — secondary
+- `--color-red` (#ff3d57) — alert, negative
+- `--color-yellow` (#ffcb00) — highlight, warning
+- `--color-green` (#00c875) — success, positive
+
+**WRONG:** `var(--color-accent-red)`, `var(--color-accent-green)`, `var(--color-accent)`, `var(--color-brand-purple)` — these do NOT exist.
+**RIGHT:** `var(--color-red)`, `var(--color-green)`, `var(--color-purple)`, `var(--color-yellow)`
 
 **Card styling modes** — for multi-card templates (`tmpl-3col`, `tmpl-4col`, `tmpl-compare`, `tmpl-steps`):
 1. **Grey surface** (default) — all cards use `background: var(--color-surface)`
@@ -532,7 +546,7 @@ Slide 7 (Track 1 - Training):
 
 *Data visualization — Charts:*
 - `.chart-container` — surface card that wraps a bar chart. Internal structure: `.chart-body` → `.y-axis` (labels) + `.chart-plot` (`.grid-lines` + `.bars-row` → `.bar-group` → `.bar-group-bars` → `.bar-wrap` → `.bar-top-label` + `.bar`). Bar fill colors: `.bar-purple`, `.bar-green`, `.bar-yellow`, `.bar-red`, `.bar-purple-light`. Legend: `.chart-legend` → `.legend-item` → `.legend-dot` + text. Stagger animation built in for up to 8 bar groups.
-- `.pie-chart` / `.donut-chart` — conic-gradient circle/donut. Set `background: conic-gradient(var(--color-purple) 0deg Ndeg, ...)` inline. Formula: `percent × 3.6 = degrees`. Donut wraps in `.donut-wrap`; center label uses `.donut-center` + `.donut-center-value` + `.donut-center-label`. Side legend: `.pie-wrap` → `.pie-legend` → `.pie-legend-item` (`.pie-legend-dot` + `.pie-legend-label` + `.pie-legend-value`).
+- `.pie-chart` / `.donut-chart` — conic-gradient circle/donut. Set `background: conic-gradient(var(--color-purple) 0% 62%, var(--color-yellow) 62% 86%, var(--color-green) 86% 100%)` inline. Use **percentage** syntax (not degrees). Donut wraps in `.donut-wrap`; center label uses `.donut-center` + `.donut-center-value` + `.donut-center-label`. Side legend: `.pie-wrap` → `.pie-legend` → `.pie-legend-item` (`.pie-legend-dot` + `.pie-legend-label` + `.pie-legend-value`). **Color vars for charts:** only `--color-purple`, `--color-red`, `--color-yellow`, `--color-green`, `--color-purple-light`. Never use `--color-accent-*` (doesn't exist).
 
 *Data visualization — Stats:*
 - `.stat-block` + `.stat-value` + `.stat-label` — metric tile. `stat-value` = h1-size semibold number. Place 3–4 in a grid for a metrics slide.
@@ -678,18 +692,18 @@ If user has a .pptx file:
 
 **Name the file** — derive a short kebab-case filename from the presentation topic (e.g. `monday-ai-features.html`, `q3-roadmap.html`, `team-kickoff.html`). Never use `presentation.html`.
 
-**Save to the current working directory** (not the skill directory).
+**Save to the `output/` folder** inside the current working directory (not the skill directory). Create the `output/` directory if it doesn't exist. The `output/` folder is git-ignored so generated presentations won't be committed.
 
 **Open the file** (Claude Code only):
 ```
-open <filename>.html
+open output/<filename>.html
 ```
 
 **Summarize for the user:**
 
 > **Your deck is ready!**
 >
-> **File:** `<filename>.html` — self-contained, no external dependencies
+> **File:** `output/<filename>.html` — self-contained, no external dependencies
 >
 > **Navigation:**
 > - Arrow keys or Space to advance
